@@ -7,7 +7,7 @@ public class FireStateManager : MonoBehaviour
     public FireBaseState currentState;
     public FireFullState FullState = new FireFullState();
     public FireNoneState NoneState = new FireNoneState(); 
-    public int Temperature;
+    public float Temperature;
     [HideInInspector] public int IgnitionTemperature;
     [HideInInspector] public int SpreadRadius;
     [HideInInspector] public float BurnTime;
