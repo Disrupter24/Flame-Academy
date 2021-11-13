@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorkerStateManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class WorkerStateManager : MonoBehaviour
     public WorkerIdleState IdleState = new WorkerIdleState();
 
     public bool IsSelected;
+    private WorkerMovement _workerMovement;
 
     // target (might need to be a list if we're stacking actions)
     public GameObject Target;
@@ -28,6 +30,8 @@ public class WorkerStateManager : MonoBehaviour
 
         _sprite = gameObject.GetComponent<SpriteRenderer>();
         _camera = Camera.main;
+        _workerMovement = GetComponent<WorkerMovement>();
+
     }
 
     private void Update()
@@ -53,12 +57,13 @@ public class WorkerStateManager : MonoBehaviour
 
         //// Set target to the tile at the location
         // Layermask is the Tile layer, it needs to be layer#7 for this to work
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 1, (1 << 7));
-
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 1);//, (1 << 7));
         if (hit.collider != null)
         {
             Debug.Log("Found target");
+            _workerMovement.MoveTo(hit.point);
         }
+       
 
         // For now, in terms of states, we're just going to focus on movement
         // Might want a navmesh in the near future
