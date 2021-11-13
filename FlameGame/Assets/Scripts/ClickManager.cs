@@ -16,8 +16,6 @@ public class ClickManager : MonoBehaviour
     private Vector2 _targetingStartPositionCanvas;
     private Vector2 _targetingStartPositionWorld;
     [SerializeField] private RectTransform _targetingBox;
-    // List of tiles selected
-    private List<Tile> _tilesSelected = new List<Tile>();
 
     private void Update()
     {
@@ -83,6 +81,11 @@ public class ClickManager : MonoBehaviour
     private void ManageTargetSelection()
     {
 
+        // Controls for torch
+        // With worker selected, if mousing over tile on fire, cursor becomes a torch
+        // Right click to have the worker immolate itself
+
+
         if (Input.GetMouseButtonDown(1))
         {
             // Set selection box start point
@@ -114,31 +117,36 @@ public class ClickManager : MonoBehaviour
             // Set selection box end point
             Vector3 currentMousePosition = GetMousePositionInWorld();
 
-            // Get all tiles in box and add them to the tiles selected list
+            // Clear each selected worker's task list
+            foreach (WorkerStateManager worker in _workersSelected)
+            {
+                worker.TaskList.Clear();
+            }
+
+            // Get all tiles in box, check their contents, and add them to the tiles selected list
             foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
             {
                 Tile tile = tileCollider.gameObject.GetComponent<Tile>();
-                if (tile != null /* */)
+                
+                // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
+                if (tile != null /* && Tile.TaskState.IsResource || Tile.TaskState.IsFuel*/)
                 {
-                    _tilesSelected.Add(tile);
+                    foreach (WorkerStateManager worker in _workersSelected)
+                    {
+                        // Add tile to each worker's task list
+                        worker.TaskList.Add(tile);
+                    }
                 }
             }
 
-            // worker checks tile status when it starts moving and when it arrives
-
-            // handle everything in box
-            // automatically move fuel to nearest storehouse
-            // if boxing over trees and storehouse, nothing happens with storehouse
-            // to use storehouse resources, select worker, then select resource button, then paint fuel
-
-            // Assign tasks to workers
-            foreach (WorkerStateManager worker in _workersSelected)
+            foreach(WorkerStateManager worker in _workersSelected)
             {
-                // worker.SetTarget(Input.mousePosition);
+                // Send the worker on their task
+                worker.FindNextTask();
             }
 
-            // Clear selected workers list
-            _tilesSelected.Clear();
+            // Special case:
+            // To use storehouse resources, select worker, then select resource button, then paint fuel
         }
     }
 

@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class WorkerChoppingState : WorkerBaseState
+
+public class WorkerGatheringState : WorkerBaseState
 {
+    // Let the tile know that its item is gone
+    // Play "pick up item" animation
+    // When the animation's done, set the nearest storehouse as the next task
+
     public override void EnterState(WorkerStateManager worker)
     {
 
