@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4595424593878107713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4595424593878107719}
+  - component: {fileID: 7556944035891175136}
+  m_Layer: 0
+  m_Name: CursorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4595424593878107719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595424593878107713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.605587, y: 48.41478, z: -10.961816}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7556944035891175136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595424593878107713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017959b7a17efa5478a49d426ff78202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idleCursor: {fileID: 11400000, guid: 9d1386b0b519ff146bc883b3de550f98, type: 2}
+  _overMaterialACursor: {fileID: 11400000, guid: 67f7df8381d95fa45b51dd929bde4f40, type: 2}
+  _overMaterialBCursor: {fileID: 11400000, guid: 6735b4c19735c0847a859ec8f5d315e2, type: 2}
+  _overWorkerCursor: {fileID: 11400000, guid: 341999e693067774b8689957208ea506, type: 2}
+  _selectedMaterialCursor: {fileID: 11400000, guid: 5ca5297f1cd145943b9022ff50a609fd, type: 2}
+  _selectedWorkerCursor: {fileID: 11400000, guid: 291f64a74c710694d8d96ffe52dd80e6, type: 2}
+  _startSelectionCursor: {fileID: 11400000, guid: 80431555657c0a6488ce7558528e77a7, type: 2}
+  _workerMoveCursor: {fileID: 11400000, guid: 989a03e33c0b8244aa13aeaaf9455909, type: 2}
+  _workerHarvestCursor: {fileID: 11400000, guid: b8e625a84321f6b409f43eda35c5d857, type: 2}
+  _workerDropCursor: {fileID: 11400000, guid: 77bf5336c6a59684cb7bfb1cd2ac3b13, type: 2}
+  _ScrollNorthCursor: {fileID: 11400000, guid: 916f869f1785710419331f9b322aee35, type: 2}
+  _ScrollNorthWestCursor: {fileID: 11400000, guid: 0f4ce4f588d66de48b45713109647623, type: 2}
+  _ScrollWestCursor: {fileID: 11400000, guid: dc033e5b71462f14d9ac0c74daccdf31, type: 2}
+  _ScrollSouthWestCursor: {fileID: 11400000, guid: e1f09ff007c887943bde8045982057fe, type: 2}
+  _ScrollSouthCursor: {fileID: 11400000, guid: ef33c6cbae4e7b24197fbaf07a2eba70, type: 2}
+  _ScrollSouthEastCursor: {fileID: 11400000, guid: 08f42ff09d787354e81b18e738a971e2, type: 2}
+  _ScrollEastCursor: {fileID: 11400000, guid: 5d137408a4c8fda46a5ae17fd3c7f85e, type: 2}
+  _ScrollNorthEastCursor: {fileID: 11400000, guid: ec13d06d6bef62a4daff543c919d85ba, type: 2}
