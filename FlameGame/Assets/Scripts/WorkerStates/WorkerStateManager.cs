@@ -15,8 +15,8 @@ public class WorkerStateManager : MonoBehaviour
 
     public bool IsSelected;
 
-    // target (might need to be a list if we're stacking actions)
-    public GameObject Target;
+    // tasks (might need to be a list if we're stacking actions)
+    public List<Tile> TaskList = new List<Tile>();
 
     private SpriteRenderer _sprite;
     private Camera _camera;
