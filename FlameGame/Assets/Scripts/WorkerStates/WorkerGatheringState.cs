@@ -2,7 +2,8 @@
 
 public class WorkerGatheringState : WorkerBaseState
 {
-    // Let the tile know that its item is gone
+    // Change tile's task state to none
+    // Change tile's task state to none
     // Play "pick up item" animation
     // When the animation's done, set the nearest storehouse as the next task
 

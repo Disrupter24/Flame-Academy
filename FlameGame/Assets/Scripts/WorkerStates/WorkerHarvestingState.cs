@@ -1,10 +1,9 @@
 
 public class WorkerHarvestingState : WorkerBaseState
 {
-    // Let the tile know that it is now empty
+    // Change tile's task state to none
     // Play harvest animation
-    // Once harvest animation is done, add fuel to the tile and switch to WorkerGatheringState
-
+    // Once harvest animation is done, change object state to relevant fuel, task state to fuel, and switch to WorkerGatheringState
 
     public override void EnterState(WorkerStateManager worker)
     {

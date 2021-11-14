@@ -85,68 +85,72 @@ public class ClickManager : MonoBehaviour
         // With worker selected, if mousing over tile on fire, cursor becomes a torch
         // Right click to have the worker immolate itself
 
+        // Special case:
+        // To use storehouse resources, select worker, then select resource button, then paint fuel
 
-        if (Input.GetMouseButtonDown(1))
+        if (_workersSelected.Count > 0)
         {
-            // Set selection box start point
-            _targetingStartPositionCanvas = Input.mousePosition;
-            _targetingStartPositionWorld = GetMousePositionInWorld();
-        }
-
-        if (Input.GetMouseButton(1))
-        {
-            // Display selection box according to selection start position and current mouse position
-            if (!_targetingBox.gameObject.activeInHierarchy)
+            if (Input.GetMouseButtonDown(1))
             {
-                _targetingBox.gameObject.SetActive(true);
+                // Set selection box start point
+                _targetingStartPositionCanvas = Input.mousePosition;
+                _targetingStartPositionWorld = GetMousePositionInWorld();
             }
 
-            Vector2 currentMousePosition = Input.mousePosition;
-            float boxWidth = currentMousePosition.x - _targetingStartPositionCanvas.x;
-            float boxHeight = currentMousePosition.y - _targetingStartPositionCanvas.y;
-
-            _targetingBox.sizeDelta = new Vector2(Mathf.Abs(boxWidth), Mathf.Abs(boxHeight));
-            _targetingBox.anchoredPosition = _targetingStartPositionCanvas + new Vector2(boxWidth / 2, boxHeight / 2);
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            // Hide selection box
-            _targetingBox.gameObject.SetActive(false);
-            
-            // Set selection box end point
-            Vector3 currentMousePosition = GetMousePositionInWorld();
-
-            // Clear each selected worker's task list
-            foreach (WorkerStateManager worker in _workersSelected)
+            if (Input.GetMouseButton(1))
             {
-                worker.TaskList.Clear();
-            }
-
-            // Get all tiles in box, check their contents, and add them to the tiles selected list
-            foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
-            {
-                Tile tile = tileCollider.gameObject.GetComponent<Tile>();
-                
-                // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
-                if (tile != null /* && Tile.TaskState.IsResource || Tile.TaskState.IsFuel*/)
+                // Display selection box according to selection start position and current mouse position
+                if (!_targetingBox.gameObject.activeInHierarchy)
                 {
-                    foreach (WorkerStateManager worker in _workersSelected)
+                    _targetingBox.gameObject.SetActive(true);
+                }
+
+                Vector2 currentMousePosition = Input.mousePosition;
+                float boxWidth = currentMousePosition.x - _targetingStartPositionCanvas.x;
+                float boxHeight = currentMousePosition.y - _targetingStartPositionCanvas.y;
+
+                _targetingBox.sizeDelta = new Vector2(Mathf.Abs(boxWidth), Mathf.Abs(boxHeight));
+                _targetingBox.anchoredPosition = _targetingStartPositionCanvas + new Vector2(boxWidth / 2, boxHeight / 2);
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                // Hide selection box
+                _targetingBox.gameObject.SetActive(false);
+
+                // Set selection box end point
+                Vector3 currentMousePosition = GetMousePositionInWorld();
+
+                // Clear each selected worker's task list
+                foreach (WorkerStateManager worker in _workersSelected)
+                {
+                    worker.TaskList.Clear();
+                }
+
+                // Get all tiles in box, check their contents, and add them to the tiles selected list
+                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
+                {
+                    Tile tile = tileCollider.gameObject.GetComponent<Tile>();
+
+                    // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
+                    if (tile != null /* && Tile.TaskState.IsResource || Tile.TaskState.IsFuel*/)
                     {
-                        // Add tile to each worker's task list
-                        worker.TaskList.Add(tile);
+                        foreach (WorkerStateManager worker in _workersSelected)
+                        {
+                            // Add tile to each worker's task list
+                            worker.TaskList.Add(tile);
+                        }
                     }
+                }
+
+                foreach (WorkerStateManager worker in _workersSelected)
+                {
+                    // Send the worker on their task
+                    worker.FindNextTask();
                 }
             }
 
-            foreach(WorkerStateManager worker in _workersSelected)
-            {
-                // Send the worker on their task
-                worker.FindNextTask();
-            }
 
-            // Special case:
-            // To use storehouse resources, select worker, then select resource button, then paint fuel
         }
     }
 
