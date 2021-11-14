@@ -9,6 +9,7 @@ public class TileObjectEmptyState : TileObjectBaseState
         tile.ResetFireProperties();
         tile.FireStateManager.enabled = false;
         tile.ObjectRenderer.enabled = false;
+        tile.WillCollide = false;
     }
     public override void UpdateState(TileStateManager tile)
     {

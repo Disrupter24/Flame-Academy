@@ -7,6 +7,7 @@ public class TileStateManager : MonoBehaviour
     public FireStateManager FireStateManager;
     public SpriteRenderer TileRenderer;
     public SpriteRenderer ObjectRenderer;
+    public bool WillCollide;
     public enum TaskStates //Information for workers
     {
         Tree,
@@ -48,6 +49,8 @@ public class TileStateManager : MonoBehaviour
     public TileObjectGrassState ObjectGrassState = new TileObjectGrassState();
     public TileObjectLogState ObjectLogState = new TileObjectLogState();
     public TileObjectTreeState ObjectTreeState = new TileObjectTreeState();
+    public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
+    public TileObjectWallState ObjectWallState = new TileObjectWallState();
     protected void Start()
     {
         currentTaskState = TaskEmptyState;

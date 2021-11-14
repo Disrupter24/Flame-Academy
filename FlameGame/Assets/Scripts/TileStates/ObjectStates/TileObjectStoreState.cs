@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileObjectGrassState : TileObjectBaseState
+public class TileObjectStoreState : TileObjectBaseState
 {
     public override void EnterState(TileStateManager tile)
     {
-        tile.ObjectRenderer.enabled = true;
-        tile.WillCollide = false;
-        //Set sprite to grass
+        tile.WillCollide = true;
     }
     public override void UpdateState(TileStateManager tile)
     {
