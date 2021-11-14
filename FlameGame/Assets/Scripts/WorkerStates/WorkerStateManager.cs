@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class WorkerStateManager : MonoBehaviour
 {
@@ -10,16 +9,18 @@ public class WorkerStateManager : MonoBehaviour
 
     // If you need to add a state to workers, create a new class that inherits from WorkerBaseState and insert it here.
     private WorkerBaseState _currentState;
-    public WorkerChoppingState ChoppingState = new WorkerChoppingState();
     public WorkerWalkingState WalkingState = new WorkerWalkingState();
+    public WorkerGatheringState GatheringState = new WorkerGatheringState();
+    public WorkerHarvestingState HarvestingState = new WorkerHarvestingState();
     public WorkerIdleState IdleState = new WorkerIdleState();
 
     public bool IsSelected;
-    private WorkerMovement _workerMovement;
 
-    // tasks (might need to be a list if we're stacking actions)
-    public List<Tile> TaskList = new List<Tile>();
+    // Tasks
+    public List<TileStateManager> TaskList = new List<TileStateManager>();
+    public TileStateManager CurrentTask;
 
+    // Misc. pointers
     private SpriteRenderer _sprite;
     private Camera _camera;
 
@@ -30,8 +31,6 @@ public class WorkerStateManager : MonoBehaviour
 
         _sprite = gameObject.GetComponent<SpriteRenderer>();
         _camera = Camera.main;
-        _workerMovement = GetComponent<WorkerMovement>();
-
     }
 
     private void Update()
@@ -48,31 +47,57 @@ public class WorkerStateManager : MonoBehaviour
         }
     }
 
-    public void SetTarget(Vector2 targetPosition)
-    {
-        // Here we're going to have logic around what happens when the player right clicks on a tile
-
-        // The Vector2 passed to this function should be the worldposition of the target (ClickManager.GetMousePositionInWorld() takes care of this)
-        // We use this Vector2 to find the tile at the target location with a raycast
-
-        //// Set target to the tile at the location
-        // Layermask is the Tile layer, it needs to be layer#7 for this to work
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 1);//, (1 << 7));
-        if (hit.collider != null)
-        {
-            Debug.Log("Found target");
-            _workerMovement.MoveTo(hit.point);
-        }
-       
-
-        // For now, in terms of states, we're just going to focus on movement
-        // Might want a navmesh in the near future
-        SwitchState(WalkingState);
-    }
-
     public void SwitchState(WorkerBaseState state)
     {
         _currentState = state;
         _currentState.EnterState(this);
     }
+
+    public void FindNextTask()
+    {
+        // Clear current task
+        CurrentTask = null;
+        
+        // While there are tasks on the tasklist, search for nearest tile with a valid task
+        while(CurrentTask == null && TaskList.Count > 0)
+        {
+            // Find nearest tile with a task available
+            TileStateManager nearestTile = null;
+            float nearestTileDistance = 100000;
+            foreach (TileStateManager tile in TaskList)
+            {
+                // Check distance to tile
+                float tileDistance = Vector2.Distance(tile.transform.position, gameObject.transform.position);
+
+                // Get nearest tile
+                if (tileDistance < nearestTileDistance)
+                {
+                    nearestTile = tile;
+                }
+
+            }
+
+            // Check status of tile. If it has a task, set it as the target; otherwise, remove it from the list
+            //if (nearestTile.TaskState.IsResource || nearestTile.TaskState.IsFuel)
+            //{
+            //    CurrentTask = nearestTile;
+            //}
+            //else
+            //{
+            //    // Hopefully this works
+            //    TaskList.Remove(nearestTile);
+            //}
+        }
+
+        // Set worker state based on whether it found a task
+        if(CurrentTask != null)
+        {
+            SwitchState(WalkingState);
+        }
+        else
+        {
+            SwitchState(IdleState);
+        }
+    }
+
 }
