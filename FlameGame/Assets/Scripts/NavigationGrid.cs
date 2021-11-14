@@ -62,6 +62,30 @@ public class NavigationGrid : MonoBehaviour
         return _nodeGrid[i, j];
     }
 
+    public static int GetDistance(NavigationNode startNode, NavigationNode endNode)
+    {
+        Vector2 startNodeCoordinates = startNode.GetCoordinates();
+        Vector2 endNodeCoordinates = endNode.GetCoordinates();
+        int distanceX = (int) endNodeCoordinates.x - (int) startNodeCoordinates.x;
+        int distanceY = (int)endNodeCoordinates.y - (int)startNodeCoordinates.y;
+
+        if (distanceX > distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
+        return 14 * distanceY + 10 * (distanceY - distanceX); 
+
+    }
+
+    public static List<NavigationNode> GeneratePathFromEndNode(NavigationNode endNode, NavigationNode startNode)
+    {
+        List<NavigationNode> movementPath = new List<NavigationNode>();
+        NavigationNode currentNode = endNode;
+        while (currentNode != startNode)
+        {
+            movementPath.Add(currentNode);
+            currentNode = currentNode.GetPreviousNode();
+        }
+        movementPath.Reverse();
+        return movementPath;
+    }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
     {
         List<NavigationNode> neighbours = new List<NavigationNode>(); 
@@ -74,5 +98,61 @@ public class NavigationGrid : MonoBehaviour
             }
         }
         return neighbours;
+    }
+
+
+    public static bool IsReadyToCalculateNavigation()
+    {
+        return _isCalculatingNavigation;
+    }
+
+    public static List<NavigationNode> CalculatePathToDestination(NavigationNode startNode, NavigationNode endNode)
+    {
+        _isCalculatingNavigation = true;
+        List<NavigationNode> _openNodeList = new List<NavigationNode>();
+        List<NavigationNode> _closedNodeList = new List<NavigationNode>();
+        _openNodeList.Add(startNode);
+        NavigationNode currentNode;
+        while (true)
+        {
+            currentNode = GetNodeWithLowestFCost(_openNodeList);
+            _openNodeList.Remove(currentNode);
+            _closedNodeList.Add(currentNode);
+            if (currentNode == endNode)
+            {
+                return GeneratePathFromEndNode(endNode, startNode);
+            }
+            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates()))
+            {
+                if (!node.GetTraversable() || _closedNodeList.Contains(node))
+                {
+                    continue;
+                }
+                int pathDistancetoNeighbourNode = currentNode.GetGCost() + GetDistance(currentNode, node);
+                if (_openNodeList.Contains(node) || pathDistancetoNeighbourNode < node.GetGCost())
+                {
+                    node.SetGCost(pathDistancetoNeighbourNode);
+                    node.SetHCost(GetDistance(node, endNode));
+                    node.SetPreviousNode(currentNode);
+                    if (!_openNodeList.Contains(node)) _openNodeList.Add(node);
+                }
+            }
+
+        }
+    }
+
+    private static NavigationNode GetNodeWithLowestFCost(List<NavigationNode> nodeList)
+    {
+        NavigationNode smallestFCostNode = nodeList[0];
+        foreach (NavigationNode node in nodeList)
+        {
+
+            if (smallestFCostNode.GetFCost() > node.GetFCost() || smallestFCostNode.GetFCost() == node.GetFCost() && node.GetHCost() < smallestFCostNode.GetHCost())
+
+            {
+                smallestFCostNode = node;
+            }
+        }
+        return smallestFCostNode;
     }
 }
