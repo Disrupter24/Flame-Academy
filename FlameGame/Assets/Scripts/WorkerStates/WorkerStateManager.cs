@@ -17,8 +17,8 @@ public class WorkerStateManager : MonoBehaviour
     public bool IsSelected;
 
     // Tasks
-    public List<Tile> TaskList = new List<Tile>();
-    public Tile CurrentTask;
+    public List<TileStateManager> TaskList = new List<TileStateManager>();
+    public TileStateManager CurrentTask;
 
     // Misc. pointers
     private SpriteRenderer _sprite;
@@ -62,9 +62,9 @@ public class WorkerStateManager : MonoBehaviour
         while(CurrentTask == null && TaskList.Count > 0)
         {
             // Find nearest tile with a task available
-            Tile nearestTile = null;
+            TileStateManager nearestTile = null;
             float nearestTileDistance = 100000;
-            foreach (Tile tile in TaskList)
+            foreach (TileStateManager tile in TaskList)
             {
                 // Check distance to tile
                 float tileDistance = Vector2.Distance(tile.transform.position, gameObject.transform.position);

@@ -10,9 +10,8 @@ public class TileStateManager : MonoBehaviour
     public bool WillCollide;
     public enum TaskStates //Information for workers
     {
-        Tree,
-        Log,
-        Grass,
+        Harvest,
+        Gather,
         Burning,
         None
     }

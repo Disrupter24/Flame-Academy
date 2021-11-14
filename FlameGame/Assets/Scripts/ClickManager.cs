@@ -130,10 +130,10 @@ public class ClickManager : MonoBehaviour
                 // Get all tiles in box, check their contents, and add them to the tiles selected list
                 foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
                 {
-                    Tile tile = tileCollider.gameObject.GetComponent<Tile>();
+                    TileStateManager tile = tileCollider.gameObject.GetComponent<TileStateManager>();
 
                     // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
-                    if (tile != null /* && Tile.TaskState.IsResource || Tile.TaskState.IsFuel*/)
+                    if (tile != null  && tile.TaskState == TileStateManager.TaskStates.Harvest || tile.TaskState == TileStateManager.TaskStates.Gather)
                     {
                         foreach (WorkerStateManager worker in _workersSelected)
                         {

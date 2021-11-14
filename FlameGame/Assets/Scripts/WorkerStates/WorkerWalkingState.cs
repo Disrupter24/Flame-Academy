@@ -15,6 +15,7 @@ public class WorkerWalkingState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
+        // Check the target's status
         // Set worker.CurrentTask as target
 
     }
