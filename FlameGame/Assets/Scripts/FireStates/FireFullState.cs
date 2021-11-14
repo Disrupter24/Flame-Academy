@@ -6,9 +6,7 @@ public class FireFullState : FireBaseState
 {
     public override void EnterState(FireStateManager fire)
     {
-        Debug.Log("Burning");
-        Debug.Log(fire.Temperature);
-        
+        fire.TileManager.SwitchTaskState(fire.TileManager.TaskBurningState);
     }
     public override void UpdateState(FireStateManager fire)
     {

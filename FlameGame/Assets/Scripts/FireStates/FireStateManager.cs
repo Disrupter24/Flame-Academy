@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireStateManager : MonoBehaviour
 {
+    public TileStateManager TileManager;
     public FireBaseState currentState;
     public FireFullState FullState = new FireFullState();
     public FireNoneState NoneState = new FireNoneState(); 
@@ -37,7 +38,11 @@ public class FireStateManager : MonoBehaviour
     public void BurnOut()
     {
         Destroy(gameObject);
-        //Spawn Ash
+        TileManager.SwitchTaskState(TileManager.TaskEmptyState);
+    }
+    public void ReloadFire()
+    {
+        Start();
     }
     private void SetProperties(FuelTypes fueltype)
     {
