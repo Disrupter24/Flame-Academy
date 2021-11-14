@@ -10,6 +10,10 @@ public class NavigationGrid : MonoBehaviour
     private static int _mapHeight;
     private static int _mapWidth;
 
+    [SerializeField]
+    private static int _tileDimention;
+
+    
 
     public static NavigationGrid Instance
     {
@@ -39,27 +43,34 @@ public class NavigationGrid : MonoBehaviour
 
     //}
 
-    public static void CreateGrid(TileStateManager[,] tileArray)
+    public static void CreateGrid(TileStateManager[] tileArray)
     {
+        Vector2 worldPosition;
+        int xIndex;
+        int yIndex;
+        _nodeGrid = new NavigationNode[_mapWidth, _mapHeight];
+        NavigationNode newNode;
 
-        _mapWidth = tileArray.GetLength(1);
-        _mapHeight = tileArray.GetLength(2);
-
-        _nodeGrid = new NavigationNode [_mapWidth, _mapHeight];
-
-        NavigationNode newNode; 
-
-        for (int i = 0; i < _mapWidth; i++)
+        foreach (TileStateManager tile in tileArray)
         {
-            for (int j = 0; j < _mapHeight; j++)
-            {
-                newNode = new NavigationNode(tileArray[i, j], i, j);
-                _nodeGrid[i, j] = newNode;
-            }
+            worldPosition = tile.transform.position;
+            xIndex = Mathf.FloorToInt(worldPosition.x / _tileDimention);
+            yIndex = Mathf.FloorToInt(worldPosition.y / _tileDimention);
+            newNode = new NavigationNode(tile, xIndex, yIndex);
+            _nodeGrid[xIndex, yIndex] = newNode;
 
         }
+
+    }
+    public static void SetGridHeight(int height)
+    {
+        _mapHeight = height;
     }
 
+    public static void SetGridWidth(int width)
+    {
+        _mapWidth = width;
+    }
     public static NavigationNode GetNode(int i , int j)
     {
         return _nodeGrid[i, j];
