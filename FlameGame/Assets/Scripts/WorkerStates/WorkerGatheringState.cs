@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 public class WorkerGatheringState : WorkerBaseState
 {
@@ -9,7 +9,7 @@ public class WorkerGatheringState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
-
+        Debug.Log("Entered gathering state");
     }
 
     public override void UpdateState(WorkerStateManager worker)

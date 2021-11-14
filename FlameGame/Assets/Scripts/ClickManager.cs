@@ -128,7 +128,7 @@ public class ClickManager : MonoBehaviour
                 }
 
                 // Get all tiles in box, check their contents, and add them to the tiles selected list
-                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
+                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 7))
                 {
                     TileStateManager tile = tileCollider.gameObject.GetComponent<TileStateManager>();
 
@@ -139,6 +139,7 @@ public class ClickManager : MonoBehaviour
                         {
                             // Add tile to each worker's task list
                             worker.TaskList.Add(tile);
+                            Debug.Log("Added task to list");
                         }
                     }
                 }

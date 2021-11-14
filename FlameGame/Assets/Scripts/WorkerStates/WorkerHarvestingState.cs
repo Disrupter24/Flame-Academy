@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class WorkerHarvestingState : WorkerBaseState
 {
@@ -7,7 +8,7 @@ public class WorkerHarvestingState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
-
+        Debug.Log("Entered harvesting state");
     }
 
     public override void UpdateState(WorkerStateManager worker)

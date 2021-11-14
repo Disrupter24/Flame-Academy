@@ -19,6 +19,7 @@ public class WorkerStateManager : MonoBehaviour
     // Tasks
     public List<TileStateManager> TaskList = new List<TileStateManager>();
     public TileStateManager CurrentTask;
+    public int CurrentTaskID;
 
     // Misc. pointers
     private SpriteRenderer _sprite;
@@ -78,15 +79,16 @@ public class WorkerStateManager : MonoBehaviour
             }
 
             // Check status of tile. If it has a task, set it as the target; otherwise, remove it from the list
-            //if (nearestTile.TaskState.IsResource || nearestTile.TaskState.IsFuel)
-            //{
-            //    CurrentTask = nearestTile;
-            //}
-            //else
-            //{
-            //    // Hopefully this works
-            //    TaskList.Remove(nearestTile);
-            //}
+            if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather)
+            {
+                CurrentTask = nearestTile;
+                CurrentTaskID = TaskList.IndexOf(nearestTile);
+            }
+            else
+            {
+                // Hopefully this works
+                TaskList.Remove(nearestTile);
+            }
         }
 
         // Set worker state based on whether it found a task
