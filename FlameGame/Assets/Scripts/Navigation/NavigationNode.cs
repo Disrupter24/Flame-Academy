@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class NavigationNode 
 {
-    private Tile _tile;
+    private TileStateManager _tile;
     private Vector2 _coordinates;
     private int _fCost;
     private int _hCost;
     private int _gCost;
     private NavigationNode _prevNode;
 
-    public NavigationNode(Tile tile, Vector2 coordinates)
+    public NavigationNode(TileStateManager tile, Vector2 coordinates)
     {
         _tile = tile;
         _coordinates = coordinates;
         _prevNode = null;
     }
-    public NavigationNode(Tile tile, int x, int y)
+    public NavigationNode(TileStateManager tile, int x, int y)
     {
         _tile = tile;
         _coordinates = new Vector2(x, y);
@@ -30,7 +30,7 @@ public class NavigationNode
     {
         return _prevNode;
     }
-    public void SetTile(Tile tile)
+    public void SetTile(TileStateManager tile)
     {
         _tile = tile; 
     }
@@ -51,9 +51,7 @@ public class NavigationNode
 
     public bool GetTraversable()
     {
-
-        return true; 
-        //_tile.IsTraversable();
+        return _tile.WillCollide;
     }
     public int GetFCost()
     {

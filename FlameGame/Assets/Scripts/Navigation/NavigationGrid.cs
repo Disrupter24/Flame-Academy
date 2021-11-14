@@ -34,9 +34,12 @@ public class NavigationGrid : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    //private NavigationNode GetNavigationNodeFromPosition(float x, float y)
+    //{
 
+    //}
 
-    public static void CreateGrid(Tile[,] tileArray)
+    public static void CreateGrid(TileStateManager[,] tileArray)
     {
 
         _mapWidth = tileArray.GetLength(1);
