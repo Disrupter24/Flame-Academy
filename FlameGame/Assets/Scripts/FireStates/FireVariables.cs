@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireVariables : MonoBehaviour
 {
     public static FireStateManager[] s_listOfCombustibles;
+    public static TileStateManager[] s_listOfTiles;
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
@@ -28,5 +29,6 @@ public class FireVariables : MonoBehaviour
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
+        s_listOfTiles = FindObjectsOfType<TileStateManager>();
     }
 }

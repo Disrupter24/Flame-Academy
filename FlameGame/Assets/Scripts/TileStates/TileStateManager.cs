@@ -7,6 +7,7 @@ public class TileStateManager : MonoBehaviour
     public FireStateManager FireStateManager;
     public SpriteRenderer TileRenderer;
     public SpriteRenderer ObjectRenderer;
+    public NavigationNode NavigationNode;
     public bool WillCollide;
     public enum TaskStates //Information for workers
     {
@@ -52,9 +53,9 @@ public class TileStateManager : MonoBehaviour
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
     protected void Start()
     {
-        currentTaskState = TaskEmptyState;
+        currentTaskState = TaskEmptyState;// fix this
         currentTaskState.EnterState(this);
-        currentObjectState = ObjectEmptyState;
+        currentObjectState = ObjectEmptyState;//fix this
         currentObjectState.EnterState(this);
     }
     protected void Update()
