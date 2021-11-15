@@ -7,10 +7,15 @@ public class ClickManager : MonoBehaviour
     // Startpoint of box selection, on canvas and in world coordinates
     private Vector2 _selectionStartPositionCanvas;
     private Vector2 _selectionStartPositionWorld;
-    // Selection box visual
+    // Worker selection box visual
     [SerializeField] private RectTransform _selectionBox;
     // List of all workers currently selected
     private List<WorkerStateManager> _workersSelected = new List<WorkerStateManager>();
+
+    // Same as above, but for target selection box
+    private Vector2 _targetingStartPositionCanvas;
+    private Vector2 _targetingStartPositionWorld;
+    [SerializeField] private RectTransform _targetingBox;
 
     private void Update()
     {
@@ -71,19 +76,83 @@ public class ClickManager : MonoBehaviour
             }
         }
 
+
     }
 
     private void ManageTargetSelection()
     {
-        // For now, this gives a worker a single target when the player right clicks on something
-        // If we want to queue multiple tasks, this will get more complex
 
-        if (Input.GetMouseButtonDown(1))
+        // Controls for torch
+        // With worker selected, if mousing over tile on fire, cursor becomes a torch
+        // Right click to have the worker immolate itself
+
+        // Special case:
+        // To use storehouse resources, select worker, then select resource button, then paint fuel
+
+        if (_workersSelected.Count > 0)
         {
-            foreach (WorkerStateManager worker in _workersSelected)
+            if (Input.GetMouseButtonDown(1))
             {
-                worker.SetTarget(Input.mousePosition);
+                // Set selection box start point
+                _targetingStartPositionCanvas = Input.mousePosition;
+                _targetingStartPositionWorld = GetMousePositionInWorld();
             }
+
+            if (Input.GetMouseButton(1))
+            {
+                // Display selection box according to selection start position and current mouse position
+                if (!_targetingBox.gameObject.activeInHierarchy)
+                {
+                    _targetingBox.gameObject.SetActive(true);
+                }
+
+                Vector2 currentMousePosition = Input.mousePosition;
+                float boxWidth = currentMousePosition.x - _targetingStartPositionCanvas.x;
+                float boxHeight = currentMousePosition.y - _targetingStartPositionCanvas.y;
+
+                _targetingBox.sizeDelta = new Vector2(Mathf.Abs(boxWidth), Mathf.Abs(boxHeight));
+                _targetingBox.anchoredPosition = _targetingStartPositionCanvas + new Vector2(boxWidth / 2, boxHeight / 2);
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                // Hide selection box
+                _targetingBox.gameObject.SetActive(false);
+
+                // Set selection box end point
+                Vector3 currentMousePosition = GetMousePositionInWorld();
+
+                // Clear each selected worker's task list
+                foreach (WorkerStateManager worker in _workersSelected)
+                {
+                    worker.TaskList.Clear();
+                }
+
+                // Get all tiles in box, check their contents, and add them to the tiles selected list
+                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 7))
+                {
+                    TileStateManager tile = tileCollider.gameObject.GetComponent<TileStateManager>();
+
+                    // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
+                    if (tile != null  && tile.TaskState == TileStateManager.TaskStates.Harvest || tile.TaskState == TileStateManager.TaskStates.Gather)
+                    {
+                        foreach (WorkerStateManager worker in _workersSelected)
+                        {
+                            // Add tile to each worker's task list
+                            worker.TaskList.Add(tile);
+                            Debug.Log("Added task to list");
+                        }
+                    }
+                }
+
+                foreach (WorkerStateManager worker in _workersSelected)
+                {
+                    // Send the worker on their task
+                    worker.FindNextTask();
+                }
+            }
+
+
         }
     }
 
