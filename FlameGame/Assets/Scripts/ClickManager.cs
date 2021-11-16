@@ -123,6 +123,7 @@ public class ClickManager : MonoBehaviour
                 Vector3 currentMousePosition = GetMousePositionInWorld();
 
                 // Clear each selected worker's task list
+                // Also exit their current state
                 foreach (WorkerStateManager worker in _workersSelected)
                 {
                     worker.TaskList.Clear();

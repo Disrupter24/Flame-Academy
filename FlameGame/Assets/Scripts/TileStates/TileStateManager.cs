@@ -36,9 +36,8 @@ public class TileStateManager : MonoBehaviour
     */
     // Task States
     public TileTaskBaseState currentTaskState;
-    public TileTaskTreeState TaskTreeState = new TileTaskTreeState();
-    public TileTaskLogState TaskLogState = new TileTaskLogState();
-    public TileTaskGrassState TaskGrassState = new TileTaskGrassState();
+    public TileTaskHarvestState TaskHarvestState = new TileTaskHarvestState();
+    public TileTaskGatherState TaskGatherState = new TileTaskGatherState();
     public TileTaskEmptyState TaskEmptyState = new TileTaskEmptyState();
     public TileTaskBurningState TaskBurningState = new TileTaskBurningState();
     // Object States

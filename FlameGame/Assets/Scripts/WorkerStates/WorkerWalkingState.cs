@@ -19,9 +19,12 @@ public class WorkerWalkingState : WorkerBaseState
     public override void EnterState(WorkerStateManager worker)
     {
         Debug.Log("entered moving state");
+
+        // Enter walking animation state
+
+        // If current tile no longer has a task, remove it from the list and find the next one
         if (!(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather))
         {
-            worker.TaskList.RemoveAt(worker.CurrentTaskID);
             worker.FindNextTask();
         }
 
