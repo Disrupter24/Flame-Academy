@@ -49,12 +49,13 @@ public class TileStateManager : MonoBehaviour
     public TileObjectLogState ObjectLogState = new TileObjectLogState();
     public TileObjectTreeState ObjectTreeState = new TileObjectTreeState();
     public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
+    public TileObjectBrazierState ObjectBrazierState = new TileObjectBrazierState();
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
     protected void Start()
     {
-        currentTaskState = TaskEmptyState;// fix this
+        SetStartingState("Task");
+        SetStartingState("Object");
         currentTaskState.EnterState(this);
-        currentObjectState = ObjectEmptyState;//fix this
         currentObjectState.EnterState(this);
     }
     protected void Update()
@@ -65,15 +66,83 @@ public class TileStateManager : MonoBehaviour
     public void SwitchTaskState(TileTaskBaseState state)
     {
         currentTaskState = state;
+        UpdateEnumState("Task");
         state.EnterState(this);
     }
     public void SwitchObjectState(TileObjectBaseState state)
     {
         currentObjectState = state;
+        UpdateEnumState("Object");
         state.EnterState(this);
     }
     public void ResetFireProperties()
     {
         FireStateManager.Temperature = 0;
+    }
+    public void UpdateEnumState(string type)
+    {
+        if (type == "Object")
+        {
+            if (currentObjectState == ObjectGoalpostState)
+                ObjectState = ObjectStates.Goalpost;
+            else if (currentObjectState == ObjectGrassState)
+                ObjectState = ObjectStates.Grass;
+            else if (currentObjectState == ObjectLogState)
+                ObjectState = ObjectStates.Log;
+            else if (currentObjectState == ObjectTreeState)
+                ObjectState = ObjectStates.Tree;
+            else if (currentObjectState == ObjectStoreState)
+                ObjectState = ObjectStates.Storehouse;
+            else if (currentObjectState == ObjectWallState)
+                ObjectState = ObjectStates.Wall;
+            else if (currentObjectState == ObjectBrazierState)
+                ObjectState = ObjectStates.Brazier;
+            else if (currentObjectState == ObjectEmptyState)
+                ObjectState = ObjectStates.None;
+        }
+        else if (type == "Task")
+        {
+            if (currentTaskState == TaskHarvestState)
+                TaskState = TaskStates.Harvest;
+            else if (currentTaskState == TaskGatherState)
+                TaskState = TaskStates.Gather;
+            else if (currentTaskState == TaskEmptyState)
+                TaskState = TaskStates.None;
+            else if (currentTaskState == TaskBurningState)
+                TaskState = TaskStates.Burning;
+        }
+    }
+    public void SetStartingState(string type)
+    {
+        if (type == "Object")
+        {
+            if (ObjectState == ObjectStates.Goalpost)
+                currentObjectState = ObjectGoalpostState;
+            else if (ObjectState == ObjectStates.Grass)
+                currentObjectState = ObjectGrassState;
+            else if (ObjectState == ObjectStates.Log)
+                currentObjectState = ObjectLogState;
+            else if (ObjectState == ObjectStates.Tree)
+                currentObjectState = ObjectTreeState;
+            else if (ObjectState == ObjectStates.Storehouse)
+                currentObjectState = ObjectStoreState;
+            else if (ObjectState == ObjectStates.Wall)
+                currentObjectState = ObjectWallState;
+            else if (ObjectState == ObjectStates.Brazier)
+                currentObjectState = ObjectBrazierState;
+            else if (ObjectState == ObjectStates.None)
+                currentObjectState = ObjectEmptyState;
+        }
+        else if (type == "Task")
+        {
+            if (TaskState == TaskStates.Harvest)
+                currentTaskState = TaskHarvestState;
+            else if (TaskState == TaskStates.Gather)
+                currentTaskState = TaskGatherState;
+            else if (TaskState == TaskStates.None)
+                currentTaskState = TaskEmptyState;
+            else if (TaskState == TaskStates.Burning)
+                currentTaskState = TaskBurningState;
+        }
     }
 }
