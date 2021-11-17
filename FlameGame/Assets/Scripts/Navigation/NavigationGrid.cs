@@ -159,6 +159,12 @@ public class NavigationGrid : MonoBehaviour
         _path = new NavigationPath(movementPath);
         return _path;
     }
+
+    public static bool IsValidLocation(Vector2 coordinates, int i, int j)
+    {
+        if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y || (i == coordinates.x && j == coordinates.y)) return false;
+        return true;
+    }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
     {
 
@@ -168,8 +174,26 @@ public class NavigationGrid : MonoBehaviour
         {
             for (int j = (int)coordinates.y - 1; j <= coordinates.y + 1; j++)
             {
-                if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y || (i == coordinates.x && j == coordinates.y)) continue;
-                
+                if (!IsValidLocation(coordinates, i, j)) {
+                    continue;
+                }
+
+                //travelling diagonally
+                //make sure we don't cut corners
+                //highly inefficient but would rather not fix unless we have to
+
+                if (i != coordinates.x && j != coordinates.y) 
+                {
+                    int x = i;
+                    int y = (int)coordinates.y;
+                    if (!(IsValidLocation(coordinates, x,y) && _nodeGrid[x,y] != null && _nodeGrid[x,y].GetTraversable()))
+                    continue;
+                    x = (int)coordinates.x;
+                    y = j;
+                    if (!(IsValidLocation(coordinates, x, y) && _nodeGrid[x, y] != null && _nodeGrid[x, y].GetTraversable()))
+                    continue;
+
+                }
                 if (_nodeGrid[i,j] != null) neighbours.Add(_nodeGrid[i, j]);
             }
         }
