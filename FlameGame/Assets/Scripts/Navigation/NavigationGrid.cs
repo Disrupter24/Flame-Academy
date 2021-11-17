@@ -87,9 +87,14 @@ public class NavigationGrid : MonoBehaviour
 
             if (tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
         }
+        _tileDimention = (int)smallestTileDimention;
+
+        mapWidth /= _tileDimention;
+        mapHeight /= _tileDimention;
+        smallestXValue /= _tileDimention;
+        smallestYValue /= _tileDimention;
         mapDimention = new Vector2 (mapWidth, mapHeight);
         startTilePosition = new Vector2(smallestXValue, smallestYValue);
-        _tileDimention = (int)smallestTileDimention;
         Debug.Log("level dim " + mapDimention + " start " + startTilePosition + " tile dim " + _tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
