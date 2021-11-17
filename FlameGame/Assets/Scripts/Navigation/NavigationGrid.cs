@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class NavigationGrid : MonoBehaviour
 {
+
+    //just for temporary 
+    //contained in Level Class
+    private static TileStateManager [] allTilesOnMap;
+    public Vector2 bottomLeftCornerTilePosition; 
+    private static Vector2 startTilePosition;
+    public Vector2 mapSize;
+    private static Vector2 mapDimention;
+
+
+    private static List<NavigationNode> _path;
+    private static bool _hasStartedNavigating;
+    private static NavigationNode _currentNode; 
+
     private static NavigationGrid s_instance;
     private static bool _isCalculatingNavigation;
     private static NavigationNode[,] _nodeGrid;
@@ -42,21 +56,33 @@ public class NavigationGrid : MonoBehaviour
     //{
 
     //}
-
-    public static void CreateGrid(TileStateManager[] tileArray)
+    private void Start()
     {
+        startTilePosition = bottomLeftCornerTilePosition;
+        _tileDimention = 1;
+        allTilesOnMap = FindObjectsOfType<TileStateManager>();
+        mapDimention = mapSize;
+        _hasStartedNavigating = false; 
+        CreateGrid(allTilesOnMap);
+    }
+    public static void CreateGrid(TileStateManager[] tileArray = null)
+    {
+
         Vector2 worldPosition;
         int xIndex;
         int yIndex;
-        _nodeGrid = new NavigationNode[_mapWidth, _mapHeight];
+       // _nodeGrid = new NavigationNode[_mapWidth, _mapHeight];
+        _nodeGrid = new NavigationNode[(int) mapDimention.x, (int) mapDimention.y];
+
         NavigationNode newNode;
 
         foreach (TileStateManager tile in tileArray)
         {
             worldPosition = tile.transform.position;
-            xIndex = Mathf.FloorToInt(worldPosition.x / _tileDimention);
-            yIndex = Mathf.FloorToInt(worldPosition.y / _tileDimention);
+            xIndex = Mathf.FloorToInt(worldPosition.x / _tileDimention) - (int) startTilePosition.x;
+            yIndex = Mathf.FloorToInt(worldPosition.y / _tileDimention) - (int) startTilePosition.y;
             newNode = new NavigationNode(tile, xIndex, yIndex);
+            //Debug.Log("x: " + xIndex + " y: " + yIndex + " worldx " + worldPosition.x + " worldy " + worldPosition.y);
             _nodeGrid[xIndex, yIndex] = newNode;
 
         }
@@ -80,8 +106,8 @@ public class NavigationGrid : MonoBehaviour
     {
         Vector2 startNodeCoordinates = startNode.GetCoordinates();
         Vector2 endNodeCoordinates = endNode.GetCoordinates();
-        int distanceX = (int) endNodeCoordinates.x - (int) startNodeCoordinates.x;
-        int distanceY = (int)endNodeCoordinates.y - (int)startNodeCoordinates.y;
+        int distanceX = Mathf.Abs((int)startNodeCoordinates.x - (int) endNodeCoordinates.x);
+        int distanceY = Mathf.Abs((int)startNodeCoordinates.y - (int)endNodeCoordinates.y);
 
         if (distanceX > distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
         return 14 * distanceY + 10 * (distanceY - distanceX); 
@@ -102,12 +128,14 @@ public class NavigationGrid : MonoBehaviour
     }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
     {
+
+
         List<NavigationNode> neighbours = new List<NavigationNode>(); 
-        for (int i = (int) coordinates.x - 1; i < coordinates.x + 2; i++ )
+        for (int i = (int) coordinates.x - 1; i <= coordinates.x + 1; i++ )
         {
-            for (int j = (int)coordinates.y - 1; j < coordinates.y + 2; j++)
+            for (int j = (int)coordinates.y - 1; j <= coordinates.y + 1; j++)
             {
-                if (i < 0 || i > _mapWidth - 1 || j < 0 || j > _mapHeight || (i == coordinates.x && j == coordinates.y)) continue;
+                if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y || (i == coordinates.x && j == coordinates.y)) continue;
                 neighbours.Add(_nodeGrid[i, j]);
             }
         }
@@ -119,22 +147,68 @@ public class NavigationGrid : MonoBehaviour
     {
         return _isCalculatingNavigation;
     }
-
-    public static List<NavigationNode> CalculatePathToDestination(NavigationNode startNode, NavigationNode endNode)
+    public static Vector2 GetPathNodePosition(int nodeNumber)
     {
+        return _path[nodeNumber].GetCoordinates();
+    }
+
+    public static bool StartNavigation()
+    {
+        _hasStartedNavigating = true;
+        if (_path.Count == 0) return false; 
+        _currentNode = _path[0];
+        _path.Remove(_currentNode);
+        return true;
+    }
+
+    public static Vector2 GetNodePosition()
+    {
+        return _currentNode.GetTileWorldPosition();
+    }
+    public static bool IsEndOfPath()
+    {
+        return (_path.Count == 0);
+    }
+    public static Vector2 GetNextNodePosition()
+    {
+        Vector2 coordinates = _currentNode.GetTileWorldPosition();
+        _currentNode = _path[0];
+        _path.Remove(_currentNode);
+        return coordinates;
+    }
+
+    public static void CalculatePathToDestination(Vector2 startPosition, Vector2 endPosition)
+    {
+        int xIndex = Mathf.FloorToInt(startPosition.x / _tileDimention) - (int)startTilePosition.x;
+        int yIndex = Mathf.FloorToInt(startPosition.y / _tileDimention) - (int)startTilePosition.y;
+        NavigationNode startNode = GetNode(xIndex, yIndex);
+        xIndex = Mathf.FloorToInt(endPosition.x / _tileDimention) - (int)startTilePosition.x;
+        yIndex = Mathf.FloorToInt(endPosition.y / _tileDimention) - (int)startTilePosition.y;
+        NavigationNode endNode = GetNode(xIndex, yIndex);
+        CalculatePath(startNode, endNode);
+
+    }
+
+    public static void CalculatePath(NavigationNode startNode, NavigationNode endNode)
+    {
+        _hasStartedNavigating = false;
         _isCalculatingNavigation = true;
+        _path = new List<NavigationNode>();
         List<NavigationNode> _openNodeList = new List<NavigationNode>();
         List<NavigationNode> _closedNodeList = new List<NavigationNode>();
         _openNodeList.Add(startNode);
         NavigationNode currentNode;
-        while (true)
+        int counter = 0; 
+        while (_openNodeList.Count > 0)
         {
             currentNode = GetNodeWithLowestFCost(_openNodeList);
             _openNodeList.Remove(currentNode);
             _closedNodeList.Add(currentNode);
             if (currentNode == endNode)
             {
-                return GeneratePathFromEndNode(endNode, startNode);
+                _path =  GeneratePathFromEndNode(endNode, startNode);
+                Debug.Log(_path.Count);
+                return;
             }
             foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates()))
             {
@@ -143,7 +217,9 @@ public class NavigationGrid : MonoBehaviour
                     continue;
                 }
                 int pathDistancetoNeighbourNode = currentNode.GetGCost() + GetDistance(currentNode, node);
-                if (_openNodeList.Contains(node) || pathDistancetoNeighbourNode < node.GetGCost())
+                Debug.Log("Neighbours " + node.GetCoordinates() + " is walkable " + node.GetTraversable() + " distance " + pathDistancetoNeighbourNode);
+
+                if (!_openNodeList.Contains(node) || pathDistancetoNeighbourNode < node.GetGCost())
                 {
                     node.SetGCost(pathDistancetoNeighbourNode);
                     node.SetHCost(GetDistance(node, endNode));
@@ -151,8 +227,10 @@ public class NavigationGrid : MonoBehaviour
                     if (!_openNodeList.Contains(node)) _openNodeList.Add(node);
                 }
             }
-
+            Debug.Log("Count " + counter );
+            counter++;
         }
+        Debug.Log("_openNodeList is empty");
     }
 
     private static NavigationNode GetNodeWithLowestFCost(List<NavigationNode> nodeList)

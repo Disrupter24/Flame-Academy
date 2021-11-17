@@ -124,3 +124,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsSelected: 0
   TaskList: []
+  CurrentTask: {fileID: 0}
+  CurrentTaskID: 0

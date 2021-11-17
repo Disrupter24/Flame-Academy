@@ -8,6 +8,9 @@ public class TileStateManager : MonoBehaviour
     public SpriteRenderer TileRenderer;
     public SpriteRenderer ObjectRenderer;
     public bool WillCollide;
+    [SerializeField]
+    private bool _canWalkOntile; 
+
     public enum TaskStates //Information for workers
     {
         Harvest,
@@ -56,6 +59,11 @@ public class TileStateManager : MonoBehaviour
         currentTaskState.EnterState(this);
         currentObjectState = ObjectEmptyState;
         currentObjectState.EnterState(this);
+    }
+
+    public bool CanWalkOnTile()
+    {
+        return _canWalkOntile;
     }
     protected void Update()
     {

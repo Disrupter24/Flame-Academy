@@ -13,6 +13,7 @@ public class WorkerStateManager : MonoBehaviour
     public WorkerGatheringState GatheringState = new WorkerGatheringState();
     public WorkerHarvestingState HarvestingState = new WorkerHarvestingState();
     public WorkerIdleState IdleState = new WorkerIdleState();
+    public WorkerMovement workerMovement = new WorkerMovement();
 
     public bool IsSelected;
 
