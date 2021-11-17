@@ -8,9 +8,9 @@ public class NavigationGrid : MonoBehaviour
     //just for temporary 
     //contained in Level Class
     private static TileStateManager [] allTilesOnMap;
-    public Vector2 bottomLeftCornerTilePosition; 
+    //public Vector2 bottomLeftCornerTilePosition; 
     private static Vector2 startTilePosition;
-    public Vector2 mapSize;
+    //public Vector2 mapSize;
     private static Vector2 mapDimention;
 
 
@@ -58,16 +58,42 @@ public class NavigationGrid : MonoBehaviour
     //}
     private void Start()
     {
-        startTilePosition = bottomLeftCornerTilePosition;
-        _tileDimention = 1;
+        //startTilePosition = bottomLeftCornerTilePosition;
         allTilesOnMap = FindObjectsOfType<TileStateManager>();
-        mapDimention = mapSize;
-        _hasStartedNavigating = false; 
+        //mapDimention = mapSize;
+        _hasStartedNavigating = false;
+        DetermineLevelData(allTilesOnMap);
         CreateGrid(allTilesOnMap);
+    }
+    //replace with level class
+
+    private static void DetermineLevelData(TileStateManager[] tileArray = null)
+    {
+        int mapWidth = 0;
+        int mapHeight = 0;
+        float smallestXValue = Mathf.Infinity;
+        float smallestYValue = Mathf.Infinity;
+        float smallestTileDimention = Mathf.Infinity; 
+
+        foreach (TileStateManager tile in tileArray)
+        {
+            if (tile.transform.position.x < smallestXValue) smallestXValue = tile.transform.position.x;
+
+            if (tile.transform.position.y < smallestYValue) smallestYValue = tile.transform.position.y;
+
+            if ((tile.transform.position.x - smallestXValue) + 1 > mapWidth) mapWidth = ((int) tile.transform.position.x - (int) smallestXValue) + 1;
+
+            if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = ((int)tile.transform.position.y - (int)smallestYValue) + 1;
+
+            if (tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
+        }
+        mapDimention = new Vector2 (mapWidth, mapHeight);
+        startTilePosition = new Vector2(smallestXValue, smallestYValue);
+        _tileDimention = (int)smallestTileDimention;
+        Debug.Log("level dim " + mapDimention + " start " + startTilePosition + " tile dim " + _tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
     {
-
         Vector2 worldPosition;
         int xIndex;
         int yIndex;
