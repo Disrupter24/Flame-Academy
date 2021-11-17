@@ -19,6 +19,7 @@ public class WorkerStateManager : MonoBehaviour
     // Tasks
     public List<TileStateManager> TaskList = new List<TileStateManager>();
     public TileStateManager CurrentTask;
+    public int CurrentTaskID;
 
     // Misc. pointers
     private SpriteRenderer _sprite;
@@ -49,6 +50,7 @@ public class WorkerStateManager : MonoBehaviour
 
     public void SwitchState(WorkerBaseState state)
     {
+        _currentState.ExitState(this);
         _currentState = state;
         _currentState.EnterState(this);
     }
@@ -63,7 +65,7 @@ public class WorkerStateManager : MonoBehaviour
         {
             // Find nearest tile with a task available
             TileStateManager nearestTile = null;
-            float nearestTileDistance = 100000;
+            float nearestTileDistance = 100000; // Arbitrarily large float
             foreach (TileStateManager tile in TaskList)
             {
                 // Check distance to tile
@@ -77,16 +79,16 @@ public class WorkerStateManager : MonoBehaviour
 
             }
 
-            // Check status of tile. If it has a task, set it as the target; otherwise, remove it from the list
-            //if (nearestTile.TaskState.IsResource || nearestTile.TaskState.IsFuel)
-            //{
-            //    CurrentTask = nearestTile;
-            //}
-            //else
-            //{
-            //    // Hopefully this works
-            //    TaskList.Remove(nearestTile);
-            //}
+            // Check status of tile. If it has a task, set it as the current task
+            if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather)
+            {
+                CurrentTask = nearestTile;
+                CurrentTaskID = TaskList.IndexOf(nearestTile);
+            }
+            
+            // Now that the task has been handled, it's removed from the list
+            TaskList.Remove(nearestTile);
+            
         }
 
         // Set worker state based on whether it found a task
