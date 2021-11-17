@@ -169,7 +169,8 @@ public class NavigationGrid : MonoBehaviour
             for (int j = (int)coordinates.y - 1; j <= coordinates.y + 1; j++)
             {
                 if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y || (i == coordinates.x && j == coordinates.y)) continue;
-                neighbours.Add(_nodeGrid[i, j]);
+                
+                if (_nodeGrid[i,j] != null) neighbours.Add(_nodeGrid[i, j]);
             }
         }
         return neighbours;
@@ -185,37 +186,7 @@ public class NavigationGrid : MonoBehaviour
         return _path[nodeNumber].GetCoordinates();
     }
 
-    public static bool StartNavigation()
-    {
-        _hasStartedNavigating = true;
-        if (_path.Count == 0) return false; 
-        _currentNode = _path[0];
-        _path.Remove(_currentNode);
-        return true;
-    }
-
-    public static Vector2 GetNodePosition()
-    {
-        return _currentNode.GetTileWorldPosition();
-    }
-    public static bool IsEndOfPath()
-    {
-        return (_currentNode == null);
-    }
-    public static Vector2 GetNextNodePosition()
-    {
-        Vector2 coordinates = _currentNode.GetTileWorldPosition();
-        if (_path.Count == 0)
-        {
-            _currentNode = null;
-        } else
-        {
-            _currentNode = _path[0];
-            _path.Remove(_currentNode);
-        }
-        return coordinates;
-    }
-
+    
     public static NavigationPath CalculatePathToDestination(Vector2 startPosition, Vector2 endPosition)
     {
         int xIndex = Mathf.FloorToInt(startPosition.x / _tileDimention) - (int)startTilePosition.x;
@@ -224,6 +195,8 @@ public class NavigationGrid : MonoBehaviour
         xIndex = Mathf.FloorToInt(endPosition.x / _tileDimention) - (int)startTilePosition.x;
         yIndex = Mathf.FloorToInt(endPosition.y / _tileDimention) - (int)startTilePosition.y;
         NavigationNode endNode = GetNode(xIndex, yIndex);
+        if (endNode == null) return null; 
+
         return CalculatePath(startNode, endNode);
 
     }
