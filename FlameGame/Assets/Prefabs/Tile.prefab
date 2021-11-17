@@ -210,6 +210,7 @@ MonoBehaviour:
   TileRenderer: {fileID: 4915544363973530684}
   ObjectRenderer: {fileID: 5926131241197425147}
   WillCollide: 0
+  _canWalkOntile: 0
   TaskState: 0
   ObjectState: 0
 --- !u!114 &6448513495059104924
@@ -219,7 +220,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4915544363973530685}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03697e8cf418c224e9e4c7c2708f5db2, type: 3}
   m_Name: 

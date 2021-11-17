@@ -23,7 +23,7 @@ public class WorkerWalkingState : WorkerBaseState
             worker.TaskList.RemoveAt(worker.CurrentTaskID);
             worker.FindNextTask();
         }
-        Debug.Log("starting path");
+        Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
         worker.workerMovement.MoveTo(worker.transform.position, worker.CurrentTask.transform.position);
         movementTimer = 0;
     }
@@ -43,7 +43,7 @@ public class WorkerWalkingState : WorkerBaseState
         worker.transform.position = worker.workerMovement.Move(worker.transform.position); 
         if (worker.workerMovement.IsAtDestination())
         {
-            Debug.Log("at desination");
+            Debug.Log("at destination");
             switch (worker.CurrentTask.TaskState)
             {
                 case TileStateManager.TaskStates.Harvest:

@@ -9,6 +9,7 @@ public class WorkerMovement
     private bool _isMoving;
     private bool _isAtDestination; 
     private Vector2 _pointToMoveTowards;
+    private NavigationPath _path; 
 
     // have a data class to hold all this information like speeds and such. 
     private float _movementSpeed = 1.0f;
@@ -30,16 +31,17 @@ public class WorkerMovement
 
         currentPosition = Vector3.MoveTowards(currentPosition, _pointToMoveTowards, distanceToMove);
 
-        if (Vector2.Distance(currentPosition,_pointToMoveTowards) < 0.01)
+        if (currentPosition == _pointToMoveTowards)
         {
-            if (NavigationGrid.IsEndOfPath())
+            if (_path.IsAtEndOfPath())
             {
                 _isMoving = false;
                 _isAtDestination = true;
+                Debug.Log("worker final position " + currentPosition);
             }
             else
             {
-                _pointToMoveTowards = NavigationGrid.GetNextNodePosition();
+                _pointToMoveTowards = _path.GetNextNodePosition();
             }
 
         }
@@ -56,11 +58,11 @@ public class WorkerMovement
         _isAtDestination = false;
         _isMoving = false;
         _pointToMoveTowards = targetPosition;
-        NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
-        if (NavigationGrid.StartNavigation())
+        _path = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
+        if (_path != null)
         {
             _isMoving = true;
-            _pointToMoveTowards = NavigationGrid.GetNodePosition();
+            _pointToMoveTowards = _path.GetNextNodePosition();
             Debug.Log("Path Created");
         }
         return _isMoving;

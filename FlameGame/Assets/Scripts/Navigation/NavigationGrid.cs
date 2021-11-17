@@ -114,17 +114,24 @@ public class NavigationGrid : MonoBehaviour
 
     }
 
-    public static List<NavigationNode> GeneratePathFromEndNode(NavigationNode endNode, NavigationNode startNode)
+    public static NavigationPath GeneratePathFromEndNode(NavigationNode endNode, NavigationNode startNode)
     {
         List<NavigationNode> movementPath = new List<NavigationNode>();
         NavigationNode currentNode = endNode;
+        NavigationPath _path;
+
         while (currentNode != startNode)
         {
             movementPath.Add(currentNode);
             currentNode = currentNode.GetPreviousNode();
         }
         movementPath.Reverse();
-        return movementPath;
+        foreach (NavigationNode node in movementPath)
+        {
+            Debug.Log("path part: " + node.GetTileWorldPosition());
+        }
+        _path = new NavigationPath(movementPath);
+        return _path;
     }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
     {
@@ -167,17 +174,23 @@ public class NavigationGrid : MonoBehaviour
     }
     public static bool IsEndOfPath()
     {
-        return (_path.Count == 0);
+        return (_currentNode == null);
     }
     public static Vector2 GetNextNodePosition()
     {
         Vector2 coordinates = _currentNode.GetTileWorldPosition();
-        _currentNode = _path[0];
-        _path.Remove(_currentNode);
+        if (_path.Count == 0)
+        {
+            _currentNode = null;
+        } else
+        {
+            _currentNode = _path[0];
+            _path.Remove(_currentNode);
+        }
         return coordinates;
     }
 
-    public static void CalculatePathToDestination(Vector2 startPosition, Vector2 endPosition)
+    public static NavigationPath CalculatePathToDestination(Vector2 startPosition, Vector2 endPosition)
     {
         int xIndex = Mathf.FloorToInt(startPosition.x / _tileDimention) - (int)startTilePosition.x;
         int yIndex = Mathf.FloorToInt(startPosition.y / _tileDimention) - (int)startTilePosition.y;
@@ -185,11 +198,11 @@ public class NavigationGrid : MonoBehaviour
         xIndex = Mathf.FloorToInt(endPosition.x / _tileDimention) - (int)startTilePosition.x;
         yIndex = Mathf.FloorToInt(endPosition.y / _tileDimention) - (int)startTilePosition.y;
         NavigationNode endNode = GetNode(xIndex, yIndex);
-        CalculatePath(startNode, endNode);
+        return CalculatePath(startNode, endNode);
 
     }
 
-    public static void CalculatePath(NavigationNode startNode, NavigationNode endNode)
+    public static NavigationPath CalculatePath(NavigationNode startNode, NavigationNode endNode)
     {
         _hasStartedNavigating = false;
         _isCalculatingNavigation = true;
@@ -198,7 +211,6 @@ public class NavigationGrid : MonoBehaviour
         List<NavigationNode> _closedNodeList = new List<NavigationNode>();
         _openNodeList.Add(startNode);
         NavigationNode currentNode;
-        int counter = 0; 
         while (_openNodeList.Count > 0)
         {
             currentNode = GetNodeWithLowestFCost(_openNodeList);
@@ -206,9 +218,7 @@ public class NavigationGrid : MonoBehaviour
             _closedNodeList.Add(currentNode);
             if (currentNode == endNode)
             {
-                _path =  GeneratePathFromEndNode(endNode, startNode);
-                Debug.Log(_path.Count);
-                return;
+                return GeneratePathFromEndNode(endNode, startNode);
             }
             foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates()))
             {
@@ -217,7 +227,7 @@ public class NavigationGrid : MonoBehaviour
                     continue;
                 }
                 int pathDistancetoNeighbourNode = currentNode.GetGCost() + GetDistance(currentNode, node);
-                Debug.Log("Neighbours " + node.GetCoordinates() + " is walkable " + node.GetTraversable() + " distance " + pathDistancetoNeighbourNode);
+                //Debug.Log("Neighbours " + node.GetCoordinates() + " is walkable " + node.GetTraversable() + " distance " + pathDistancetoNeighbourNode);
 
                 if (!_openNodeList.Contains(node) || pathDistancetoNeighbourNode < node.GetGCost())
                 {
@@ -227,10 +237,8 @@ public class NavigationGrid : MonoBehaviour
                     if (!_openNodeList.Contains(node)) _openNodeList.Add(node);
                 }
             }
-            Debug.Log("Count " + counter );
-            counter++;
         }
-        Debug.Log("_openNodeList is empty");
+        return null;
     }
 
     private static NavigationNode GetNodeWithLowestFCost(List<NavigationNode> nodeList)
