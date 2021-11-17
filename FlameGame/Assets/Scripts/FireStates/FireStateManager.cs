@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class FireStateManager : MonoBehaviour
 {
-    public TileStateManager TileManager;
     public FireBaseState currentState;
     public FireFullState FullState = new FireFullState();
     public FireNoneState NoneState = new FireNoneState(); 
-    public float Temperature;
+    public int Temperature;
     [HideInInspector] public int IgnitionTemperature;
     [HideInInspector] public int SpreadRadius;
     [HideInInspector] public float BurnTime;
@@ -38,11 +37,7 @@ public class FireStateManager : MonoBehaviour
     public void BurnOut()
     {
         Destroy(gameObject);
-        TileManager.SwitchTaskState(TileManager.TaskEmptyState);
-    }
-    public void ReloadFire()
-    {
-        Start();
+        //Spawn Ash
     }
     private void SetProperties(FuelTypes fueltype)
     {

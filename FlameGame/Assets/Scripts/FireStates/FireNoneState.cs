@@ -17,9 +17,5 @@ public class FireNoneState : FireBaseState
         {
             fire.SwitchState(fire.FullState);
         }
-        else if (fire.Temperature > 0)
-        {
-          fire.Temperature -= (fire.HeatTransfer * Time.deltaTime);
-        }
     }
 }
