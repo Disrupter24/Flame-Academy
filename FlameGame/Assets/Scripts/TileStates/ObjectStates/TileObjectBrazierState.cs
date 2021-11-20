@@ -8,7 +8,7 @@ public class TileObjectBrazierState : TileObjectBaseState
     {
         tile.ResetProperties();
         tile.FireStateManager.enabled = true;
-        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Log; // Make Brazier fueltype
+        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Brazier;
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[0];

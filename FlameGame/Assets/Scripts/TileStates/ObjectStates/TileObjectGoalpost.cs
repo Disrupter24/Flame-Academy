@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class TileObjectGoalpostState : TileObjectBaseState
 {
-    //Goalpost logic will be put here, triggers win when temperature exceeds a certain amount.
     public override void EnterState(TileStateManager tile)
     {
         tile.ResetProperties();
         tile.FireStateManager.enabled = true;
-        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Log; // Make Goalpost fueltype
+        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Goalpost;
         tile.WillCollide = true;
         tile.ObjectRenderer.enabled = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[3];

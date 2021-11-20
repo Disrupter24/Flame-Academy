@@ -26,6 +26,16 @@ public class FireVariables : MonoBehaviour
     public static int s_grassSpreadRadius = 1;
     public static float s_grassBurnTime = 2f;
     public static float s_grassHeatTransfer = 0.25f;
+    //Goalpost Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
+    public static int s_goalpostIgnitionTemperature = 250;
+    public static int s_goalpostSpreadRadius = 0;
+    public static float s_goalpostBurnTime = 15f;
+    public static float s_goalpostHeatTransfer = 0.1f;
+    //Brazier Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
+    public static int s_brazierIgnitionTemperature = 50;
+    public static int s_brazierSpreadRadius = 1;
+    public static float s_brazierBurnTime = 2f;
+    public static float s_brazierHeatTransfer = 0.25f;
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
