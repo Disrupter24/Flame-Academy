@@ -6,6 +6,9 @@ public class TileObjectTreeState : TileObjectBaseState
 {
     public override void EnterState(TileStateManager tile)
     {
+        tile.ResetProperties();
+        tile.FireStateManager.enabled = true;
+        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Tree;
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[4];

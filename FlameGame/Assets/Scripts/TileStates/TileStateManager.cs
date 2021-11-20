@@ -76,9 +76,10 @@ public class TileStateManager : MonoBehaviour
         UpdateEnumState("Object");
         state.EnterState(this);
     }
-    public void ResetFireProperties()
+    public void ResetProperties()
     {
         FireStateManager.Temperature = 0;
+        ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
     }
     public void UpdateEnumState(string type)
     {
