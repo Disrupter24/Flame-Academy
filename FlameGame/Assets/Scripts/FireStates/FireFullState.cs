@@ -6,9 +6,7 @@ public class FireFullState : FireBaseState
 {
     public override void EnterState(FireStateManager fire)
     {
-        Debug.Log("Burning");
-        Debug.Log(fire.Temperature);
-        
+        fire.TileManager.SwitchTaskState(fire.TileManager.TaskBurningState);
     }
     public override void UpdateState(FireStateManager fire)
     {
@@ -19,10 +17,6 @@ public class FireFullState : FireBaseState
         else
         {
             fire.BurnTime -= Time.deltaTime;
-            if(fire.Temperature < 2 * fire.IgnitionTemperature)
-            {
-                fire.Temperature += Mathf.RoundToInt(Time.deltaTime * fire.Temperature);
-            }
             WarmNearby(fire);
         }
         UpdateSprite(fire);
@@ -37,7 +31,7 @@ public class FireFullState : FireBaseState
                 {
                     if(FireVariables.s_listOfCombustibles[i].Temperature < 2 * FireVariables.s_listOfCombustibles[i].IgnitionTemperature)
                     {
-                        FireVariables.s_listOfCombustibles[i].Temperature += Mathf.RoundToInt(Time.deltaTime * fire.HeatTransfer * fire.Temperature);
+                        FireVariables.s_listOfCombustibles[i].Temperature += (Time.deltaTime * fire.HeatTransfer * fire.Temperature);
                     }
                 }
             }
@@ -45,6 +39,6 @@ public class FireFullState : FireBaseState
     }
     private void UpdateSprite(FireStateManager fire)
     {
-        fire.SpriteRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
+        fire.TileManager.ObjectRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
     }
 }

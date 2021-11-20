@@ -17,8 +17,9 @@ public class WorkerStateManager : MonoBehaviour
     public bool IsSelected;
 
     // Tasks
-    public List<Tile> TaskList = new List<Tile>();
-    public Tile CurrentTask;
+    public List<TileStateManager> TaskList = new List<TileStateManager>();
+    public TileStateManager CurrentTask;
+    public int CurrentTaskID;
 
     // Item worker is carrying
     public TileStateManager.ObjectStates ItemBeingCarried;
@@ -50,6 +51,7 @@ public class WorkerStateManager : MonoBehaviour
 
     public void SwitchState(WorkerBaseState state)
     {
+        _currentState.ExitState(this);
         _currentState = state;
         _currentState.EnterState(this);
     }
@@ -63,9 +65,9 @@ public class WorkerStateManager : MonoBehaviour
         while(CurrentTask == null && TaskList.Count > 0)
         {
             // Find nearest tile with a task available
-            Tile nearestTile = null;
-            float nearestTileDistance = 100000;
-            foreach (Tile tile in TaskList)
+            TileStateManager nearestTile = null;
+            float nearestTileDistance = 100000; // Arbitrarily large float
+            foreach (TileStateManager tile in TaskList)
             {
                 // Check distance to tile
                 float tileDistance = Vector2.Distance(tile.transform.position, gameObject.transform.position);
@@ -78,16 +80,16 @@ public class WorkerStateManager : MonoBehaviour
 
             }
 
-            // Check status of tile. If it has a task, set it as the target; otherwise, remove it from the list
-            //if (nearestTile.TaskState.IsResource || nearestTile.TaskState.IsFuel)
-            //{
-            //    CurrentTask = nearestTile;
-            //}
-            //else
-            //{
-            //    // Hopefully this works
-            //    TaskList.Remove(nearestTile);
-            //}
+            // Check status of tile. If it has a task, set it as the current task
+            if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather)
+            {
+                CurrentTask = nearestTile;
+                CurrentTaskID = TaskList.IndexOf(nearestTile);
+            }
+            
+            // Now that the task has been handled, it's removed from the list
+            TaskList.Remove(nearestTile);
+            
         }
 
         // Set worker state based on whether it found a task

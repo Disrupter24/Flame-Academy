@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class WorkerWalkingState : WorkerBaseState
 {
@@ -13,16 +14,25 @@ public class WorkerWalkingState : WorkerBaseState
     // Chop down trees
     // If all tiles in selection are burning, workers immolate themselves
 
+    float movementTimer;
+
     public override void EnterState(WorkerStateManager worker)
     {
-        // Set worker.CurrentTask as target
+        Debug.Log("entered moving state");
 
+        // Enter walking animation state
+
+        // If current tile no longer has a task, remove it from the list and find the next one
+        if (!(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather))
+        {
+            worker.FindNextTask();
+        }
+
+        movementTimer = 0;
     }
 
     public override void UpdateState(WorkerStateManager worker)
     {
-        // Move towards target
-
         // If worker has reached the target, check the target's status
 
         /*
@@ -31,6 +41,29 @@ public class WorkerWalkingState : WorkerBaseState
          * If it's a storehouse, deposit held item
          * If it's empty (because another worker got there first), worker.FindNextTask();
          */
+
+        // Move towards target (I hate this movement logic but it's temporary)
+        movementTimer += 0.001f * Time.deltaTime;
+        worker.transform.position = Vector2.Lerp(worker.transform.position, worker.CurrentTask.transform.position, movementTimer);
+
+        // Upon arrival, check target status and switch state accordingly
+        if(Vector2.Distance(worker.transform.position, worker.CurrentTask.transform.position) < 0.5f)
+        {
+            switch (worker.CurrentTask.TaskState)
+            {
+                case TileStateManager.TaskStates.Harvest:
+                    worker.SwitchState(worker.HarvestingState);
+                    break;
+                case TileStateManager.TaskStates.Gather:
+                    worker.SwitchState(worker.GatheringState);
+                    break;
+                case TileStateManager.TaskStates.None:
+                    worker.FindNextTask();
+                    break;
+            }
+
+        }
+
     }
 
     public override void ExitState(WorkerStateManager worker)

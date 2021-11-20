@@ -76,6 +76,7 @@ public class ClickManager : MonoBehaviour
             }
         }
 
+
     }
 
     private void ManageTargetSelection()
@@ -122,23 +123,25 @@ public class ClickManager : MonoBehaviour
                 Vector3 currentMousePosition = GetMousePositionInWorld();
 
                 // Clear each selected worker's task list
+                // Also exit their current state
                 foreach (WorkerStateManager worker in _workersSelected)
                 {
                     worker.TaskList.Clear();
                 }
 
                 // Get all tiles in box, check their contents, and add them to the tiles selected list
-                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 6 /*REPLACE WITH TILE LAYER*/))
+                foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 7))
                 {
-                    Tile tile = tileCollider.gameObject.GetComponent<Tile>();
+                    TileStateManager tile = tileCollider.gameObject.GetComponent<TileStateManager>();
 
                     // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
-                    if (tile != null /* && Tile.TaskState.IsResource || Tile.TaskState.IsFuel*/)
+                    if (tile != null  && tile.TaskState == TileStateManager.TaskStates.Harvest || tile.TaskState == TileStateManager.TaskStates.Gather)
                     {
                         foreach (WorkerStateManager worker in _workersSelected)
                         {
                             // Add tile to each worker's task list
                             worker.TaskList.Add(tile);
+                            Debug.Log("Added task to list");
                         }
                     }
                 }
