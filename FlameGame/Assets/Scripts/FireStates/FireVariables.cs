@@ -40,5 +40,14 @@ public class FireVariables : MonoBehaviour
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
         s_listOfTiles = FindObjectsOfType<TileStateManager>();
+
+        // Compile starting list of storehouses
+        foreach(TileStateManager tile in s_listOfTiles)
+        {
+            if(tile.TaskState == TileStateManager.TaskStates.Storehouse)
+            {
+                StorehouseManager.Instance.Storehouses.Add(tile);
+            }
+        }
     }
 }

@@ -17,4 +17,9 @@ public class WorkerIdleState : WorkerBaseState
     {
 
     }
+
+    public override void CancelAction(WorkerStateManager worker)
+    {
+
+    }
 }
