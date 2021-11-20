@@ -6,7 +6,7 @@ public class FireFullState : FireBaseState
 {
     public override void EnterState(FireStateManager fire)
     {
-        fire.TileManager.SwitchTaskState(fire.TileManager.TaskBurningState);
+        fire.TileManager.TaskState = TileStateManager.TaskStates.Burning;
     }
     public override void UpdateState(FireStateManager fire)
     {

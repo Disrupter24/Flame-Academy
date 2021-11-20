@@ -9,7 +9,6 @@ public class WorkerHarvestingState : WorkerBaseState
     private float _totalHarvestingTime;
     private float _harvestTimer;
 
-    private TileObjectBaseState _currentTileState;
     private TileObjectBaseState _harvestedResource;
 
     public override void EnterState(WorkerStateManager worker)
@@ -17,7 +16,7 @@ public class WorkerHarvestingState : WorkerBaseState
         Debug.Log("Entered harvesting state");
 
         // Change tile's task state to none
-        worker.CurrentTask.SwitchTaskState(worker.CurrentTask.TaskEmptyState);
+        worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 
         // Enter animation states and set timer corresponding with resource being harvested
         switch (worker.CurrentTask.ObjectState)
@@ -46,17 +45,31 @@ public class WorkerHarvestingState : WorkerBaseState
         {
             // Change tile's object state
             worker.CurrentTask.SwitchObjectState(_harvestedResource);
-            // Pick up item
-            worker.SwitchState(worker.GatheringState);
+            
+            
+            // If there is a storehouse somewhere, pick up item
+            if(StorehouseManager.Instance.Storehouses.Count > 0)
+            {
+                worker.SwitchState(worker.GatheringState);
+            }
+            else
+            {
+                worker.FindNextTask();
+            }
         }
     }
 
     public override void ExitState(WorkerStateManager worker)
     {
+        
+    }
+
+    public override void CancelAction(WorkerStateManager worker)
+    {
         // If worker didn't finish harvesting, tile's task state must be changed since it was not completed
-        if(_harvestTimer < _totalHarvestingTime)
+        if (_harvestTimer < _totalHarvestingTime)
         {
-            worker.CurrentTask.SwitchTaskState(worker.CurrentTask.TaskHarvestState);
+            worker.CurrentTask.TaskState = TileStateManager.TaskStates.Harvest;
         }
     }
 
