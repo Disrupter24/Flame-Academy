@@ -8,7 +8,7 @@ public class TileObjectGrassState : TileObjectBaseState
     {
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = false;
-        //Set sprite to grass
+        tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[1];
     }
     public override void UpdateState(TileStateManager tile)
     {

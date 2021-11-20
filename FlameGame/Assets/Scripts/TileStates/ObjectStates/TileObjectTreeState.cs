@@ -8,7 +8,7 @@ public class TileObjectTreeState : TileObjectBaseState
     {
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
-        //set sprite to tree
+        tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[4];
     }
     public override void UpdateState(TileStateManager tile)
     {

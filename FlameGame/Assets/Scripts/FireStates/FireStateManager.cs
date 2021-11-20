@@ -37,7 +37,7 @@ public class FireStateManager : MonoBehaviour
     }
     public void BurnOut()
     {
-        Destroy(gameObject);
+        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
         TileManager.SwitchTaskState(TileManager.TaskEmptyState);
     }
     public void ReloadFire()

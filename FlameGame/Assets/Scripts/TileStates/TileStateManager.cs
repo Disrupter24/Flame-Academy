@@ -8,6 +8,7 @@ public class TileStateManager : MonoBehaviour
     public SpriteRenderer TileRenderer;
     public SpriteRenderer ObjectRenderer;
     public NavigationNode NavigationNode;
+    public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
     public enum TaskStates //Information for workers
     {
