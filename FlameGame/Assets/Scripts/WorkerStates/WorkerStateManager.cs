@@ -20,9 +20,11 @@ public class WorkerStateManager : MonoBehaviour
     public List<Tile> TaskList = new List<Tile>();
     public Tile CurrentTask;
 
+    // Item worker is carrying
+    public TileStateManager.ObjectStates ItemBeingCarried;
+
     // Misc. pointers
     private SpriteRenderer _sprite;
-    private Camera _camera;
 
     private void Awake()
     {
@@ -30,7 +32,6 @@ public class WorkerStateManager : MonoBehaviour
         SwitchState(IdleState);
 
         _sprite = gameObject.GetComponent<SpriteRenderer>();
-        _camera = Camera.main;
     }
 
     private void Update()
