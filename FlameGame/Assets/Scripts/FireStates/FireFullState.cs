@@ -39,6 +39,6 @@ public class FireFullState : FireBaseState
     }
     private void UpdateSprite(FireStateManager fire)
     {
-        fire.SpriteRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
+        fire.TileManager.ObjectRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
     }
 }

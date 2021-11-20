@@ -26,6 +26,12 @@ TextureImporter:
   - first:
       213: -4809673260456853171
     second: Grass_Tall
+  - first:
+      213: -1353551497164233637
+    second: Log
+  - first:
+      213: 8229234674354008737
+    second: Stone
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -270,7 +276,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -278,6 +284,48 @@ TextureImporter:
       bones: []
       spriteID: d4146c007ab904db0800000000000000
       internalID: -4809673260456853171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Log
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 340
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54e352b518373de0800000000000000
+      internalID: -1353551497164233637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 204
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a2b232065d143270800000000000000
+      internalID: 8229234674354008737
       vertices: []
       indices: 
       edges: []
