@@ -138,6 +138,10 @@ public class NavigationGrid : MonoBehaviour
         return _nodeGrid[i, j];
     }
 
+    public static float GetRawDistance(NavigationNode nodeA, NavigationNode nodeB)
+    {
+        return (Vector2.Distance(nodeA.GetCoordinates(), nodeB.GetCoordinates()));
+    }
     public static int GetDistance(NavigationNode startNode, NavigationNode endNode)
     {
         Vector2 startNodeCoordinates = startNode.GetCoordinates();
@@ -243,7 +247,17 @@ public class NavigationGrid : MonoBehaviour
         {
             List<NavigationNode> neighbours = GetNeighbours(endNode.GetCoordinates(), false, true);
             if (neighbours.Count == 0) return null;
-            endNode = neighbours[0]; 
+            float smallestDistance = Mathf.Infinity;
+            float distanceBetweenNodes; 
+            foreach (NavigationNode neighbourNode in neighbours)
+            {
+                distanceBetweenNodes = GetRawDistance(neighbourNode, startNode);
+                if (distanceBetweenNodes < smallestDistance)
+                {
+                    smallestDistance = distanceBetweenNodes;
+                    endNode = neighbourNode;
+                }
+            }
         } 
 
         return CalculatePath(startNode, endNode);
