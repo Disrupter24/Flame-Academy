@@ -56,7 +56,7 @@ public class NavigationNode
 
     public bool GetTraversable()
     {
-        return _tile.CanWalkOnTile();
+        return !_tile.WillCollide;
     }
     public int GetFCost()
     {
