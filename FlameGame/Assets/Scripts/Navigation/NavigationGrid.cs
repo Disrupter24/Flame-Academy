@@ -172,7 +172,7 @@ public class NavigationGrid : MonoBehaviour
 
     public static bool IsValidLocation(Vector2 coordinates, int i, int j)
     {
-        if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y || (i == coordinates.x && j == coordinates.y)) return false;
+        if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1 || (i == coordinates.x && j == coordinates.y)) return false;
         return true;
     }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
@@ -196,11 +196,11 @@ public class NavigationGrid : MonoBehaviour
                 {
                     int x = i;
                     int y = (int)coordinates.y;
-                    if (!(IsValidLocation(coordinates, x,y) && _nodeGrid[x,y] != null && _nodeGrid[x,y].GetTraversable()))
+                    if (!(IsValidLocation(coordinates, x,y) || _nodeGrid[x,y] != null || _nodeGrid[x,y].GetTraversable()))
                     continue;
                     x = (int)coordinates.x;
                     y = j;
-                    if (!(IsValidLocation(coordinates, x, y) && _nodeGrid[x, y] != null && _nodeGrid[x, y].GetTraversable()))
+                    if (!(IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] != null || _nodeGrid[x, y].GetTraversable()))
                     continue;
 
                 }
