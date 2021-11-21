@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7547729643037004453}
   - component: {fileID: 7547729643037004452}
   - component: {fileID: 7547729643037004443}
-  - component: {fileID: 2945229792278558222}
   m_Layer: 6
   m_Name: WorkerGeneric
   m_TagString: Untagged
@@ -124,17 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsSelected: 0
-  Target: {fileID: 0}
---- !u!114 &2945229792278558222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7547729643037004442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d42573186e7fc444a182a32061ed460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementSpeed: 5
+  TaskList: []
+  CurrentTask: {fileID: 0}
+  CurrentTaskID: 0

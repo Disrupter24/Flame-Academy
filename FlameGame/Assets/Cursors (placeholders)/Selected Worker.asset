@@ -15,5 +15,5 @@ MonoBehaviour:
   _isAnimated: 0
   _cursorTextures:
   - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
-  _offsetFromMousePosition: {x: 0, y: 0}
+  _offsetFromMousePosition: {x: 0, y: -10}
   _animationTimeInSeconds: 0

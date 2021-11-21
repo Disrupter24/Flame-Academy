@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class NavigationNode 
@@ -34,6 +35,11 @@ public class NavigationNode
     {
         _tile = tile; 
     }
+
+    public Vector2 GetTileWorldPosition()
+    {
+        return _tile.transform.position;
+    }
     public void SetCoordinates(Vector2 coordinates)
     {
         _coordinates = coordinates;
@@ -51,7 +57,7 @@ public class NavigationNode
 
     public bool GetTraversable()
     {
-        return _tile.WillCollide;
+        return !_tile.WillCollide;
     }
     public int GetFCost()
     {
