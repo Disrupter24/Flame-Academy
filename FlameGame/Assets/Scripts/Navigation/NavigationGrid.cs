@@ -207,6 +207,7 @@ public class NavigationGrid : MonoBehaviour
 
         while (currentNode != startNode)
         {
+            if (!(currentNode == endNode && !endNode.GetTraversable())) 
             movementPath.Add(currentNode);
             currentNode = currentNode.GetPreviousNode();
         }
@@ -230,7 +231,7 @@ public class NavigationGrid : MonoBehaviour
         if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1) return false;
         return true;
     }
-    public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false)
+    public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false, NavigationNode endNode = null)
     {
 
 
@@ -262,10 +263,12 @@ public class NavigationGrid : MonoBehaviour
 
                 if (_nodeGrid[i, j] != null)
                 {
-                    if (checkTraversable && !_nodeGrid[i, j].GetTraversable())
-                    continue;
                     
-                    neighbours.Add(_nodeGrid[i, j]);
+                    if ((endNode != null && _nodeGrid[i,j] == endNode) || !checkTraversable || (checkTraversable && _nodeGrid[i, j].GetTraversable()))
+                    {
+                        neighbours.Add(_nodeGrid[i, j]);
+                    }
+
                 }
             }
         }
@@ -303,7 +306,7 @@ public class NavigationGrid : MonoBehaviour
         NavigationNode endNode = GetNode(xIndex, yIndex);
         if (endNode == null) return null; 
 
-        if (!endNode.GetTraversable())
+        /*if (!endNode.GetTraversable())
         {
             List<NavigationNode> neighbours = GetNeighbours(endNode.GetCoordinates(), false, true);
             if (neighbours.Count == 0) return null;
@@ -319,7 +322,7 @@ public class NavigationGrid : MonoBehaviour
                 }
             }
             if (!endNode.GetTraversable()) return null;
-        } 
+        } */ 
 
         return CalculatePath(startNode, endNode);
 
@@ -343,7 +346,7 @@ public class NavigationGrid : MonoBehaviour
             {
                 return GeneratePathFromEndNode(endNode, startNode);
             }
-            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(),true, true))
+            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(),true, true, endNode))
             {
                 //if (!node.GetTraversable() || _closedNodeList.Contains(node))
                 if (_closedNodeList.Contains(node))
