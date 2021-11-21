@@ -7,17 +7,14 @@ public class TileStateManager : MonoBehaviour
     public FireStateManager FireStateManager;
     public SpriteRenderer TileRenderer;
     public SpriteRenderer ObjectRenderer;
-    public NavigationNode NavigationNode;
-    public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
+    [SerializeField]
+    private bool _canWalkOntile; 
 
-
-    [HideInInspector]
     public enum TaskStates //Information for workers
     {
         Harvest,
         Gather,
-        Storehouse,
         Burning,
         None
     }
@@ -39,8 +36,14 @@ public class TileStateManager : MonoBehaviour
          //Art stuff, will be fleshed out later.
      }
      public TileStates TileState;
-    */    
-    
+    */
+    // Task States
+    public TileTaskBaseState currentTaskState;
+    public TileTaskTreeState TaskTreeState = new TileTaskTreeState();
+    public TileTaskLogState TaskLogState = new TileTaskLogState();
+    public TileTaskGrassState TaskGrassState = new TileTaskGrassState();
+    public TileTaskEmptyState TaskEmptyState = new TileTaskEmptyState();
+    public TileTaskBurningState TaskBurningState = new TileTaskBurningState();
     // Object States
     public TileObjectBaseState currentObjectState;
     public TileObjectEmptyState ObjectEmptyState = new TileObjectEmptyState();
@@ -49,117 +52,36 @@ public class TileStateManager : MonoBehaviour
     public TileObjectLogState ObjectLogState = new TileObjectLogState();
     public TileObjectTreeState ObjectTreeState = new TileObjectTreeState();
     public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
-    public TileObjectBrazierState ObjectBrazierState = new TileObjectBrazierState();
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
     protected void Start()
     {
-        SetStartingState();
+        currentTaskState = TaskEmptyState;
+        currentTaskState.EnterState(this);
+        currentObjectState = ObjectEmptyState;
         currentObjectState.EnterState(this);
+    }
+
+    public bool CanWalkOnTile()
+    {
+        return _canWalkOntile;
     }
     protected void Update()
     {
+        currentTaskState.UpdateState(this);
         currentObjectState.UpdateState(this);
     }
-
+    public void SwitchTaskState(TileTaskBaseState state)
+    {
+        currentTaskState = state;
+        state.EnterState(this);
+    }
     public void SwitchObjectState(TileObjectBaseState state)
     {
         currentObjectState = state;
-        UpdateEnumState("Object");
         state.EnterState(this);
     }
-    public void ResetProperties()
+    public void ResetFireProperties()
     {
         FireStateManager.Temperature = 0;
-        ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
-    }
-    public void UpdateEnumState(string type)
-    {
-        if (type == "Object")
-        {
-            if (currentObjectState == ObjectGoalpostState)
-            {
-                ObjectState = ObjectStates.Goalpost;
-                TaskState = TaskStates.None;
-            }
-            else if (currentObjectState == ObjectGrassState)
-            {
-                ObjectState = ObjectStates.Grass;
-                TaskState = TaskStates.Gather;
-            }
-            else if (currentObjectState == ObjectLogState)
-            {
-                ObjectState = ObjectStates.Log;
-                TaskState = TaskStates.Gather;
-            }
-            else if (currentObjectState == ObjectTreeState)
-            {
-                ObjectState = ObjectStates.Tree;
-                TaskState = TaskStates.Harvest;
-            }
-            else if (currentObjectState == ObjectStoreState)
-            {
-                ObjectState = ObjectStates.Storehouse;
-                TaskState = TaskStates.Storehouse;
-            }
-            else if (currentObjectState == ObjectWallState)
-            {
-                ObjectState = ObjectStates.Wall;
-                TaskState = TaskStates.None;
-            }
-            else if (currentObjectState == ObjectBrazierState)
-            {
-                ObjectState = ObjectStates.Brazier;
-                TaskState = TaskStates.Burning;
-            }
-            else if (currentObjectState == ObjectEmptyState)
-            {
-                ObjectState = ObjectStates.None;
-                TaskState = TaskStates.None;
-            }
-        }
-    }
-    public void SetStartingState()
-    {
-        if (ObjectState == ObjectStates.Goalpost)
-        {
-            currentObjectState = ObjectGoalpostState;
-            TaskState = TaskStates.None;
-        }   
-        else if (ObjectState == ObjectStates.Grass)
-        {
-            currentObjectState = ObjectGrassState;
-            TaskState = TaskStates.Gather;
-        }
-        else if (ObjectState == ObjectStates.Log)
-        {
-            currentObjectState = ObjectLogState;
-            TaskState = TaskStates.Gather;
-        }
-        else if (ObjectState == ObjectStates.Tree)
-        {
-            currentObjectState = ObjectTreeState;
-            TaskState = TaskStates.Harvest;
-        }
-        else if (ObjectState == ObjectStates.Storehouse)
-        {
-            currentObjectState = ObjectStoreState;
-            TaskState = TaskStates.Storehouse;
-        }
-        else if (ObjectState == ObjectStates.Wall)
-        {
-            currentObjectState = ObjectWallState;
-            TaskState = TaskStates.None;
-        }
-        else if (ObjectState == ObjectStates.Brazier)
-        {
-            currentObjectState = ObjectBrazierState;
-            TaskState = TaskStates.Burning;
-        }
-        else if (ObjectState == ObjectStates.None)
-        {
-            currentObjectState = ObjectEmptyState;
-            TaskState = TaskStates.None;
-        }
-
     }
 }

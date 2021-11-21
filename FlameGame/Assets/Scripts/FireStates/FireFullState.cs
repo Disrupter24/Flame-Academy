@@ -6,7 +6,7 @@ public class FireFullState : FireBaseState
 {
     public override void EnterState(FireStateManager fire)
     {
-        fire.TileManager.TaskState = TileStateManager.TaskStates.Burning;
+        fire.TileManager.SwitchTaskState(fire.TileManager.TaskBurningState);
     }
     public override void UpdateState(FireStateManager fire)
     {
@@ -39,6 +39,6 @@ public class FireFullState : FireBaseState
     }
     private void UpdateSprite(FireStateManager fire)
     {
-        fire.TileManager.ObjectRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
+        fire.SpriteRenderer.color = new Color(1,0,0,(fire.BurnTime / fire.MaxBurnTime));
     }
 }

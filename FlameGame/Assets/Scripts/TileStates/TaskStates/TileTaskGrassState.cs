@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileObjectEmptyState : TileObjectBaseState
+public class TileTaskGrassState : TileTaskBaseState
 {
     public override void EnterState(TileStateManager tile)
     {
         tile.ResetFireProperties();
-        tile.FireStateManager.enabled = false;
-        tile.ObjectRenderer.enabled = false;
-        tile.WillCollide = false;
+        tile.FireStateManager.FuelType = FireStateManager.FuelTypes.Grass;
+        tile.FireStateManager.enabled = true;
+        tile.FireStateManager.ReloadFire();
     }
     public override void UpdateState(TileStateManager tile)
     {
-        //Tile's empty, no need for logic. :)
+
     }
 }

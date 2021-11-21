@@ -6,7 +6,7 @@ public class TileTaskEmptyState : TileTaskBaseState
 {
     public override void EnterState(TileStateManager tile)
     {
-        tile.ResetProperties();
+        tile.ResetFireProperties();
         tile.FireStateManager.enabled = false;
     }
     public override void UpdateState(TileStateManager tile)

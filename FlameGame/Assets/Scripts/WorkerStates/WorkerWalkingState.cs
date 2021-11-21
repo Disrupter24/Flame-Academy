@@ -18,12 +18,9 @@ public class WorkerWalkingState : WorkerBaseState
     public override void EnterState(WorkerStateManager worker)
     {
         Debug.Log("entered moving state");
-
-        // Enter walking animation state
-
-        // If current tile no longer has a task, remove it from the list and find the next one
-        if (!worker.ForceMove && !(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Storehouse))
+        if (!(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather))
         {
+            worker.TaskList.RemoveAt(worker.CurrentTaskID);
             worker.FindNextTask();
         }
         Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
@@ -55,11 +52,6 @@ public class WorkerWalkingState : WorkerBaseState
                 case TileStateManager.TaskStates.Gather:
                     worker.SwitchState(worker.GatheringState);
                     break;
-                case TileStateManager.TaskStates.Storehouse:
-                    StorehouseManager.Instance.StoreItem(worker.HeldItem);
-                    worker.HeldItem = TileStateManager.ObjectStates.None;
-                    worker.FindNextTask();
-                    break;
                 case TileStateManager.TaskStates.None:
                     worker.FindNextTask();
                     break;
@@ -70,12 +62,6 @@ public class WorkerWalkingState : WorkerBaseState
 
     public override void ExitState(WorkerStateManager worker)
     {
-        // Remove navigation target
-        
-    }
-
-    public override void CancelAction(WorkerStateManager worker)
-    {
-
+        // Remove navmesh target
     }
 }
