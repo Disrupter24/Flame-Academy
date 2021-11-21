@@ -73,7 +73,7 @@ public class NavigationGrid : MonoBehaviour
         int mapHeight = 0;
         float smallestXValue = Mathf.Infinity;
         float smallestYValue = Mathf.Infinity;
-        float smallestTileDimention = Mathf.Infinity; 
+        float smallestTileDimention = Mathf.Infinity;
 
         foreach (TileStateManager tile in tileArray)
         {
@@ -81,11 +81,16 @@ public class NavigationGrid : MonoBehaviour
 
             if (tile.transform.position.y < smallestYValue) smallestYValue = tile.transform.position.y;
 
+        }
+        foreach (TileStateManager tile in tileArray)
+        { 
             if ((tile.transform.position.x - smallestXValue) + 1 > mapWidth) mapWidth = ((int) tile.transform.position.x - (int) smallestXValue) + 1;
 
-            if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = ((int)tile.transform.position.y - (int)smallestYValue) + 1;
+            if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = ((int) tile.transform.position.y - (int) smallestYValue) + 1;
 
             if (tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
+
+
         }
         _tileDimention = (int)smallestTileDimention;
 
