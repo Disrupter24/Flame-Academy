@@ -175,7 +175,7 @@ public class NavigationGrid : MonoBehaviour
         if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1 || (i == coordinates.x && j == coordinates.y)) return false;
         return true;
     }
-    public static List<NavigationNode> GetNeighbours(Vector2 coordinates)
+    public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false)
     {
 
 
@@ -191,8 +191,8 @@ public class NavigationGrid : MonoBehaviour
                 //travelling diagonally
                 //make sure we don't cut corners
                 //highly inefficient but would rather not fix unless we have to
-
-                if (i != coordinates.x && j != coordinates.y) 
+ 
+                if (checkDiagonal && i != coordinates.x && j != coordinates.y) 
                 {
                     int x = i;
                     int y = (int)coordinates.y;
@@ -204,7 +204,15 @@ public class NavigationGrid : MonoBehaviour
                     continue;
 
                 }
-                if (_nodeGrid[i,j] != null) neighbours.Add(_nodeGrid[i, j]);
+
+                if (_nodeGrid[i, j] != null)
+                {
+                    if (checkTraversable)
+                    {
+                        if (!_nodeGrid[i, j].GetTraversable()) continue;
+                    }
+                    neighbours.Add(_nodeGrid[i, j]);
+                }
             }
         }
         return neighbours;
@@ -230,6 +238,13 @@ public class NavigationGrid : MonoBehaviour
         yIndex = Mathf.FloorToInt(endPosition.y / _tileDimention) - (int)startTilePosition.y;
         NavigationNode endNode = GetNode(xIndex, yIndex);
         if (endNode == null) return null; 
+
+        if (!endNode.GetTraversable())
+        {
+            List<NavigationNode> neighbours = GetNeighbours(endNode.GetCoordinates(), false, true);
+            if (neighbours.Count == 0) return null;
+            endNode = neighbours[0]; 
+        } 
 
         return CalculatePath(startNode, endNode);
 
