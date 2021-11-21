@@ -54,7 +54,10 @@ public class NavigationNode
     {
         return _coordinates;
     }
-
+    public TileStateManager GetTile()
+    {
+        return _tile; 
+    }
     public bool GetTraversable()
     {
         return !_tile.WillCollide;

@@ -35,9 +35,7 @@ public class WorkerMovement
         {
             if (_path.IsAtEndOfPath())
             {
-                _isMoving = false;
-                _isAtDestination = true;
-                Debug.Log("worker final position " + currentPosition);
+                WorkerPathOnComplete();
             }
             else
             {
@@ -48,7 +46,11 @@ public class WorkerMovement
         return currentPosition;
     }
 
-
+    private void WorkerPathOnComplete()
+    {
+        _isMoving = false;
+        _isAtDestination = true;
+    }
     public bool IsAtDestination()
     {
         return _isAtDestination; 
@@ -61,9 +63,16 @@ public class WorkerMovement
         _path = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
         if (_path != null)
         {
+            if (_path.IsAtEndOfPath())
+            {
+                WorkerPathOnComplete();
+            }  else
+            {
+                _pointToMoveTowards = _path.GetNextNodePosition();
+            }
             _isMoving = true;
-            _pointToMoveTowards = _path.GetNextNodePosition();
             Debug.Log("Path Created");
+
         }
         return _isMoving;
     }
