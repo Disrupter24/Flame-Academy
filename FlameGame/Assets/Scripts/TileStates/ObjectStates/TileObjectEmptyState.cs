@@ -6,7 +6,7 @@ public class TileObjectEmptyState : TileObjectBaseState
 {
     public override void EnterState(TileStateManager tile)
     {
-        tile.ResetFireProperties();
+        tile.ResetProperties();
         tile.FireStateManager.enabled = false;
         tile.ObjectRenderer.enabled = false;
         tile.WillCollide = false;

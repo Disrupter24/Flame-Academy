@@ -58,4 +58,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-FlameGame/ProjectSettings/ProjectVersion.txt
+FlameGame/UserSettings/EditorUserSettings.asset
+FlameGame/Assets/Sprites.meta

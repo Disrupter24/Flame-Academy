@@ -123,33 +123,59 @@ public class ClickManager : MonoBehaviour
                 Vector3 currentMousePosition = GetMousePositionInWorld();
 
                 // Clear each selected worker's task list
+                // Also mark any tasks in progress as cancelled
                 foreach (WorkerStateManager worker in _workersSelected)
                 {
                     worker.TaskList.Clear();
+                    worker.CancelTask();
+                    worker.ForceMove = false;
                 }
+
+                bool foundTasks = false;
 
                 // Get all tiles in box, check their contents, and add them to the tiles selected list
                 foreach (Collider2D tileCollider in Physics2D.OverlapAreaAll(_targetingStartPositionWorld, currentMousePosition, 1 << 7))
                 {
                     TileStateManager tile = tileCollider.gameObject.GetComponent<TileStateManager>();
 
+                    
                     // Check if tile has an eligible task (with specialized workers, might need to do this on a per-worker basis)
                     if (tile != null  && tile.TaskState == TileStateManager.TaskStates.Harvest || tile.TaskState == TileStateManager.TaskStates.Gather)
                     {
+                        foundTasks = true;
                         foreach (WorkerStateManager worker in _workersSelected)
                         {
                             // Add tile to each worker's task list
                             worker.TaskList.Add(tile);
-                            Debug.Log("Added task to list");
                         }
+                        
                     }
+                    
+                    
                 }
 
                 foreach (WorkerStateManager worker in _workersSelected)
                 {
-                    // Send the worker on their task
-                    worker.FindNextTask();
+                    if(foundTasks)
+                    {
+                        // Worker drops item
+                        worker.DropItem();
+                        // Send the worker on their task
+                        worker.FindNextTask();
+                    }
+                    else
+                    {
+                        RaycastHit2D hit = Physics2D.Raycast(currentMousePosition, Vector2.zero, 0, 1 << 7);
+
+                        if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
+                        {
+                            // Add tile to each worker's task list
+                            worker.TaskList.Add(hit.collider.gameObject.GetComponent<TileStateManager>());
+                            worker.MoveTowardsEmptyTile();
+                        }
+                    }
                 }
+
             }
 
 

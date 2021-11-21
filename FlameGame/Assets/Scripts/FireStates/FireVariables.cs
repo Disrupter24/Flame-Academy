@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireVariables : MonoBehaviour
 {
     public static FireStateManager[] s_listOfCombustibles;
+    public static TileStateManager[] s_listOfTiles;
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
@@ -25,8 +26,28 @@ public class FireVariables : MonoBehaviour
     public static int s_grassSpreadRadius = 1;
     public static float s_grassBurnTime = 2f;
     public static float s_grassHeatTransfer = 0.25f;
+    //Goalpost Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
+    public static int s_goalpostIgnitionTemperature = 250;
+    public static int s_goalpostSpreadRadius = 0;
+    public static float s_goalpostBurnTime = 15f;
+    public static float s_goalpostHeatTransfer = 0.1f;
+    //Brazier Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
+    public static int s_brazierIgnitionTemperature = 50;
+    public static int s_brazierSpreadRadius = 1;
+    public static float s_brazierBurnTime = 2f;
+    public static float s_brazierHeatTransfer = 0.25f;
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
+        s_listOfTiles = FindObjectsOfType<TileStateManager>();
+
+        // Compile starting list of storehouses
+        foreach(TileStateManager tile in s_listOfTiles)
+        {
+            if(tile.TaskState == TileStateManager.TaskStates.Storehouse)
+            {
+                StorehouseManager.Instance.Storehouses.Add(tile);
+            }
+        }
     }
 }
