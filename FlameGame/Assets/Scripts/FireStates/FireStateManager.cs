@@ -15,6 +15,7 @@ public class FireStateManager : MonoBehaviour
     [HideInInspector] public float MaxBurnTime;
     [HideInInspector] public float HeatTransfer;
     public SpriteRenderer SpriteRenderer;
+    public GameObject FireParticles;
     public enum FuelTypes
     {
         Log, Tree, Grass, Goalpost, Brazier
@@ -39,6 +40,7 @@ public class FireStateManager : MonoBehaviour
     {
         TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
         TileManager.SwitchTaskState(TileManager.TaskEmptyState);
+        FireParticles.SetActive(false);
     }
     public void ReloadFire()
     {
