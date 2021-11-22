@@ -242,8 +242,13 @@ public class NavigationGrid : MonoBehaviour
         int distanceX = Mathf.Abs((int)startNodeCoordinates.x - (int) endNodeCoordinates.x);
         int distanceY = Mathf.Abs((int)startNodeCoordinates.y - (int)endNodeCoordinates.y);
 
-        if (distanceX > distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
-        return 14 * distanceY + 10 * (distanceY - distanceX); 
+        if (distanceX > distanceY)
+        {
+            return 14 * distanceY + 10 * (distanceX - distanceY);
+        } else
+        {
+            return 14 * distanceX + 10 * (distanceY - distanceX);
+        }
 
     }
 
@@ -306,21 +311,26 @@ public class NavigationGrid : MonoBehaviour
                 //travelling diagonally
                 //make sure we don't cut corners
                 //highly inefficient but would rather not fix unless we have to
- 
 
 
-                if (checkDiagonal && i != coordinates.x && j != coordinates.y) 
-                {
-                    int x = i;
-                    int y = (int)coordinates.y;
-                    if (!(IsValidLocation(coordinates, x,y) || _nodeGrid[x,y] == null || !_nodeGrid[x,y].GetTraversable()))
-                    continue;
-                    x = (int)coordinates.x;
-                    y = j;
-                    if (!(IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null ||!_nodeGrid[x, y].GetTraversable()))
-                    continue;
+
+                if (checkDiagonal) {
+
+                    if (i != coordinates.x && j != coordinates.y)
+                    {
+                        int x = i;
+                        int y = (int)coordinates.y;
+                        if ((!IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null || !_nodeGrid[x, y].GetTraversable()))
+                            continue;
+                        x = (int)coordinates.x;
+                        y = j;
+                        if ((!IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null || !_nodeGrid[x, y].GetTraversable()))
+                            continue;
+
+                    }
 
                 }
+                
 
                 if (_nodeGrid[i, j] != null)
                 {
@@ -453,7 +463,7 @@ public class NavigationGrid : MonoBehaviour
         foreach (NavigationNode node in nodeList)
         {
 
-            if (smallestFCostNode.GetFCost() > node.GetFCost() || smallestFCostNode.GetFCost() == node.GetFCost() && node.GetHCost() < smallestFCostNode.GetHCost())
+            if (smallestFCostNode.GetFCost() > node.GetFCost() || (smallestFCostNode.GetFCost() == node.GetFCost() && node.GetHCost() < smallestFCostNode.GetHCost()))
 
             {
                 smallestFCostNode = node;
