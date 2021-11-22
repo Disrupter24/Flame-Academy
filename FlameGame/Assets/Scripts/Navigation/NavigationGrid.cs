@@ -14,7 +14,12 @@ public class NavigationGrid : MonoBehaviour
     private static Vector2 mapDimention;
 
     [SerializeField]
-    private Sprite _destinationMarker; 
+    private Sprite _destinationMarker;
+
+    [SerializeField]
+    private Sprite _targetMarker1;
+    [SerializeField]
+    private Sprite _targetMarker2;
   
 
 
@@ -149,6 +154,28 @@ public class NavigationGrid : MonoBehaviour
         marker.transform.position = position;
         return marker;
     }
+    public GameObject SetTargetMarker(Vector2 position)
+    {
+        GameObject parent = Instantiate(new GameObject());
+        parent.AddComponent<TargetAlternatingSprites>();
+
+
+        GameObject childMarker1 = Instantiate(new GameObject());
+        GameObject childMarker2 = Instantiate(new GameObject());
+        childMarker1.transform.position = Vector2.zero;
+        childMarker1.transform.parent = parent.transform;
+        childMarker2.transform.position = Vector2.zero;
+        childMarker2.transform.parent = parent.transform;
+
+        SpriteRenderer spriteRenderer1 = childMarker1.AddComponent<SpriteRenderer>();
+        spriteRenderer1.sprite = _targetMarker1;
+        spriteRenderer1.enabled = false; 
+        SpriteRenderer spriteRenderer2 = childMarker2.AddComponent<SpriteRenderer>();
+        spriteRenderer2.sprite = _targetMarker2;
+
+        parent.transform.position = position;
+        return parent;
+    }
     public static void SetGridHeight(int height)
     {
         _mapHeight = height;
@@ -237,6 +264,7 @@ public class NavigationGrid : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("retreating");
                     currentNode = currentNode.GetPreviousNode();
                     endNode = currentNode;
                 }
@@ -247,10 +275,6 @@ public class NavigationGrid : MonoBehaviour
             }
         }
         movementPath.Reverse();
-        foreach (NavigationNode node in movementPath)
-        {
-            Debug.Log("path part: " + node.GetTileWorldPosition());
-        }
         _path = new NavigationPath(movementPath);
         return _path;
     }
@@ -364,6 +388,7 @@ public class NavigationGrid : MonoBehaviour
 
     private static NavigationNode GetClosestNavigationNode(NavigationNode blockedPosition, NavigationNode startPosition)
     {
+        Debug.Log("Finding another Close Navigation Node");
         List<NavigationNode> neighbours = GetNeighbours(blockedPosition.GetCoordinates(), false, true, true);
         NavigationNode newUnblockedNode = null;
         if (neighbours.Count == 0) return null;
