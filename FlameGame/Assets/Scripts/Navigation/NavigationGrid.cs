@@ -13,6 +13,10 @@ public class NavigationGrid : MonoBehaviour
     //public Vector2 mapSize;
     private static Vector2 mapDimention;
 
+    [SerializeField]
+    private Sprite _destinationMarker; 
+  
+
 
     private static List<NavigationNode> _path;
     private static bool _hasStartedNavigating;
@@ -128,6 +132,23 @@ public class NavigationGrid : MonoBehaviour
         }
 
     }
+
+    public Sprite GetDestinationMarker()
+    {
+        return _destinationMarker;
+    }
+    public void DestroyMarker(GameObject marker)
+    {
+        Destroy(marker);
+    }
+    public GameObject SetDestinationMarker(Vector2 position)
+    {
+        GameObject marker = Instantiate(new GameObject());
+        SpriteRenderer spriteRenderer = marker.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = _destinationMarker;
+        marker.transform.position = position;
+        return marker;
+    }
     public static void SetGridHeight(int height)
     {
         _mapHeight = height;
@@ -207,9 +228,23 @@ public class NavigationGrid : MonoBehaviour
 
         while (currentNode != startNode)
         {
-            if (!(currentNode == endNode && !endNode.GetTraversable())) 
-            movementPath.Add(currentNode);
-            currentNode = currentNode.GetPreviousNode();
+            if (currentNode == endNode)
+            {
+                if (endNode.GetTraversable() && !endNode.HasWorkerOnTile())
+                {
+                    movementPath.Add(currentNode);
+                    currentNode = currentNode.GetPreviousNode();
+                }
+                else
+                {
+                    currentNode = currentNode.GetPreviousNode();
+                    endNode = currentNode;
+                }
+            } else
+            {
+                movementPath.Add(currentNode);
+                currentNode = currentNode.GetPreviousNode();
+            }
         }
         movementPath.Reverse();
         foreach (NavigationNode node in movementPath)
@@ -231,7 +266,7 @@ public class NavigationGrid : MonoBehaviour
         if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1) return false;
         return true;
     }
-    public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false, NavigationNode endNode = null)
+    public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false, bool checkOccupied = false, NavigationNode endNode = null)
     {
 
 
@@ -248,22 +283,26 @@ public class NavigationGrid : MonoBehaviour
                 //make sure we don't cut corners
                 //highly inefficient but would rather not fix unless we have to
  
+
+
                 if (checkDiagonal && i != coordinates.x && j != coordinates.y) 
                 {
                     int x = i;
                     int y = (int)coordinates.y;
-                    if (!(IsValidLocation(coordinates, x,y) || _nodeGrid[x,y] != null || _nodeGrid[x,y].GetTraversable()))
+                    if (!(IsValidLocation(coordinates, x,y) || _nodeGrid[x,y] == null || !_nodeGrid[x,y].GetTraversable()))
                     continue;
                     x = (int)coordinates.x;
                     y = j;
-                    if (!(IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] != null || _nodeGrid[x, y].GetTraversable()))
+                    if (!(IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null ||!_nodeGrid[x, y].GetTraversable()))
                     continue;
 
                 }
 
                 if (_nodeGrid[i, j] != null)
                 {
-                    
+                    if (checkOccupied && _nodeGrid[i, j].HasWorkerOnTile()) continue;
+
+
                     if ((endNode != null && _nodeGrid[i,j] == endNode) || !checkTraversable || (checkTraversable && _nodeGrid[i, j].GetTraversable()))
                     {
                         neighbours.Add(_nodeGrid[i, j]);
@@ -306,28 +345,43 @@ public class NavigationGrid : MonoBehaviour
         NavigationNode endNode = GetNode(xIndex, yIndex);
         if (endNode == null) return null; 
 
-        /*if (!endNode.GetTraversable())
+        if (endNode.HasWorkerOnTile() || !endNode.GetTraversable())
         {
-            List<NavigationNode> neighbours = GetNeighbours(endNode.GetCoordinates(), false, true);
-            if (neighbours.Count == 0) return null;
-            float smallestDistance = GetRawDistance(startNode, endNode);
-            float distanceBetweenNodes; 
-            foreach (NavigationNode neighbourNode in neighbours)
+            NavigationNode tempNode = GetClosestNavigationNode(endNode, GetNode(startPosition.x, startPosition.y));
+            if (tempNode != null)
             {
-                distanceBetweenNodes = GetRawDistance(neighbourNode, startNode);
-                if (distanceBetweenNodes < smallestDistance)
-                {
-                    smallestDistance = distanceBetweenNodes;
-                    endNode = neighbourNode;
-                }
+                endNode = tempNode;
+            } else
+            {
+                Debug.Log("TempNode == null");
             }
-            if (!endNode.GetTraversable()) return null;
-        } */ 
+        }
 
         return CalculatePath(startNode, endNode);
 
     }
 
+
+    private static NavigationNode GetClosestNavigationNode(NavigationNode blockedPosition, NavigationNode startPosition)
+    {
+        List<NavigationNode> neighbours = GetNeighbours(blockedPosition.GetCoordinates(), false, true, true);
+        NavigationNode newUnblockedNode = null;
+        if (neighbours.Count == 0) return null;
+        float smallestDistance = Mathf.Infinity;
+        float distanceBetweenNodes;
+        foreach (NavigationNode neighbourNode in neighbours)
+        {
+            distanceBetweenNodes = GetRawDistance(neighbourNode, startPosition);
+            if (distanceBetweenNodes < smallestDistance)
+            {
+                smallestDistance = distanceBetweenNodes;
+                newUnblockedNode = neighbourNode;
+            }
+        }
+        if (newUnblockedNode != null && !newUnblockedNode.GetTraversable()) return GetClosestNavigationNode(newUnblockedNode, startPosition);
+
+        return newUnblockedNode;
+    }
     public static NavigationPath CalculatePath(NavigationNode startNode, NavigationNode endNode)
     {
         _hasStartedNavigating = false;
@@ -346,7 +400,7 @@ public class NavigationGrid : MonoBehaviour
             {
                 return GeneratePathFromEndNode(endNode, startNode);
             }
-            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(),true, true, endNode))
+            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(),true, true, false,endNode))
             {
                 //if (!node.GetTraversable() || _closedNodeList.Contains(node))
                 if (_closedNodeList.Contains(node))

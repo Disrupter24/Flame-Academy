@@ -9,7 +9,8 @@ public class WorkerMovement
     private bool _isMoving;
     private bool _isAtDestination; 
     private Vector2 _pointToMoveTowards;
-    private NavigationPath _path; 
+    private NavigationPath _path;
+    private GameObject _marker; 
 
     // have a data class to hold all this information like speeds and such. 
     private float _movementSpeed = 1.0f;
@@ -50,30 +51,44 @@ public class WorkerMovement
     {
         _isMoving = false;
         _isAtDestination = true;
+        if (_marker != null) NavigationGrid.Instance.DestroyMarker(_marker);
+        _marker = null;
+        if (_path != null)
+        _path.RemoveWorkerFromLastNode();
+        _path = null;
     }
     public bool IsAtDestination()
     {
         return _isAtDestination; 
     }
-    public bool MoveTo(Vector2 startPosition, Vector2 targetPosition)
+    public bool MoveTo(WorkerStateManager worker, Vector2 startPosition, Vector2 targetPosition)
     {
-        _isAtDestination = false;
-        _isMoving = false;
-        _pointToMoveTowards = targetPosition;
-        _path = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
-        if (_path != null)
+        bool newPathCreatedSuccessfully = false; 
+        NavigationPath tempPath = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
+        if (tempPath != null)
         {
+            if(_path!= null)
+            {
+                WorkerPathOnComplete();
+            }
+            _path = tempPath;
             if (_path.IsAtEndOfPath())
             {
                 WorkerPathOnComplete();
+
             }  else
             {
+                _isAtDestination = false;
+                newPathCreatedSuccessfully = true;
+                _isMoving = true;
                 _pointToMoveTowards = _path.GetNextNodePosition();
+                _marker = NavigationGrid.Instance.SetDestinationMarker(_path.GetFinalPosition());
+                _path.OccupyLastNodeWithWorker(worker);
             }
-            _isMoving = true;
-            Debug.Log("Path Created");
 
         }
-        return _isMoving;
+
+        return newPathCreatedSuccessfully;        
+
     }
 }

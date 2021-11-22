@@ -27,7 +27,7 @@ public class WorkerWalkingState : WorkerBaseState
             worker.FindNextTask();
         }
         Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
-        worker.workerMovement.MoveTo(worker.transform.position, worker.CurrentTask.transform.position);
+        worker.workerMovement.MoveTo(worker,worker.transform.position, worker.CurrentTask.transform.position);
         movementTimer = 0;
     }
 

@@ -10711,6 +10711,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8606828788299930506, guid: e60ae361e72a3e94fa9635e3e930839b, type: 3}
+      propertyPath: _destinationMarker
+      value: 
+      objectReference: {fileID: 1172682990794751079, guid: 0c68a0ea46dfa5441a39c1423f60d4aa, type: 3}
     - target: {fileID: 8606828788299930507, guid: e60ae361e72a3e94fa9635e3e930839b, type: 3}
       propertyPath: m_Name
       value: NavigationManager

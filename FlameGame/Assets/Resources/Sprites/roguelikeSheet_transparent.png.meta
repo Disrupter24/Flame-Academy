@@ -32,6 +32,9 @@ TextureImporter:
   - first:
       213: 8229234674354008737
     second: Stone
+  - first:
+      213: 1172682990794751079
+    second: destinationflag
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -297,7 +300,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -318,7 +321,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -326,6 +329,27 @@ TextureImporter:
       bones: []
       spriteID: 1a2b232065d143270800000000000000
       internalID: 8229234674354008737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destinationflag
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 510
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76cb67c87f4364010800000000000000
+      internalID: 1172682990794751079
       vertices: []
       indices: 
       edges: []

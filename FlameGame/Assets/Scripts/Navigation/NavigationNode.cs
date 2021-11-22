@@ -9,6 +9,8 @@ public class NavigationNode
     private int _hCost;
     private int _gCost;
     private NavigationNode _prevNode;
+    private bool _isOccupiedByWorker;
+    private WorkerStateManager _worker; 
 
     public NavigationNode(TileStateManager tile, Vector2 coordinates)
     {
@@ -84,6 +86,26 @@ public class NavigationNode
         _gCost = gCost;
     }
 
+    public void SetWorkerOnTile(WorkerStateManager worker)
+    {
+        _isOccupiedByWorker = true;
+        _worker = worker; 
 
+    }
+
+    public WorkerStateManager GetWorkerOnTile()
+    {
+        return _worker;
+    }
+
+    public bool HasWorkerOnTile()
+    {
+        return _isOccupiedByWorker;
+    }
+    public void RemoveWorkerFromTile()
+    {
+        _worker = null;
+        _isOccupiedByWorker = false;
+    }
 
 }
