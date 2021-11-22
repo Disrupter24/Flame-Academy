@@ -41,6 +41,15 @@ TextureImporter:
   - first:
       213: -3592024507081054988
     second: selection2
+  - first:
+      213: 1046849172069043595
+    second: top banner
+  - first:
+      213: 5340203762078515764
+    second: mid banner
+  - first:
+      213: 4464582344924425882
+    second: bottom banner
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -369,7 +378,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -390,7 +399,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -398,6 +407,69 @@ TextureImporter:
       bones: []
       spriteID: 4f4afeefdb0962ec0800000000000000
       internalID: -3592024507081054988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top banner
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 510
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d469a86c7278e00800000000000000
+      internalID: 1046849172069043595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mid banner
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 493
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43205ea27073c1a40800000000000000
+      internalID: 5340203762078515764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bottom banner
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 476
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e63b30df165fd30800000000000000
+      internalID: 4464582344924425882
       vertices: []
       indices: 
       edges: []

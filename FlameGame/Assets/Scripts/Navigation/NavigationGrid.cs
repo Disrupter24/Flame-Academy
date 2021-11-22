@@ -197,16 +197,48 @@ public class NavigationGrid : MonoBehaviour
     {
         int i = GetXIndex(xPos);  
         int j = GetYIndex(yPos); 
-        return GetSurroundingTiles(i, j);
+        return GetSurroundingTiles(i, j, false);
+    }
+    
+    public static List<TileStateManager> GetEmptySurroundingTiles(float xPos, float yPos)
+    {
+        int i = GetXIndex(xPos);
+        int j = GetYIndex(yPos);
+        return GetSurroundingTiles(i, j, true);
+
     }
 
-    public static List<TileStateManager> GetSurroundingTiles(int i, int j)
+    public static TileStateManager GetAnEmptySurroundingTile(float xPos, float yPos)
+    {
+        int i = GetXIndex(xPos);
+        int j = GetYIndex(yPos);
+        List <TileStateManager> allsurroundingTiles = GetSurroundingTiles(i, j, true);
+        if (allsurroundingTiles.Count > 0) return allsurroundingTiles[0];
+        return null;
+    }
+
+    public static Vector2 GetPositionOfAnEmptySurroundingTile(float xPos, float yPos)
+    {
+        TileStateManager tile = GetAnEmptySurroundingTile(xPos, yPos);
+        if (tile != null) return tile.transform.position;
+        return new Vector2(xPos, yPos);
+    }
+
+    public static List<TileStateManager> GetSurroundingTiles(int i, int j, bool getEmpty = false)
     {
         Vector2 coordinates = new Vector2(i, j);
         List<TileStateManager> neighbouringTiles = new List<TileStateManager>();
         if (IsValidLocation(i, j))
         {
-            List<NavigationNode> allNeighbours = GetNeighbours(coordinates, false, false);
+            List<NavigationNode> allNeighbours;
+            if (getEmpty)
+            {
+                allNeighbours = GetNeighbours(coordinates, false, true, true);
+            }
+            else
+            {
+                allNeighbours = GetNeighbours(coordinates, false, false);
+            }
             foreach (NavigationNode neighbour in allNeighbours)
             {
                 neighbouringTiles.Add(neighbour.GetTile());
@@ -215,7 +247,6 @@ public class NavigationGrid : MonoBehaviour
 
         }
         return null;
-
 
     }
     public static NavigationNode GetNode(int i , int j)
@@ -348,7 +379,28 @@ public class NavigationGrid : MonoBehaviour
         return neighbours;
     }
 
+    public static bool HasWorkerOntile(float xPos, float yPos)
+    {
+        int xIndex = GetXIndex(xPos);
+        int yIndex = GetYIndex(yPos);
+        NavigationNode node = GetNode(xIndex, yIndex);
+        return node.HasWorkerOnTile();
+    }
+    public static void RemoveWorkerFromNode(float xPos, float yPos)
+    {
+        int xIndex = GetXIndex(xPos);
+        int yIndex = GetYIndex(yPos);
+        NavigationNode node = GetNode(xIndex, yIndex);
+        node.RemoveWorkerFromTile();
+    }
+    public static void SetNodeOccupied(float xPos, float yPos, WorkerStateManager worker)
+    {
+        int xIndex = GetXIndex(xPos);
+        int yIndex = GetYIndex(yPos);
+        NavigationNode node = GetNode(xIndex, yIndex);
+        node.SetWorkerOnTile(worker);
 
+    }
     public static bool IsReadyToCalculateNavigation()
     {
         return _isCalculatingNavigation;

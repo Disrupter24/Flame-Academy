@@ -47,13 +47,19 @@ public class WorkerMovement
         return currentPosition;
     }
     
-    private void WorkerOnNewPath()
+    private void WorkerOnNewPath(Vector2 position)
     {
         if (_destinationMarker != null) NavigationGrid.Instance.DestroyMarker(_destinationMarker);
         _destinationMarker = null;
         if (_targetMarker != null) NavigationGrid.Instance.DestroyMarker(_targetMarker);
         _targetMarker = null;
-        if (_path != null) _path.RemoveWorkerFromLastNode();
+        if (_path != null)
+        {
+            _path.RemoveWorkerFromLastNode();
+        } else
+        {
+            NavigationGrid.RemoveWorkerFromNode(position.x, position.y);
+        }
     }
     private void WorkerPathOnComplete()
     {
@@ -81,7 +87,7 @@ public class WorkerMovement
 
             }  else
             {
-                WorkerOnNewPath();
+                WorkerOnNewPath(startPosition);
 
                 _isAtDestination = false;
                 newPathCreatedSuccessfully = true;
