@@ -24,8 +24,8 @@ public class FireVariables : MonoBehaviour
     //Grass Properties
     public static int s_grassIgnitionTemperature = 50;
     public static int s_grassSpreadRadius = 1;
-    public static float s_grassBurnTime = 2f;
-    public static float s_grassHeatTransfer = 0.25f;
+    public static float s_grassBurnTime = 3f;
+    public static float s_grassHeatTransfer = 0.40f;
     //Goalpost Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
     public static int s_goalpostIgnitionTemperature = 250;
     public static int s_goalpostSpreadRadius = 0;

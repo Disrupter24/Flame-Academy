@@ -23,12 +23,14 @@ public class FireStateManager : MonoBehaviour
     public FuelTypes FuelType;
     protected void Start()
     {
+
         SetProperties(FuelType);
         currentState = NoneState;
         currentState.EnterState(this);
     }
     protected void Update()
     {
+        Debug.Log(IgnitionTemperature);
         currentState.UpdateState(this);
     }
     public void SwitchState(FireBaseState state)
