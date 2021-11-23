@@ -16,17 +16,21 @@ public class ClickManager : MonoBehaviour
     private Vector2 _targetingStartPositionCanvas;
     private Vector2 _targetingStartPositionWorld;
     [SerializeField] private RectTransform _targetingBox;
+    private bool _drawingTargetingBox;
 
     private void Update()
     {
-        ManageWorkerSelection();
-        ManageTargetSelection();
+        ManageLeftClick();
+        ManageRightClick();
     }
 
-    private void ManageWorkerSelection()
+    private void ManageLeftClick()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // CHECK IF CLICKING A STOREHOUSE BUTTON
+            // IF SO, DO NOT CREATE A SELECTION BOX
+
             // Set selection box start point
             _selectionStartPositionCanvas = Input.mousePosition;
             _selectionStartPositionWorld = GetMousePositionInWorld();
@@ -34,6 +38,7 @@ public class ClickManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            // ONLY DO THIS STUFF WHEN NOT IN STOREHOUSE MODE
             // Display selection box according to selection start position and current mouse position
             if (!_selectionBox.gameObject.activeInHierarchy)
             {
@@ -50,6 +55,8 @@ public class ClickManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            // IF CLICKING A STOREHOUSE BUTTON, GAIN THE ABILITY TO PAINT FUEL
+
             // Hide selection box
             _selectionBox.gameObject.SetActive(false);
 
@@ -72,6 +79,7 @@ public class ClickManager : MonoBehaviour
                 {
                     _workersSelected.Add(worker);
                     worker.IsSelected = true;
+                    // DISPLAY BUTTONS FOR STOREHOUSE COMMANDS
                 }
             }
         }
@@ -79,7 +87,7 @@ public class ClickManager : MonoBehaviour
 
     }
 
-    private void ManageTargetSelection()
+    private void ManageRightClick()
     {
 
         // Controls for torch
@@ -93,6 +101,7 @@ public class ClickManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
+                // if(clicking on storehouse button)
                 // Set selection box start point
                 _targetingStartPositionCanvas = Input.mousePosition;
                 _targetingStartPositionWorld = GetMousePositionInWorld();
