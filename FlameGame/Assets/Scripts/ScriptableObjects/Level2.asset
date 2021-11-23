@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
-  m_Name: Idle Cursor
+  m_Script: {fileID: 11500000, guid: 9c04e6d18c03b3b4c833d2ea81647e9e, type: 3}
+  m_Name: Level2
   m_EditorClassIdentifier: 
-  _isAnimated: 0
-  _cursorTextures:
-  - {fileID: 2800000, guid: 4f2102206d57bc14686d025675ca4d09, type: 3}
-  _offsetFromMousePosition: {x: 8, y: 32}
-  _animationTimeInSeconds: 0
+  LevelName: Second Level
+  IsComplete: 0
+  Star1: 0
+  Star2: 0
+  Star3: 0
