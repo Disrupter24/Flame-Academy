@@ -11,12 +11,15 @@ public class TileStateManager : MonoBehaviour
     public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
 
+    [HideInInspector]
+    public bool IsGhost = false;
 
     [HideInInspector]
     public enum TaskStates //Information for workers
     {
         Harvest,
         Gather,
+        Placement,
         Storehouse,
         Burning,
         None
@@ -64,7 +67,7 @@ public class TileStateManager : MonoBehaviour
     public void SwitchObjectState(TileObjectBaseState state)
     {
         currentObjectState = state;
-        UpdateEnumState("Object");
+        UpdateEnumState();
         state.EnterState(this);
     }
     public void ResetProperties()
@@ -72,51 +75,59 @@ public class TileStateManager : MonoBehaviour
         FireStateManager.Temperature = 0;
         ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
     }
-    public void UpdateEnumState(string type)
+    public void UpdateEnumState()
     {
-        if (type == "Object")
+        
+        if (currentObjectState == ObjectGoalpostState)
         {
-            if (currentObjectState == ObjectGoalpostState)
-            {
-                ObjectState = ObjectStates.Goalpost;
-                TaskState = TaskStates.None;
-            }
-            else if (currentObjectState == ObjectGrassState)
-            {
-                ObjectState = ObjectStates.Grass;
-                TaskState = TaskStates.Gather;
-            }
-            else if (currentObjectState == ObjectLogState)
-            {
-                ObjectState = ObjectStates.Log;
-                TaskState = TaskStates.Gather;
-            }
-            else if (currentObjectState == ObjectTreeState)
-            {
-                ObjectState = ObjectStates.Tree;
-                TaskState = TaskStates.Harvest;
-            }
-            else if (currentObjectState == ObjectStoreState)
-            {
-                ObjectState = ObjectStates.Storehouse;
-                TaskState = TaskStates.Storehouse;
-            }
-            else if (currentObjectState == ObjectWallState)
-            {
-                ObjectState = ObjectStates.Wall;
-                TaskState = TaskStates.None;
-            }
-            else if (currentObjectState == ObjectBrazierState)
-            {
-                ObjectState = ObjectStates.Brazier;
-                TaskState = TaskStates.Burning;
-            }
-            else if (currentObjectState == ObjectEmptyState)
-            {
-                ObjectState = ObjectStates.None;
-                TaskState = TaskStates.None;
-            }
+            ObjectState = ObjectStates.Goalpost;
+            TaskState = TaskStates.None;
         }
+        else if (currentObjectState == ObjectGrassState)
+        {
+            ObjectState = ObjectStates.Grass;
+
+            if (IsGhost)
+                TaskState = TaskStates.Placement;
+            else
+                TaskState = TaskStates.Gather;
+        }
+        else if (currentObjectState == ObjectLogState)
+        {
+            ObjectState = ObjectStates.Log;
+
+            if (IsGhost)
+                TaskState = TaskStates.Placement;
+            else
+                TaskState = TaskStates.Gather;
+        }
+        else if (currentObjectState == ObjectTreeState)
+        {
+            ObjectState = ObjectStates.Tree;
+            TaskState = TaskStates.Harvest;
+        }
+        else if (currentObjectState == ObjectStoreState)
+        {
+            ObjectState = ObjectStates.Storehouse;
+            TaskState = TaskStates.Storehouse;
+        }
+        else if (currentObjectState == ObjectWallState)
+        {
+            ObjectState = ObjectStates.Wall;
+            TaskState = TaskStates.None;
+        }
+        else if (currentObjectState == ObjectBrazierState)
+        {
+            ObjectState = ObjectStates.Brazier;
+            TaskState = TaskStates.Burning;
+        }
+        else if (currentObjectState == ObjectEmptyState)
+        {
+            ObjectState = ObjectStates.None;
+            TaskState = TaskStates.None;
+        }
+
+
     }
     public void SetStartingState()
     {

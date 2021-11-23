@@ -16,6 +16,8 @@ public class ClickManager : MonoBehaviour
     private Vector2 _targetingStartPositionCanvas;
     private Vector2 _targetingStartPositionWorld;
     [SerializeField] private RectTransform _targetingBox;
+
+    private bool _placingFuel = false;
     private bool _drawingTargetingBox;
 
     private void Update()
@@ -30,6 +32,9 @@ public class ClickManager : MonoBehaviour
         {
             // CHECK IF CLICKING A STOREHOUSE BUTTON
             // IF SO, DO NOT CREATE A SELECTION BOX
+
+            // if(clickingstorehousebutton)
+                //_placingFuel = true;
 
             // Set selection box start point
             _selectionStartPositionCanvas = Input.mousePosition;
