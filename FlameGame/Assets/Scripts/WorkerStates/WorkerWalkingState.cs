@@ -15,7 +15,6 @@ public class WorkerWalkingState : WorkerBaseState
     // If all tiles in selection are burning, workers immolate themselves
 
     float movementTimer;
-
     public override void EnterState(WorkerStateManager worker)
     {
         Debug.Log("entered moving state");
@@ -23,11 +22,12 @@ public class WorkerWalkingState : WorkerBaseState
         // Enter walking animation state
 
         // If current tile no longer has a task, remove it from the list and find the next one
-        if (!(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather))
+        if (!worker.ForceMove && !(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Storehouse))
         {
             worker.FindNextTask();
         }
-
+        Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
+        worker.workerMovement.MoveTo(worker,worker.transform.position, worker.CurrentTask.transform.position);
         movementTimer = 0;
     }
 
@@ -43,12 +43,10 @@ public class WorkerWalkingState : WorkerBaseState
          */
 
         // Move towards target (I hate this movement logic but it's temporary)
-        movementTimer += 0.001f * Time.deltaTime;
-        worker.transform.position = Vector2.Lerp(worker.transform.position, worker.CurrentTask.transform.position, movementTimer);
-
-        // Upon arrival, check target status and switch state accordingly
-        if(Vector2.Distance(worker.transform.position, worker.CurrentTask.transform.position) < 0.5f)
+        worker.transform.position = worker.workerMovement.Move(worker.transform.position); 
+        if (worker.workerMovement.IsAtDestination())
         {
+            Debug.Log("at destination");
             switch (worker.CurrentTask.TaskState)
             {
                 case TileStateManager.TaskStates.Harvest:
@@ -57,17 +55,27 @@ public class WorkerWalkingState : WorkerBaseState
                 case TileStateManager.TaskStates.Gather:
                     worker.SwitchState(worker.GatheringState);
                     break;
+                case TileStateManager.TaskStates.Storehouse:
+                    StorehouseManager.Instance.StoreItem(worker.HeldItem);
+                    worker.HeldItem = TileStateManager.ObjectStates.None;
+                    worker.FindNextTask();
+                    break;
                 case TileStateManager.TaskStates.None:
                     worker.FindNextTask();
                     break;
             }
-
         }
 
     }
 
     public override void ExitState(WorkerStateManager worker)
     {
-        // Remove navmesh target
+        // Remove navigation target
+        
+    }
+
+    public override void CancelAction(WorkerStateManager worker)
+    {
+
     }
 }

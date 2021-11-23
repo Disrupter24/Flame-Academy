@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class NavigationNode 
@@ -8,6 +9,8 @@ public class NavigationNode
     private int _hCost;
     private int _gCost;
     private NavigationNode _prevNode;
+    private bool _isOccupiedByWorker;
+    private WorkerStateManager _worker; 
 
     public NavigationNode(TileStateManager tile, Vector2 coordinates)
     {
@@ -34,6 +37,11 @@ public class NavigationNode
     {
         _tile = tile; 
     }
+
+    public Vector2 GetTileWorldPosition()
+    {
+        return _tile.transform.position;
+    }
     public void SetCoordinates(Vector2 coordinates)
     {
         _coordinates = coordinates;
@@ -48,10 +56,13 @@ public class NavigationNode
     {
         return _coordinates;
     }
-
+    public TileStateManager GetTile()
+    {
+        return _tile; 
+    }
     public bool GetTraversable()
     {
-        return _tile.WillCollide;
+        return !_tile.WillCollide;
     }
     public int GetFCost()
     {
@@ -75,6 +86,26 @@ public class NavigationNode
         _gCost = gCost;
     }
 
+    public void SetWorkerOnTile(WorkerStateManager worker)
+    {
+        _isOccupiedByWorker = true;
+        _worker = worker; 
 
+    }
+
+    public WorkerStateManager GetWorkerOnTile()
+    {
+        return _worker;
+    }
+
+    public bool HasWorkerOnTile()
+    {
+        return _isOccupiedByWorker;
+    }
+    public void RemoveWorkerFromTile()
+    {
+        _worker = null;
+        _isOccupiedByWorker = false;
+    }
 
 }

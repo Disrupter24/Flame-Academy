@@ -13,25 +13,29 @@ public class WorkerStateManager : MonoBehaviour
     public WorkerGatheringState GatheringState = new WorkerGatheringState();
     public WorkerHarvestingState HarvestingState = new WorkerHarvestingState();
     public WorkerIdleState IdleState = new WorkerIdleState();
+    public WorkerMovement workerMovement = new WorkerMovement();
 
     public bool IsSelected;
+    public bool ForceMove = false;
 
     // Tasks
     public List<TileStateManager> TaskList = new List<TileStateManager>();
     public TileStateManager CurrentTask;
+    public TileStateManager CancelledTask;
     public int CurrentTaskID;
+
+    // Item worker is carrying
+    public TileStateManager.ObjectStates HeldItem;
 
     // Misc. pointers
     private SpriteRenderer _sprite;
-    private Camera _camera;
 
     private void Awake()
     {
         // Initial state of worker
-        SwitchState(IdleState);
+        _currentState = IdleState;
 
         _sprite = gameObject.GetComponent<SpriteRenderer>();
-        _camera = Camera.main;
     }
 
     private void Update()
@@ -59,7 +63,9 @@ public class WorkerStateManager : MonoBehaviour
     {
         // Clear current task
         CurrentTask = null;
-        
+
+        Debug.Log("Finding task");
+
         // While there are tasks on the tasklist, search for nearest tile with a valid task
         while(CurrentTask == null && TaskList.Count > 0)
         {
@@ -80,7 +86,7 @@ public class WorkerStateManager : MonoBehaviour
             }
 
             // Check status of tile. If it has a task, set it as the current task
-            if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather)
+            if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather || ForceMove)
             {
                 CurrentTask = nearestTile;
                 CurrentTaskID = TaskList.IndexOf(nearestTile);
@@ -101,5 +107,46 @@ public class WorkerStateManager : MonoBehaviour
             SwitchState(IdleState);
         }
     }
+
+    public void CancelTask()
+    {
+        _currentState.CancelAction(this);
+    }
+
+    public void MoveTowardsEmptyTile()
+    {
+        Debug.Log("Moving to empty tile");
+        ForceMove = true;
+        FindNextTask();
+    }
+
+    public void CollectItem(TileStateManager.ObjectStates item)
+    {
+        HeldItem = item;
+        // Display visual for item...
+    }
+
+    public void DropItem()
+    {
+        Debug.Log("Dropping item");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, 0, 1 << 7);
+
+        if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
+        {
+            Debug.Log("hit tile");
+            TileStateManager tile = hit.collider.gameObject.GetComponent<TileStateManager>();
+            switch (HeldItem)
+            {
+                case TileStateManager.ObjectStates.Grass:
+                    tile.SwitchObjectState(tile.ObjectGrassState);
+                    break;
+                case TileStateManager.ObjectStates.Log:
+                    tile.SwitchObjectState(tile.ObjectLogState);
+                    break;
+            }
+            HeldItem = TileStateManager.ObjectStates.None;
+        }
+    }
+        
 
 }
