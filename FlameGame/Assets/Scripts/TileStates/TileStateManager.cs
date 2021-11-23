@@ -12,14 +12,14 @@ public class TileStateManager : MonoBehaviour
     public bool WillCollide;
 
     [HideInInspector]
-    public bool IsGhost = false;
+    public bool IsGhost = false; // Indicates that a worker intends to place fuel here
 
     [HideInInspector]
     public enum TaskStates //Information for workers
     {
         Harvest,
         Gather,
-        Placement,
+        PlaceFuel,
         Storehouse,
         Burning,
         None
@@ -54,6 +54,7 @@ public class TileStateManager : MonoBehaviour
     public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
     public TileObjectBrazierState ObjectBrazierState = new TileObjectBrazierState();
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
+
     protected void Start()
     {
         SetStartingState();
@@ -88,7 +89,7 @@ public class TileStateManager : MonoBehaviour
             ObjectState = ObjectStates.Grass;
 
             if (IsGhost)
-                TaskState = TaskStates.Placement;
+                TaskState = TaskStates.PlaceFuel;
             else
                 TaskState = TaskStates.Gather;
         }
@@ -97,7 +98,7 @@ public class TileStateManager : MonoBehaviour
             ObjectState = ObjectStates.Log;
 
             if (IsGhost)
-                TaskState = TaskStates.Placement;
+                TaskState = TaskStates.PlaceFuel;
             else
                 TaskState = TaskStates.Gather;
         }

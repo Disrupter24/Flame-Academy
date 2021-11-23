@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class StorehouseManager : MonoBehaviour
 {
@@ -24,6 +26,23 @@ public class StorehouseManager : MonoBehaviour
         }
     }
 
+    public static int Logs;
+    public static int Grass;
+    public TMP_Text LogText;
+    public TMP_Text GrassText;
+
+    public void Start()
+    {
+        //Set starting values of logs etc. according to the map.
+        Logs = 0;
+        Grass = 0;
+    }
+    public void UpdateStorehouseUI() // This will be called by the worker when they deposit resources into the storehouse to prevent every-frame checking.
+    {
+        LogText.text = ("Wood: " + Logs);
+        GrassText.text = ("Grass: " + Grass);
+    }
+
     public List<TileStateManager> Storehouses = new List<TileStateManager>();
 
     private void Awake()
@@ -33,7 +52,17 @@ public class StorehouseManager : MonoBehaviour
 
     public void StoreItem(TileStateManager.ObjectStates item)
     {
-        //Debug.Log("stored item");
+        switch(item)
+        {
+            case TileStateManager.ObjectStates.Log:
+                Logs += 1;
+                break;
+            case TileStateManager.ObjectStates.Grass:
+                Grass += 1;
+                break;
+        }
+
+        UpdateStorehouseUI();
     }
 
 }
