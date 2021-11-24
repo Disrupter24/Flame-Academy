@@ -15,6 +15,9 @@ public class TileObjectGoalpostState : TileObjectBaseState
     }
     public override void UpdateState(TileStateManager tile)
     {
-        // if temperature gets high enough, you win!
+        if (tile.FireStateManager.Temperature >= tile.FireStateManager.IgnitionTemperature)
+        {
+            tile.WinScreen.SetActive(true);
+        }
     }
 }

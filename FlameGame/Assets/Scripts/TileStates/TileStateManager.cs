@@ -51,6 +51,7 @@ public class TileStateManager : MonoBehaviour
     public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
     public TileObjectBrazierState ObjectBrazierState = new TileObjectBrazierState();
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
+    public GameObject WinScreen;
     public void Start()
     {
         SetStartingState();

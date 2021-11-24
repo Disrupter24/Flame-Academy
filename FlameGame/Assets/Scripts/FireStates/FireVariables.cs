@@ -26,12 +26,12 @@ public class FireVariables : MonoBehaviour
     public static int s_grassSpreadRadius = 1;
     public static float s_grassBurnTime = 3f;
     public static float s_grassHeatTransfer = 0.40f;
-    //Goalpost Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
-    public static int s_goalpostIgnitionTemperature = 250;
+    //Goalpost Properties
+    public static int s_goalpostIgnitionTemperature = 150;
     public static int s_goalpostSpreadRadius = 0;
     public static float s_goalpostBurnTime = 1f;
     public static float s_goalpostHeatTransfer = 0f;
-    //Brazier Properties PLACEHOLDER VALUES, TO BE OPTIMIZED
+    //Brazier Properties
     public static int s_brazierIgnitionTemperature = 100;
     public static int s_brazierSpreadRadius = 1;
     public static float s_brazierBurnTime = 200f;
