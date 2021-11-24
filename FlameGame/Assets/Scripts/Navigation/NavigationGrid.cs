@@ -7,11 +7,11 @@ public class NavigationGrid : MonoBehaviour
 
     //just for temporary 
     //contained in Level Class
-    private static TileStateManager [] allTilesOnMap;
+    private static TileStateManager [] s_allTilesOnMap;
     //public Vector2 bottomLeftCornerTilePosition; 
-    private static Vector2 startTilePosition;
+    private static Vector2 s_startTilePosition;
     //public Vector2 mapSize;
-    private static Vector2 mapDimention;
+    private static Vector2 s_mapDimention;
 
     [SerializeField]
     private Sprite _destinationMarker;
@@ -23,20 +23,19 @@ public class NavigationGrid : MonoBehaviour
   
 
 
-    private static List<NavigationNode> _path;
-    private static bool _hasStartedNavigating;
-    private static NavigationNode _currentNode; 
+    private static List<NavigationNode> s_path;
+    private static bool s_hasStartedNavigating;
 
-    private static NavigationGrid s_instance;
-    private static bool _isCalculatingNavigation;
-    private static NavigationNode[,] _nodeGrid;
-    private static int _mapHeight;
-    private static int _mapWidth;
+    private static bool s_isCalculatingNavigation;
+    private static NavigationNode[,] s_nodeGrid;
+    private static int s_mapHeight;
+    private static int s_mapWidth;
 
     [SerializeField]
-    private static int _tileDimention;
+    private static int s_tileDimention;
 
-    
+    private static NavigationGrid s_instance;
+
 
     public static NavigationGrid Instance
     {
@@ -65,8 +64,19 @@ public class NavigationGrid : MonoBehaviour
     //{
 
     //}
+
+    private void OnEnable()
+    {
+        GameAction.OnLevelStart += OnStartLevel;
+    }
+    private void OnDisable()
+    {
+        GameAction.OnLevelStart -= OnStartLevel;
+    }
+
     private void Start()
     {
+        //this will be removed eventually
         OnStartLevel();
         //startTilePosition = bottomLeftCornerTilePosition;
         //mapDimention = mapSize;
@@ -75,10 +85,10 @@ public class NavigationGrid : MonoBehaviour
 
     public static void OnStartLevel()
     {
-        allTilesOnMap = FindObjectsOfType<TileStateManager>();
-        _hasStartedNavigating = false;
-        DetermineLevelData(allTilesOnMap);
-        CreateGrid(allTilesOnMap);
+        s_allTilesOnMap = FindObjectsOfType<TileStateManager>();
+        s_hasStartedNavigating = false;
+        DetermineLevelData(s_allTilesOnMap);
+        CreateGrid(s_allTilesOnMap);
 
     }
     private static void DetermineLevelData(TileStateManager[] tileArray = null)
@@ -106,15 +116,17 @@ public class NavigationGrid : MonoBehaviour
 
 
         }
-        _tileDimention = (int)smallestTileDimention;
+        s_tileDimention = (int)smallestTileDimention;
 
-        mapWidth /= _tileDimention;
-        mapHeight /= _tileDimention;
-        smallestXValue /= _tileDimention;
-        smallestYValue /= _tileDimention;
-        mapDimention = new Vector2 (mapWidth, mapHeight);
-        startTilePosition = new Vector2(smallestXValue, smallestYValue);
-        Debug.Log("level dim " + mapDimention + " start " + startTilePosition + " tile dim " + _tileDimention);
+        mapWidth /= s_tileDimention;
+        mapHeight /= s_tileDimention;
+        smallestXValue /= s_tileDimention;
+        smallestYValue /= s_tileDimention;
+        s_mapWidth = mapWidth;
+        s_mapHeight = mapHeight;
+        s_mapDimention = new Vector2 (mapWidth, mapHeight);
+        s_startTilePosition = new Vector2(smallestXValue, smallestYValue);
+        Debug.Log("level dim " + s_mapDimention + " start " + s_startTilePosition + " tile dim " + s_tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
     {
@@ -122,7 +134,7 @@ public class NavigationGrid : MonoBehaviour
         int xIndex;
         int yIndex;
        // _nodeGrid = new NavigationNode[_mapWidth, _mapHeight];
-        _nodeGrid = new NavigationNode[(int) mapDimention.x, (int) mapDimention.y];
+        s_nodeGrid = new NavigationNode[(int) s_mapDimention.x, (int) s_mapDimention.y];
 
         NavigationNode newNode;
 
@@ -132,7 +144,7 @@ public class NavigationGrid : MonoBehaviour
             xIndex = GetXIndex(worldPosition.x); 
             yIndex = GetYIndex(worldPosition.y);
             newNode = new NavigationNode(tile, xIndex, yIndex);
-            _nodeGrid[xIndex, yIndex] = newNode;
+            s_nodeGrid[xIndex, yIndex] = newNode;
 
         }
 
@@ -178,12 +190,12 @@ public class NavigationGrid : MonoBehaviour
     }
     public static void SetGridHeight(int height)
     {
-        _mapHeight = height;
+        s_mapHeight = height;
     }
 
     public static void SetGridWidth(int width)
     {
-        _mapWidth = width;
+        s_mapWidth = width;
     }
 
     public static TileStateManager GetTile(float xPos, float yPos)
@@ -251,7 +263,7 @@ public class NavigationGrid : MonoBehaviour
     }
     public static NavigationNode GetNode(int i , int j)
     {
-        return _nodeGrid[i, j];
+        return s_nodeGrid[i, j];
     }
 
     public static NavigationNode GetNode(float xPos, float yPos)
@@ -317,13 +329,13 @@ public class NavigationGrid : MonoBehaviour
 
     public static bool IsValidLocation(Vector2 coordinates, int i, int j)
     {
-        if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1 || (i == coordinates.x && j == coordinates.y)) return false;
+        if (i < 0 || i > s_mapDimention.x - 1 || j < 0 || j > s_mapDimention.y - 1 || (i == coordinates.x && j == coordinates.y)) return false;
         return true;
     }
 
     public static bool IsValidLocation(int i, int j)
     {
-        if (i < 0 || i > mapDimention.x - 1 || j < 0 || j > mapDimention.y - 1) return false;
+        if (i < 0 || i > s_mapDimention.x - 1 || j < 0 || j > s_mapDimention.y - 1) return false;
         return true;
     }
     public static List<NavigationNode> GetNeighbours(Vector2 coordinates, bool checkDiagonal=true, bool checkTraversable=false, bool checkOccupied = false, NavigationNode endNode = null)
@@ -351,11 +363,11 @@ public class NavigationGrid : MonoBehaviour
                     {
                         int x = i;
                         int y = (int)coordinates.y;
-                        if ((!IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null || !_nodeGrid[x, y].GetTraversable()))
+                        if ((!IsValidLocation(coordinates, x, y) || s_nodeGrid[x, y] == null || !s_nodeGrid[x, y].GetTraversable()))
                             continue;
                         x = (int)coordinates.x;
                         y = j;
-                        if ((!IsValidLocation(coordinates, x, y) || _nodeGrid[x, y] == null || !_nodeGrid[x, y].GetTraversable()))
+                        if ((!IsValidLocation(coordinates, x, y) || s_nodeGrid[x, y] == null || !s_nodeGrid[x, y].GetTraversable()))
                             continue;
 
                     }
@@ -363,14 +375,14 @@ public class NavigationGrid : MonoBehaviour
                 }
                 
 
-                if (_nodeGrid[i, j] != null)
+                if (s_nodeGrid[i, j] != null)
                 {
-                    if (checkOccupied && _nodeGrid[i, j].HasWorkerOnTile()) continue;
+                    if (checkOccupied && s_nodeGrid[i, j].HasWorkerOnTile()) continue;
 
 
-                    if ((endNode != null && _nodeGrid[i,j] == endNode) || !checkTraversable || (checkTraversable && _nodeGrid[i, j].GetTraversable()))
+                    if ((endNode != null && s_nodeGrid[i,j] == endNode) || !checkTraversable || (checkTraversable && s_nodeGrid[i, j].GetTraversable()))
                     {
-                        neighbours.Add(_nodeGrid[i, j]);
+                        neighbours.Add(s_nodeGrid[i, j]);
                     }
 
                 }
@@ -403,21 +415,21 @@ public class NavigationGrid : MonoBehaviour
     }
     public static bool IsReadyToCalculateNavigation()
     {
-        return _isCalculatingNavigation;
+        return s_isCalculatingNavigation;
     }
     public static Vector2 GetPathNodePosition(int nodeNumber)
     {
-        return _path[nodeNumber].GetCoordinates();
+        return s_path[nodeNumber].GetCoordinates();
     }
 
     public static int GetXIndex(float x)
     {
-        return Mathf.FloorToInt(x / _tileDimention) - (int)startTilePosition.x;
+        return Mathf.FloorToInt(x / s_tileDimention) - (int)s_startTilePosition.x;
     }
 
     public static int GetYIndex(float y)
     {
-        return Mathf.FloorToInt(y / _tileDimention) - (int)startTilePosition.y;
+        return Mathf.FloorToInt(y / s_tileDimention) - (int)s_startTilePosition.y;
 
     }
 
@@ -471,9 +483,9 @@ public class NavigationGrid : MonoBehaviour
     }
     public static NavigationPath CalculatePath(NavigationNode startNode, NavigationNode endNode)
     {
-        _hasStartedNavigating = false;
-        _isCalculatingNavigation = true;
-        _path = new List<NavigationNode>();
+        s_hasStartedNavigating = false;
+        s_isCalculatingNavigation = true;
+        s_path = new List<NavigationNode>();
         List<NavigationNode> _openNodeList = new List<NavigationNode>();
         List<NavigationNode> _closedNodeList = new List<NavigationNode>();
         _openNodeList.Add(startNode);
