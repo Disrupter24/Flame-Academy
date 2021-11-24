@@ -51,7 +51,7 @@ public class TileStateManager : MonoBehaviour
     public TileObjectStoreState ObjectStoreState = new TileObjectStoreState();
     public TileObjectBrazierState ObjectBrazierState = new TileObjectBrazierState();
     public TileObjectWallState ObjectWallState = new TileObjectWallState();
-    protected void Start()
+    public void Start()
     {
         SetStartingState();
         currentObjectState.EnterState(this);
@@ -65,6 +65,7 @@ public class TileStateManager : MonoBehaviour
     {
         currentObjectState = state;
         UpdateEnumState("Object");
+        FireStateManager.FireParticles.SetActive(false);
         state.EnterState(this);
     }
     public void ResetProperties()

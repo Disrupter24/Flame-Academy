@@ -23,7 +23,6 @@ public class FireStateManager : MonoBehaviour
     public FuelTypes FuelType;
     protected void Start()
     {
-
         SetProperties(FuelType);
         currentState = NoneState;
         currentState.EnterState(this);
@@ -40,8 +39,8 @@ public class FireStateManager : MonoBehaviour
     }
     public void BurnOut()
     {
-        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
         FireParticles.SetActive(false);
+        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
     }
     public void ReloadFire()
     {

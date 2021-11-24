@@ -12,6 +12,7 @@ public class TileObjectBrazierState : TileObjectBaseState
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[0];
+        tile.FireStateManager.Temperature = tile.FireStateManager.IgnitionTemperature;
     }
     public override void UpdateState(TileStateManager tile)
     {
