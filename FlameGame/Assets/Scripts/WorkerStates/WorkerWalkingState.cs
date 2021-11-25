@@ -5,7 +5,7 @@ public class WorkerWalkingState : WorkerBaseState
     // This function defines the worker's walking behaviour
     // The worker will move towards a target (probably using a navmesh)
     // Upon reaching the target, the worker will enter a new state based on the nature of the target
-    // For example, if the target is a tile with a tree, the worker will enter "WorkerChoppingState"
+    // For example, if the target is a tile with a tree, the worker will enter "WorkerHarvestingState"
 
     // Worker identifies the nearest tile and moves towards it
     // Worker checks tile status when it starts moving and when it arrives
@@ -14,50 +14,75 @@ public class WorkerWalkingState : WorkerBaseState
     // Chop down trees
     // If all tiles in selection are burning, workers immolate themselves
 
-    float movementTimer;
     public override void EnterState(WorkerStateManager worker)
     {
-        Debug.Log("entered moving state");
-
         // Enter walking animation state
 
         // If current tile no longer has a task, remove it from the list and find the next one
-        if (!worker.ForceMove && !(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Storehouse))
+        if (!worker.ForceMove && !(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Storehouse || worker.CurrentTask.TaskState == TileStateManager.TaskStates.PlaceFuel))
         {
             worker.FindNextTask();
         }
-        Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
+
+        //Debug.Log("starting path at worker position " + worker.transform.position + " target position " +  worker.CurrentTask.transform.position);
         worker.workerMovement.MoveTo(worker,worker.transform.position, worker.CurrentTask.transform.position);
-        movementTimer = 0;
     }
 
     public override void UpdateState(WorkerStateManager worker)
     {
-        // If worker has reached the target, check the target's status
 
+        // Worker movement
+        worker.transform.position = worker.workerMovement.Move(worker.transform.position);
+
+        // If worker has reached the target, check the target's status
         /*
          * If it's a tree (or other resource), enter harvestingstate
          * If it's fuel, enter gatheringstate
-         * If it's a storehouse, deposit held item
+         * If it's fuel placement, put that fuel down
+         * If it's a storehouse, deposit held item. If tasked with placing fuel, grab required fuel and go to location
          * If it's empty (because another worker got there first), worker.FindNextTask();
          */
-
-        // Move towards target (I hate this movement logic but it's temporary)
-        worker.transform.position = worker.workerMovement.Move(worker.transform.position); 
         if (worker.workerMovement.IsAtDestination())
         {
-            Debug.Log("at destination");
             switch (worker.CurrentTask.TaskState)
             {
                 case TileStateManager.TaskStates.Harvest:
                     worker.SwitchState(worker.HarvestingState);
                     break;
                 case TileStateManager.TaskStates.Gather:
-                    worker.SwitchState(worker.GatheringState);
+                    if(!worker.PlacingFuel)
+                    {
+                        worker.SwitchState(worker.GatheringState);
+                    }
+                    else
+                    {
+                        worker.FindNextTask();
+                    }
+                    break;
+                case TileStateManager.TaskStates.PlaceFuel:
+                    // Place fuel on ground
+                    worker.CurrentTask.ToggleGhost(false, worker.HeldItem);
+                    worker.HeldItem = TileStateManager.ObjectStates.None;
+                    worker.CurrentTask.TaskState = TileStateManager.TaskStates.Gather;
+                    worker.FindNextTask();
                     break;
                 case TileStateManager.TaskStates.Storehouse:
-                    StorehouseManager.Instance.StoreItem(worker.HeldItem);
-                    worker.HeldItem = TileStateManager.ObjectStates.None;
+                    // Place held item in storehouse
+                    Debug.Log("Found " + worker.CurrentTask.ObjectState);
+                    if(worker.HeldItem != TileStateManager.ObjectStates.None)
+                    {
+                        StorehouseManager.Instance.MoveItem(worker.HeldItem, true);
+                        worker.HeldItem = TileStateManager.ObjectStates.None;
+                    }
+                    // If next task is to take fuel, remove fuel from storehouse
+                    if(worker.TaskList.Count > 0)
+                    {
+                        if (worker.TaskList[0].TaskState == TileStateManager.TaskStates.PlaceFuel && StorehouseManager.Instance.CheckRemainingFuel(worker.TaskList[0].ObjectState) > 0)
+                        {
+                            StorehouseManager.Instance.MoveItem(worker.TaskList[0].ObjectState, false);
+                            worker.HeldItem = worker.TaskList[0].ObjectState;
+                        }
+                    }
                     worker.FindNextTask();
                     break;
                 case TileStateManager.TaskStates.None:

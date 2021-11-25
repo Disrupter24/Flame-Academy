@@ -23,6 +23,7 @@ public class WorkerStateManager : MonoBehaviour
     public TileStateManager CurrentTask;
     public TileStateManager CancelledTask;
     public int CurrentTaskID;
+    public bool PlacingFuel;
 
     // Item worker is carrying
     public TileStateManager.ObjectStates HeldItem;
@@ -64,8 +65,6 @@ public class WorkerStateManager : MonoBehaviour
         // Clear current task
         CurrentTask = null;
 
-        Debug.Log("Finding task");
-
         // While there are tasks on the tasklist, search for nearest tile with a valid task
         while(CurrentTask == null && TaskList.Count > 0)
         {
@@ -81,6 +80,7 @@ public class WorkerStateManager : MonoBehaviour
                 if (tileDistance < nearestTileDistance)
                 {
                     nearestTile = tile;
+                    nearestTileDistance = tileDistance;
                 }
 
             }
@@ -88,12 +88,44 @@ public class WorkerStateManager : MonoBehaviour
             // Check status of tile. If it has a task, set it as the current task
             if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather || ForceMove)
             {
-                CurrentTask = nearestTile;
-                CurrentTaskID = TaskList.IndexOf(nearestTile);
+                // If a worker is placing fuel, we want them to ignore all other types of tasks (otherwise they can pick up fuel placed by other workers)
+                if (!PlacingFuel)
+                {
+                    CurrentTask = nearestTile;
+                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                }
+            }
+
+            if(nearestTile.TaskState == TileStateManager.TaskStates.PlaceFuel)
+            {
+                PlacingFuel = true;
+                if(HeldItem != nearestTile.ObjectState)
+                {
+                    // Get item from storehouse if needed
+                    if(StorehouseManager.Instance.CheckRemainingFuel(nearestTile.ObjectState) > 0)
+                    {
+                        CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
+                        CurrentTaskID = TaskList.IndexOf(nearestTile);
+                    }
+                    else
+                    {
+                        TaskList.Clear();
+                    }
+                }
+                else
+                {
+                    CurrentTask = nearestTile;
+                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                    TaskList.Remove(nearestTile);
+                }
+            }
+            else
+            {
+                // Now that the task has been handled, it's removed from the list
+                // Don't want to do this if placing fuel because that's a 2-part task
+                TaskList.Remove(nearestTile);
             }
             
-            // Now that the task has been handled, it's removed from the list
-            TaskList.Remove(nearestTile);
             
         }
 
@@ -115,7 +147,6 @@ public class WorkerStateManager : MonoBehaviour
 
     public void MoveTowardsEmptyTile()
     {
-        Debug.Log("Moving to empty tile");
         ForceMove = true;
         FindNextTask();
     }
@@ -133,7 +164,6 @@ public class WorkerStateManager : MonoBehaviour
 
         if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
         {
-            Debug.Log("hit tile");
             TileStateManager tile = hit.collider.gameObject.GetComponent<TileStateManager>();
             switch (HeldItem)
             {

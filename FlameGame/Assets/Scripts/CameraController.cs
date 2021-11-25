@@ -32,10 +32,6 @@ public class CameraController : MonoBehaviour
         {
             cameraPosition.x += PanSpeed * Time.deltaTime;
         }
-        /*if (Input.GetKeyDown(KeyCode.Mouse2))
-        {
-            Debug.Log("Mouse 2 ");
-        }*/
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         OrtographicCamera.orthographicSize -= scroll * ScrollSpeed * 100f * Time.deltaTime;
