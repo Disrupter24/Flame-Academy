@@ -13,8 +13,6 @@ public class WorkerHarvestingState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
-        Debug.Log("Entered harvesting state");
-
         // Change tile's task state to none
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 

@@ -13,8 +13,6 @@ public class WorkerGatheringState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
-        Debug.Log("Entered gathering state");
-
         // Change tile's task state to none
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 
@@ -38,22 +36,7 @@ public class WorkerGatheringState : WorkerBaseState
             // Change tile's object state
             worker.CurrentTask.SwitchObjectState(worker.CurrentTask.ObjectEmptyState);
 
-            // Find nearest storehouse tile
-            TileStateManager nearestStorehouse = null;
-            float nearestStorehouseDistance = 100000; // Arbitrarily large float
-
-            foreach (TileStateManager storehouse in StorehouseManager.Instance.Storehouses)
-            {
-                // Check distance to tile
-                float tileDistance = Vector2.Distance(storehouse.transform.position, worker.transform.position);
-
-                // Get nearest tile
-                if (tileDistance < nearestStorehouseDistance)
-                {
-                    nearestStorehouse = storehouse;
-                }
-
-            }
+            TileStateManager nearestStorehouse = StorehouseManager.Instance.FindNearestStorehouse(worker);
 
             if(nearestStorehouse != null)
             {
