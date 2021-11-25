@@ -29,6 +29,7 @@ public class FireStateManager : MonoBehaviour
     }
     protected void Update()
     {
+        Debug.Log(IgnitionTemperature);
         currentState.UpdateState(this);
     }
     public void SwitchState(FireBaseState state)
@@ -38,8 +39,8 @@ public class FireStateManager : MonoBehaviour
     }
     public void BurnOut()
     {
-        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
         FireParticles.SetActive(false);
+        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
     }
     public void ReloadFire()
     {
