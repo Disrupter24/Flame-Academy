@@ -114,7 +114,7 @@ public class NavigationGrid : MonoBehaviour
         smallestYValue /= _tileDimention;
         mapDimention = new Vector2 (mapWidth, mapHeight);
         startTilePosition = new Vector2(smallestXValue, smallestYValue);
-        Debug.Log("level dim " + mapDimention + " start " + startTilePosition + " tile dim " + _tileDimention);
+        //Debug.Log("level dim " + mapDimention + " start " + startTilePosition + " tile dim " + _tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
     {
@@ -300,7 +300,7 @@ public class NavigationGrid : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("retreating");
+                    //Debug.Log("retreating");
                     currentNode = currentNode.GetPreviousNode();
                     endNode = currentNode;
                 }
@@ -439,7 +439,7 @@ public class NavigationGrid : MonoBehaviour
                 endNode = tempNode;
             } else
             {
-                Debug.Log("TempNode == null");
+                //Debug.Log("TempNode == null");
             }
         }
 
@@ -450,7 +450,7 @@ public class NavigationGrid : MonoBehaviour
 
     private static NavigationNode GetClosestNavigationNode(NavigationNode blockedPosition, NavigationNode startPosition)
     {
-        Debug.Log("Finding another Close Navigation Node");
+        //Debug.Log("Finding another Close Navigation Node");
         List<NavigationNode> neighbours = GetNeighbours(blockedPosition.GetCoordinates(), false, true, true);
         NavigationNode newUnblockedNode = null;
         if (neighbours.Count == 0) return null;

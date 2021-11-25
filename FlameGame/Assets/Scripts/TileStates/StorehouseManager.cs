@@ -28,6 +28,8 @@ public class StorehouseManager : MonoBehaviour
 
     public static int Logs;
     public static int Grass;
+    public static int GhostLogs; // Need to track ghostlogs because we don't want the number of ghostlogs to exceed the number of logs available
+    public static int GhostGrass;
     public TMP_Text LogText;
     public TMP_Text GrassText;
 
@@ -36,6 +38,8 @@ public class StorehouseManager : MonoBehaviour
         //Set starting values of logs etc. according to the map.
         Logs = 0;
         Grass = 0;
+        GhostLogs = 0;
+        GhostGrass = 0;
     }
     public void UpdateStorehouseUI() // This will be called by the worker when they deposit resources into the storehouse to prevent every-frame checking.
     {
@@ -50,19 +54,81 @@ public class StorehouseManager : MonoBehaviour
         _instance = this;
     }
 
-    public void StoreItem(TileStateManager.ObjectStates item)
+    public void MoveItem(TileStateManager.ObjectStates item, bool puttingIn)
     {
-        switch(item)
+        switch (item)
         {
             case TileStateManager.ObjectStates.Log:
-                Logs += 1;
+                if (puttingIn)
+                {
+                    Logs += 1;
+                }
+                else
+                {
+                    Logs -= 1;
+                    GhostLogs -= 1;
+                }
                 break;
             case TileStateManager.ObjectStates.Grass:
-                Grass += 1;
+                if (puttingIn)
+                {
+                    Grass += 1;
+                }
+                else
+                {
+                    Grass -= 1;
+                    GhostGrass -= 1;
+                }
                 break;
         }
 
         UpdateStorehouseUI();
     }
 
+    public TileStateManager FindNearestStorehouse(WorkerStateManager worker)
+    {
+        // Used by workers to find the nearest storehouse
+        TileStateManager nearestStorehouse = null;
+        float nearestStorehouseDistance = 100000; // Arbitrarily large float
+
+        foreach (TileStateManager storehouse in StorehouseManager.Instance.Storehouses)
+        {
+            // Check distance to tile
+            float tileDistance = Vector2.Distance(storehouse.transform.position, worker.transform.position);
+
+            // Get nearest tile
+            if (tileDistance < nearestStorehouseDistance)
+            {
+                nearestStorehouse = storehouse;
+                nearestStorehouseDistance = tileDistance;
+            }
+
+        }
+
+        return nearestStorehouse;
+    }
+
+    public int CheckRemainingFuel(TileStateManager.ObjectStates fuelType)
+    {
+        switch (fuelType)
+        {
+            case TileStateManager.ObjectStates.Log:
+                return Logs;
+            case TileStateManager.ObjectStates.Grass:
+                return Grass;
+        }
+        return 0;
+    }
+
+    public int CheckGhostFuel(TileStateManager.ObjectStates fuelType)
+    {
+        switch (fuelType)
+        {
+            case TileStateManager.ObjectStates.Log:
+                return GhostLogs;
+            case TileStateManager.ObjectStates.Grass:
+                return GhostGrass;
+        }
+        return 0;
+    }
 }

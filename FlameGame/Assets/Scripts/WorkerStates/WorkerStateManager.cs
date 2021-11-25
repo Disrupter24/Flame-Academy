@@ -64,8 +64,6 @@ public class WorkerStateManager : MonoBehaviour
         // Clear current task
         CurrentTask = null;
 
-        Debug.Log("Finding task");
-
         // While there are tasks on the tasklist, search for nearest tile with a valid task
         while(CurrentTask == null && TaskList.Count > 0)
         {
@@ -81,6 +79,7 @@ public class WorkerStateManager : MonoBehaviour
                 if (tileDistance < nearestTileDistance)
                 {
                     nearestTile = tile;
+                    nearestTileDistance = tileDistance;
                 }
 
             }
@@ -91,9 +90,29 @@ public class WorkerStateManager : MonoBehaviour
                 CurrentTask = nearestTile;
                 CurrentTaskID = TaskList.IndexOf(nearestTile);
             }
+
+            if(nearestTile.TaskState == TileStateManager.TaskStates.PlaceFuel)
+            {
+                if(HeldItem != nearestTile.ObjectState)
+                {
+                    // Get item from storehouse if needed
+                    CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
+                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                }
+                else
+                {
+                    CurrentTask = nearestTile;
+                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                    TaskList.Remove(nearestTile);
+                }
+            }
+            else
+            {
+                // Now that the task has been handled, it's removed from the list
+                // Don't want to do this if placing fuel because that's a 2-part task
+                TaskList.Remove(nearestTile);
+            }
             
-            // Now that the task has been handled, it's removed from the list
-            TaskList.Remove(nearestTile);
             
         }
 
@@ -115,7 +134,6 @@ public class WorkerStateManager : MonoBehaviour
 
     public void MoveTowardsEmptyTile()
     {
-        Debug.Log("Moving to empty tile");
         ForceMove = true;
         FindNextTask();
     }
@@ -133,7 +151,6 @@ public class WorkerStateManager : MonoBehaviour
 
         if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
         {
-            Debug.Log("hit tile");
             TileStateManager tile = hit.collider.gameObject.GetComponent<TileStateManager>();
             switch (HeldItem)
             {
