@@ -11135,7 +11135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4736627219771074621, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: TaskState
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4736627219771074621, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: ObjectState
