@@ -13,7 +13,7 @@ public class WorkerMovement
     private GameObject _destinationMarker;
     private GameObject _targetMarker; 
     // have a data class to hold all this information like speeds and such. 
-    private float _movementSpeed = 1.0f;
+    private float _movementSpeed = 8.0f;
     private void Start()
     {
         _isMoving = false;
