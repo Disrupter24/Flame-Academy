@@ -50,7 +50,14 @@ public class WorkerWalkingState : WorkerBaseState
                     worker.SwitchState(worker.HarvestingState);
                     break;
                 case TileStateManager.TaskStates.Gather:
-                    worker.SwitchState(worker.GatheringState);
+                    if(!worker.PlacingFuel)
+                    {
+                        worker.SwitchState(worker.GatheringState);
+                    }
+                    else
+                    {
+                        worker.FindNextTask();
+                    }
                     break;
                 case TileStateManager.TaskStates.PlaceFuel:
                     // Place fuel on ground
@@ -77,7 +84,6 @@ public class WorkerWalkingState : WorkerBaseState
                         }
                     }
                     worker.FindNextTask();
-                    
                     break;
                 case TileStateManager.TaskStates.None:
                     worker.FindNextTask();

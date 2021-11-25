@@ -23,6 +23,7 @@ public class WorkerStateManager : MonoBehaviour
     public TileStateManager CurrentTask;
     public TileStateManager CancelledTask;
     public int CurrentTaskID;
+    public bool PlacingFuel;
 
     // Item worker is carrying
     public TileStateManager.ObjectStates HeldItem;
@@ -87,17 +88,29 @@ public class WorkerStateManager : MonoBehaviour
             // Check status of tile. If it has a task, set it as the current task
             if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather || ForceMove)
             {
-                CurrentTask = nearestTile;
-                CurrentTaskID = TaskList.IndexOf(nearestTile);
+                // If a worker is placing fuel, we want them to ignore all other types of tasks (otherwise they can pick up fuel placed by other workers)
+                if (!PlacingFuel)
+                {
+                    CurrentTask = nearestTile;
+                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                }
             }
 
             if(nearestTile.TaskState == TileStateManager.TaskStates.PlaceFuel)
             {
+                PlacingFuel = true;
                 if(HeldItem != nearestTile.ObjectState)
                 {
                     // Get item from storehouse if needed
-                    CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
-                    CurrentTaskID = TaskList.IndexOf(nearestTile);
+                    if(StorehouseManager.Instance.CheckRemainingFuel(nearestTile.ObjectState) > 0)
+                    {
+                        CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
+                        CurrentTaskID = TaskList.IndexOf(nearestTile);
+                    }
+                    else
+                    {
+                        TaskList.Clear();
+                    }
                 }
                 else
                 {

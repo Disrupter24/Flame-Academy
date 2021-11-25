@@ -20,9 +20,16 @@ public class ClickManager : MonoBehaviour
     private Vector2 _targetingStartPositionWorld;
     [SerializeField] private RectTransform _targetingBox;
 
-    
+    [SerializeField] private GameObject _treeButton;
+    [SerializeField] private GameObject _grassButton;
+
     private bool _placingFuel = false;
     private TileStateManager.ObjectStates _fuelToPlace;
+
+    private void Start()
+    {
+        ToggleStorehouseButtons(false);
+    }
 
     private void Update()
     {
@@ -30,11 +37,18 @@ public class ClickManager : MonoBehaviour
         ManageRightClick();
     }
 
+    private void ToggleStorehouseButtons(bool isEnabled)
+    {
+        _treeButton.GetComponent<Button>().enabled = isEnabled;
+        _treeButton.GetComponent<Image>().enabled = isEnabled;
+        _grassButton.GetComponent<Button>().enabled = isEnabled;
+        _grassButton.GetComponent<Image>().enabled = isEnabled;
+    }
+
     public void ButtonWoodPointerDown()
     {
         _canDrawSelectionBox = false;
     }
-
     public void ButtonWoodOnClick()
     {
         _placingFuel = true;
@@ -106,6 +120,7 @@ public class ClickManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _placingFuel = false;
+            ToggleStorehouseButtons(false);
 
             // Set selection box start point
             _selectionStartPositionCanvas = Input.mousePosition;
@@ -114,7 +129,6 @@ public class ClickManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            // ONLY DO THIS STUFF WHEN NOT IN STOREHOUSE MODE
             // Display selection box according to selection start position and current mouse position
             if (!_selectionBox.gameObject.activeInHierarchy)
             {
@@ -133,8 +147,7 @@ public class ClickManager : MonoBehaviour
         {
             // Hide selection box
             _selectionBox.gameObject.SetActive(false);
-
-            // DO NOT DESELECT WORKERS IF CLICKING STOREHOUSE BUTTON
+            
             // Deselect currently selected workers
             foreach (WorkerStateManager worker in _workersSelected)
             {
@@ -154,7 +167,7 @@ public class ClickManager : MonoBehaviour
                 {
                     _workersSelected.Add(worker);
                     worker.IsSelected = true;
-                    // DISPLAY BUTTONS FOR STOREHOUSE COMMANDS
+                    ToggleStorehouseButtons(true);
                 }
             }
         }
@@ -273,8 +286,11 @@ public class ClickManager : MonoBehaviour
             Vector3 currentMousePosition = GetMousePositionInWorld();
 
             // If the worker is currently placing fuel, cancel fuel tasks and remove ghosts
+            // FEATURE TO ADD: worker does not drop item if the player instructs them to visit a storehouse
             foreach (WorkerStateManager worker in _workersSelected)
             {
+                worker.PlacingFuel = false;
+
                 if(worker.CurrentTask != null)
                 {
                     if (worker.CurrentTask.TaskState == TileStateManager.TaskStates.PlaceFuel)
