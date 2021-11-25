@@ -16,6 +16,7 @@ public class FireStateManager : MonoBehaviour
     [HideInInspector] public float HeatTransfer;
     public SpriteRenderer SpriteRenderer;
     public GameObject FireParticles;
+    public bool StartsBurning;
     public enum FuelTypes
     {
         Log, Tree, Grass, Goalpost, Brazier
@@ -26,10 +27,13 @@ public class FireStateManager : MonoBehaviour
         SetProperties(FuelType);
         currentState = NoneState;
         currentState.EnterState(this);
+        if (StartsBurning)
+        {
+            Temperature = IgnitionTemperature;
+        }
     }
     protected void Update()
     {
-        Debug.Log(IgnitionTemperature);
         currentState.UpdateState(this);
     }
     public void SwitchState(FireBaseState state)
@@ -41,6 +45,7 @@ public class FireStateManager : MonoBehaviour
     {
         FireParticles.SetActive(false);
         TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
+        SwitchState(NoneState);
     }
     public void ReloadFire()
     {
