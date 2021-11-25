@@ -108,6 +108,8 @@ public class StorehouseManager : MonoBehaviour
         return nearestStorehouse;
     }
 
+    // Remember that fuel is stored globally, not per storehouse
+    // (I forgot this and it caused me some pain and confusion)
     public int CheckRemainingFuel(TileStateManager.ObjectStates fuelType)
     {
         switch (fuelType)
