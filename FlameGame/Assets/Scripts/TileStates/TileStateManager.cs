@@ -11,6 +11,8 @@ public class TileStateManager : MonoBehaviour
     public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
 
+    [HideInInspector]
+    public bool IsGhost = false; // Indicates that a worker intends to place fuel here
 
     [HideInInspector]
     public enum TaskStates //Information for workers
@@ -18,6 +20,7 @@ public class TileStateManager : MonoBehaviour
         Harvest,
         Gather,
         Storehouse,
+        PlaceFuel,
         Burning,
         None
     }
@@ -62,6 +65,33 @@ public class TileStateManager : MonoBehaviour
         currentObjectState.UpdateState(this);
     }
 
+    public void ToggleGhost(bool becomeGhost, ObjectStates fuelToPlace)
+    {
+        if (becomeGhost)
+        {
+            IsGhost = true;
+            ObjectRenderer.color = new Color(0.1420879f, 0.7886239f, 1, 0.5f);
+            switch (fuelToPlace)
+            {
+                case ObjectStates.Log:
+                    StorehouseManager.GhostLogs += 1;
+                    break;
+                case ObjectStates.Grass:
+                    StorehouseManager.GhostGrass += 1;
+                    break;
+            }
+        }
+        else
+        {
+            IsGhost = false;
+            ObjectRenderer.color = Color.white;
+            if (fuelToPlace == ObjectStates.None)
+            {
+                SwitchObjectState(ObjectEmptyState);
+            }
+        }
+    }
+
     public void SwitchObjectState(TileObjectBaseState state)
     {
         currentObjectState = state;
@@ -72,7 +102,10 @@ public class TileStateManager : MonoBehaviour
     public void ResetProperties()
     {
         FireStateManager.Temperature = 0;
-        ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
+        if (!IsGhost)
+        {
+            ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
+        }
     }
     public void UpdateEnumState(string type)
     {
@@ -87,11 +120,21 @@ public class TileStateManager : MonoBehaviour
             {
                 ObjectState = ObjectStates.Grass;
                 TaskState = TaskStates.Gather;
+
+                if (IsGhost)
+                    TaskState = TaskStates.PlaceFuel;
+                else
+                    TaskState = TaskStates.Gather;
             }
             else if (currentObjectState == ObjectLogState)
             {
                 ObjectState = ObjectStates.Log;
                 TaskState = TaskStates.Gather;
+
+                if (IsGhost)
+                    TaskState = TaskStates.PlaceFuel;
+                else
+                    TaskState = TaskStates.Gather;
             }
             else if (currentObjectState == ObjectTreeState)
             {

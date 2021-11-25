@@ -68,6 +68,7 @@ public class WorkerWalkingState : WorkerBaseState
                     break;
                 case TileStateManager.TaskStates.Storehouse:
                     // Place held item in storehouse
+                    Debug.Log("Found " + worker.CurrentTask.ObjectState);
                     if(worker.HeldItem != TileStateManager.ObjectStates.None)
                     {
                         StorehouseManager.Instance.MoveItem(worker.HeldItem, true);
@@ -76,11 +77,10 @@ public class WorkerWalkingState : WorkerBaseState
                     // If next task is to take fuel, remove fuel from storehouse
                     if(worker.TaskList.Count > 0)
                     {
-                        if (worker.TaskList[0].TaskState == TileStateManager.TaskStates.PlaceFuel)
+                        if (worker.TaskList[0].TaskState == TileStateManager.TaskStates.PlaceFuel && StorehouseManager.Instance.CheckRemainingFuel(worker.TaskList[0].ObjectState) > 0)
                         {
                             StorehouseManager.Instance.MoveItem(worker.TaskList[0].ObjectState, false);
                             worker.HeldItem = worker.TaskList[0].ObjectState;
-                            //worker.workerMovement.MoveTo(worker, worker.transform.position, worker.CurrentTask.transform.position);
                         }
                     }
                     worker.FindNextTask();

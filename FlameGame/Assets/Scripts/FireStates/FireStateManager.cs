@@ -29,7 +29,7 @@ public class FireStateManager : MonoBehaviour
     }
     protected void Update()
     {
-        Debug.Log(IgnitionTemperature);
+        //Debug.Log(IgnitionTemperature);
         currentState.UpdateState(this);
     }
     public void SwitchState(FireBaseState state)
