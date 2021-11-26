@@ -6458,6 +6458,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 420944911436749369}
     m_Modifications:
+    - target: {fileID: 159589337618989591, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 420944911436749374}
+    - target: {fileID: 159589337618989591, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 159589338042510309, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 420944911436749374}
+    - target: {fileID: 159589338042510309, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToWorldMap
+      objectReference: {fileID: 0}
     - target: {fileID: 159589338431719732, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -22749,6 +22765,7 @@ GameObject:
   - component: {fileID: 420944911436749368}
   - component: {fileID: 420944911436749371}
   - component: {fileID: 420944911436749370}
+  - component: {fileID: 420944911436749374}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -22756,6 +22773,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &420944911436749374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420944911436749373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc25688ee678084080b2365218186d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PauseMenu: {fileID: 0}
+  IsPaused: 0
 --- !u!1 &420944912415019008
 GameObject:
   m_ObjectHideFlags: 0
