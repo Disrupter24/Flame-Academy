@@ -15,9 +15,11 @@ public class FireStateManager : MonoBehaviour
     [HideInInspector] public float MaxBurnTime;
     [HideInInspector] public float HeatTransfer;
     public SpriteRenderer SpriteRenderer;
+    public GameObject FireParticles;
+    public bool StartsBurning;
     public enum FuelTypes
     {
-        Log, Tree, Grass
+        Log, Tree, Grass, Goalpost, Brazier
     }
     public FuelTypes FuelType;
     protected void Start()
@@ -25,6 +27,10 @@ public class FireStateManager : MonoBehaviour
         SetProperties(FuelType);
         currentState = NoneState;
         currentState.EnterState(this);
+        if (StartsBurning)
+        {
+            Temperature = IgnitionTemperature;
+        }
     }
     protected void Update()
     {
@@ -37,8 +43,9 @@ public class FireStateManager : MonoBehaviour
     }
     public void BurnOut()
     {
-        Destroy(gameObject);
-        TileManager.SwitchTaskState(TileManager.TaskEmptyState);
+        FireParticles.SetActive(false);
+        TileManager.SwitchObjectState(TileManager.ObjectEmptyState);
+        SwitchState(NoneState);
     }
     public void ReloadFire()
     {
@@ -70,6 +77,22 @@ public class FireStateManager : MonoBehaviour
                     SpreadRadius = FireVariables.s_grassSpreadRadius;
                     BurnTime = FireVariables.s_grassBurnTime;
                     HeatTransfer = FireVariables.s_grassHeatTransfer;
+                    break;
+                }
+            case FuelTypes.Goalpost:
+                {
+                    IgnitionTemperature = FireVariables.s_goalpostIgnitionTemperature;
+                    SpreadRadius = FireVariables.s_goalpostSpreadRadius;
+                    BurnTime = FireVariables.s_goalpostBurnTime;
+                    HeatTransfer = FireVariables.s_goalpostHeatTransfer;
+                    break;
+                }
+            case FuelTypes.Brazier:
+                {
+                    IgnitionTemperature = FireVariables.s_brazierIgnitionTemperature;
+                    SpreadRadius = FireVariables.s_brazierSpreadRadius;
+                    BurnTime = FireVariables.s_brazierBurnTime;
+                    HeatTransfer = FireVariables.s_brazierHeatTransfer;
                     break;
                 }
         }

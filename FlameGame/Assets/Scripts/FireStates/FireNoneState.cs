@@ -6,10 +6,7 @@ public class FireNoneState : FireBaseState
 {
     public override void EnterState(FireStateManager fire)
     {
-        if (fire.Temperature >= fire.IgnitionTemperature)
-        {
-            fire.SwitchState(fire.FullState);
-        }
+        fire.FireParticles.SetActive(false);
     }
     public override void UpdateState(FireStateManager fire)
     {

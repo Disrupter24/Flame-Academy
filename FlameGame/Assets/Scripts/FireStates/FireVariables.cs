@@ -5,6 +5,8 @@ using UnityEngine;
 public class FireVariables : MonoBehaviour
 {
     public static FireStateManager[] s_listOfCombustibles;
+    public static TileStateManager[] s_listOfTiles;
+    public GameObject LoseMenu;
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
@@ -23,10 +25,43 @@ public class FireVariables : MonoBehaviour
     //Grass Properties
     public static int s_grassIgnitionTemperature = 50;
     public static int s_grassSpreadRadius = 1;
-    public static float s_grassBurnTime = 2f;
-    public static float s_grassHeatTransfer = 0.25f;
+    public static float s_grassBurnTime = 3f;
+    public static float s_grassHeatTransfer = 0.40f;
+    //Goalpost Properties
+    public static int s_goalpostIgnitionTemperature = 150;
+    public static int s_goalpostSpreadRadius = 0;
+    public static float s_goalpostBurnTime = 1f;
+    public static float s_goalpostHeatTransfer = 0f;
+    //Brazier Properties
+    public static int s_brazierIgnitionTemperature = 100;
+    public static int s_brazierSpreadRadius = 1;
+    public static float s_brazierBurnTime = 200f;
+    public static float s_brazierHeatTransfer = 0.06f;
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
+        s_listOfTiles = FindObjectsOfType<TileStateManager>();
+
+        // Compile starting list of storehouses
+        foreach(TileStateManager tile in s_listOfTiles)
+        {
+            if(tile.TaskState == TileStateManager.TaskStates.Storehouse)
+            {
+                StorehouseManager.Instance.Storehouses.Add(tile);
+            }
+        }
+        InvokeRepeating("LossCheck", 5f, 5f);
+    }
+
+    private void LossCheck()
+    {
+        for (int i = 0; i < s_listOfCombustibles.Length; i++)
+        {
+            if (s_listOfCombustibles[i].currentState != s_listOfCombustibles[i].NoneState && s_listOfCombustibles[i].enabled)
+            {
+                return;
+            }
+        }
+        LoseMenu.SetActive(true);
     }
 }

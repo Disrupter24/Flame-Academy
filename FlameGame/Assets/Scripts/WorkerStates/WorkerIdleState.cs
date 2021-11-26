@@ -5,7 +5,7 @@ public class WorkerIdleState : WorkerBaseState
 
     public override void EnterState(WorkerStateManager worker)
     {
-        Debug.Log("Entered idle state");
+        worker.CurrentTask = null;
     }
 
     public override void UpdateState(WorkerStateManager worker)
@@ -14,6 +14,11 @@ public class WorkerIdleState : WorkerBaseState
     }
 
     public override void ExitState(WorkerStateManager worker)
+    {
+
+    }
+
+    public override void CancelAction(WorkerStateManager worker)
     {
 
     }
