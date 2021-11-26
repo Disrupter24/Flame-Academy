@@ -30,7 +30,7 @@ public class FireFullState : FireBaseState
             {
                 if (Vector2.Distance(FireVariables.s_listOfCombustibles[i].transform.position, fire.transform.position) < (fire.SpreadRadius + 1) && (FireVariables.s_listOfCombustibles[i].currentState == FireVariables.s_listOfCombustibles[i].NoneState))
                 {
-                    if(FireVariables.s_listOfCombustibles[i].Temperature < 2 * FireVariables.s_listOfCombustibles[i].IgnitionTemperature)
+                    if(FireVariables.s_listOfCombustibles[i].Temperature < 2 * FireVariables.s_listOfCombustibles[i].IgnitionTemperature && !FireVariables.s_listOfCombustibles[i].TileManager.IsGhost)
                     {
                         FireVariables.s_listOfCombustibles[i].Temperature += (Time.deltaTime * fire.HeatTransfer * fire.Temperature);
                     }

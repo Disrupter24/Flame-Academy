@@ -43436,8 +43436,8 @@ MonoBehaviour:
   _overMaterialACursor: {fileID: 11400000, guid: 67f7df8381d95fa45b51dd929bde4f40, type: 2}
   _overMaterialBCursor: {fileID: 11400000, guid: 6735b4c19735c0847a859ec8f5d315e2, type: 2}
   _overWorkerCursor: {fileID: 11400000, guid: 341999e693067774b8689957208ea506, type: 2}
-  _drawWoodCursor: {fileID: 0}
-  _drawGrassCursor: {fileID: 0}
+  _drawWoodCursor: {fileID: 11400000, guid: 39278d1e3d0944a4d92e02a2085ab872, type: 2}
+  _drawGrassCursor: {fileID: 11400000, guid: 4af2bb19d055d3e45bb8adfe167dc435, type: 2}
   _selectedMaterialCursor: {fileID: 11400000, guid: 5ca5297f1cd145943b9022ff50a609fd, type: 2}
   _selectedWorkerCursor: {fileID: 11400000, guid: 291f64a74c710694d8d96ffe52dd80e6, type: 2}
   _startSelectionCursor: {fileID: 11400000, guid: 80431555657c0a6488ce7558528e77a7, type: 2}
