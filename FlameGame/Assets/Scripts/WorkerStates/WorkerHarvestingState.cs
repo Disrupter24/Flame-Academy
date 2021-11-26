@@ -39,6 +39,8 @@ public class WorkerHarvestingState : WorkerBaseState
         // Could also switch out the whole thing for coroutines
 
         _harvestTimer += Time.deltaTime;
+        worker.gameObject.GetComponent<SoundEffects>().PlayChopSound(Time.deltaTime);
+
         if(_harvestTimer >= _totalHarvestingTime)
         {
             // Change tile's object state
