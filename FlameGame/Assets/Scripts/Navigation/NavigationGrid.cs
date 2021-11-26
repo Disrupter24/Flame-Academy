@@ -111,7 +111,7 @@ public class NavigationGrid : MonoBehaviour
 
             if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = ((int) tile.transform.position.y - (int) smallestYValue) + 1;
 
-            if (tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
+            if ( tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
 
 
         }
@@ -125,7 +125,7 @@ public class NavigationGrid : MonoBehaviour
         s_mapHeight = mapHeight;
         s_mapDimention = new Vector2 (mapWidth, mapHeight);
         s_startTilePosition = new Vector2(smallestXValue, smallestYValue);
-        //Debug.Log("level dim " + s_mapDimention + " start " + s_startTilePosition + " tile dim " + s_tileDimention);
+        Debug.Log("level dim " + s_mapDimention + " start " + s_startTilePosition + " tile dim " + s_tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
     {
@@ -142,6 +142,7 @@ public class NavigationGrid : MonoBehaviour
             worldPosition = tile.transform.position;
             xIndex = GetXIndex(worldPosition.x); 
             yIndex = GetYIndex(worldPosition.y);
+            Debug.Log(xIndex + " " + yIndex + " " + worldPosition);
             newNode = new NavigationNode(tile, xIndex, yIndex);
             s_nodeGrid[xIndex, yIndex] = newNode;
 
@@ -423,12 +424,17 @@ public class NavigationGrid : MonoBehaviour
 
     public static int GetXIndex(float x)
     {
-        return Mathf.FloorToInt(x / s_tileDimention) - (int)s_startTilePosition.x;
+        return (int)(x / s_tileDimention) - (int)s_startTilePosition.x;
+        //return Mathf.FloorToInt(x / s_tileDimention) - Mathf.FloorToInt(s_startTilePosition.x);
+        //return Mathf.CeilToInt(x / s_tileDimention) - (int)s_startTilePosition.x;
     }
 
     public static int GetYIndex(float y)
     {
-        return Mathf.FloorToInt(y / s_tileDimention) - (int)s_startTilePosition.y;
+        return (int)(y / s_tileDimention) - (int)s_startTilePosition.y;
+
+        // return Mathf.CeilToInt(y / s_tileDimention) - (int)s_startTilePosition.y;
+        // return Mathf.FloorToInt(y / s_tileDimention) - Mathf.FloorToInt(s_startTilePosition.y);
 
     }
 
