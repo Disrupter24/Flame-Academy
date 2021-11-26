@@ -14,6 +14,6 @@ public class TileObjectBrazierState : TileObjectBaseState
     }
     public override void UpdateState(TileStateManager tile)
     {
-
+        tile.FireStateManager.BrazierBar.value = (tile.FireStateManager.BurnTime / tile.FireStateManager.MaxBurnTime);
     }
 }
