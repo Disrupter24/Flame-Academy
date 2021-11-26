@@ -13,30 +13,30 @@ public class FireVariables : MonoBehaviour
     public static int s_objectSpreadRadius = int; (radius in tiles, example: 1 would spread the fire to the 8 tiles surrounding it)
     public static float s_objectBurnTime = float; (in seconds)*/
     //Wood Properties
-    public static int s_woodIgnitionTemperature = 200;
+    public static int s_woodIgnitionTemperature = 100;
     public static int s_woodSpreadRadius = 1;
     public static float s_woodBurnTime = 15f;
-    public static float s_woodHeatTransfer = 0.1f;
+    public static float s_woodHeatTransfer = 0.2f;
     //Tree Properties
-    public static int s_treeIgnitionTemperature = 250;
+    public static int s_treeIgnitionTemperature = 125;
     public static int s_treeSpreadRadius = 1;
     public static float s_treeBurnTime = 25f;
-    public static float s_treeHeatTransfer = 0.06f;
+    public static float s_treeHeatTransfer = 0.12f;
     //Grass Properties
-    public static int s_grassIgnitionTemperature = 50;
+    public static int s_grassIgnitionTemperature = 25;
     public static int s_grassSpreadRadius = 1;
     public static float s_grassBurnTime = 3f;
-    public static float s_grassHeatTransfer = 0.40f;
+    public static float s_grassHeatTransfer = 0.80f;
     //Goalpost Properties
-    public static int s_goalpostIgnitionTemperature = 150;
+    public static int s_goalpostIgnitionTemperature = 75;
     public static int s_goalpostSpreadRadius = 0;
     public static float s_goalpostBurnTime = 1f;
     public static float s_goalpostHeatTransfer = 0f;
     //Brazier Properties
-    public static int s_brazierIgnitionTemperature = 100;
+    public static int s_brazierIgnitionTemperature = 200;
     public static int s_brazierSpreadRadius = 1;
     public static float s_brazierBurnTime = 200f;
-    public static float s_brazierHeatTransfer = 0.06f;
+    public static float s_brazierHeatTransfer = 0.12f;
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
