@@ -71,22 +71,7 @@ public class WorkerStateManager : MonoBehaviour
         // While there are tasks on the tasklist, search for nearest tile with a valid task
         while(CurrentTask == null && TaskList.Count > 0)
         {
-            // Find nearest tile with a task available
-            TileStateManager nearestTile = null;
-            float nearestTileDistance = 100000; // Arbitrarily large float
-            foreach (TileStateManager tile in TaskList)
-            {
-                // Check distance to tile
-                float tileDistance = Vector2.Distance(tile.transform.position, gameObject.transform.position);
-
-                // Get nearest tile
-                if (tileDistance < nearestTileDistance)
-                {
-                    nearestTile = tile;
-                    nearestTileDistance = tileDistance;
-                }
-
-            }
+            TileStateManager nearestTile = FindNearestTask();
 
             // Check status of tile. If it has a task, set it as the current task
             if (nearestTile.TaskState == TileStateManager.TaskStates.Harvest || nearestTile.TaskState == TileStateManager.TaskStates.Gather || ForceMove)
@@ -97,24 +82,33 @@ public class WorkerStateManager : MonoBehaviour
                     CurrentTask = nearestTile;
                     CurrentTaskID = TaskList.IndexOf(nearestTile);
                 }
+                else
+                {
+                    TaskList.Remove(nearestTile);
+                    FindNextTask();
+                }
             }
 
             if(nearestTile.TaskState == TileStateManager.TaskStates.PlaceFuel)
             {
                 PlacingFuel = true;
                 FuelToPlace = nearestTile.ObjectState;
-                if(HeldItem != FuelToPlace)
+                // Get item from storehouse if needed
+                if (HeldItem != FuelToPlace)
                 {
-                    // Get item from storehouse if needed
+                    // If the storehouse has the requisite fuel
                     if(StorehouseManager.Instance.CheckRemainingFuel(FuelToPlace) > 0)
                     {
                         CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
                     }
+                    // Otherwise, iterate to next tile
                     else
                     {
-                        TaskList.Clear();
+                        TaskList.Remove(nearestTile);
+                        FindNextTask();
                     }
                 }
+                // If th worker has the item already, just go for it
                 else
                 {
                     CurrentTask = nearestTile;
@@ -180,6 +174,26 @@ public class WorkerStateManager : MonoBehaviour
             HeldItem = TileStateManager.ObjectStates.None;
         }
     }
-        
 
+    public TileStateManager FindNearestTask()
+    {
+        // Find nearest tile with a task available
+        TileStateManager nearestTile = null;
+        float nearestTileDistance = 100000; // Arbitrarily large float
+        foreach (TileStateManager tile in TaskList)
+        {
+            // Check distance to tile
+            float tileDistance = Vector2.Distance(tile.transform.position, gameObject.transform.position);
+
+            // Get nearest tile
+            if (tileDistance < nearestTileDistance)
+            {
+                nearestTile = tile;
+                nearestTileDistance = tileDistance;
+            }
+
+        }
+
+        return nearestTile;
+    }
 }

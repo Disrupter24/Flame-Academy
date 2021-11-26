@@ -76,11 +76,22 @@ public class WorkerWalkingState : WorkerBaseState
                     // If next task is to take fuel, remove fuel from storehouse
                     if(worker.TaskList.Count > 0)
                     {
-                        if (worker.TaskList[0].TaskState == TileStateManager.TaskStates.PlaceFuel && StorehouseManager.Instance.CheckRemainingFuel(worker.FuelToPlace) > 0)
+                        if(worker.TaskList[0].TaskState == TileStateManager.TaskStates.PlaceFuel)
                         {
-                            StorehouseManager.Instance.MoveItem(worker.FuelToPlace, false);
-                            worker.HeldItem = worker.FuelToPlace;
+                            TileStateManager nearestTile = worker.FindNearestTask();
+                            worker.FuelToPlace = nearestTile.ObjectState;
+
+                            if (StorehouseManager.Instance.CheckRemainingFuel(worker.FuelToPlace) > 0)
+                            {
+                                StorehouseManager.Instance.MoveItem(worker.FuelToPlace, false);
+                                worker.HeldItem = worker.FuelToPlace;
+                            }
                         }
+                        else
+                        {
+                            worker.TaskList.RemoveAt(0);
+                        }
+                        
                     }
                     worker.FindNextTask();
                     break;
