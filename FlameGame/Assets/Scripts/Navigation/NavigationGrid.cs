@@ -156,11 +156,15 @@ public class NavigationGrid : MonoBehaviour
     }
     public void DestroyMarker(GameObject marker)
     {
+        foreach (Transform markerPart in transform)
+        {
+            Destroy(markerPart);
+        }
         Destroy(marker);
     }
     public GameObject SetDestinationMarker(Vector2 position)
     {
-        GameObject marker = Instantiate(new GameObject());
+        GameObject marker = new GameObject();
         SpriteRenderer spriteRenderer = marker.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = _destinationMarker;
         marker.transform.position = position;
@@ -168,12 +172,12 @@ public class NavigationGrid : MonoBehaviour
     }
     public GameObject SetTargetMarker(Vector2 position)
     {
-        GameObject parent = Instantiate(new GameObject());
+        GameObject parent = new GameObject();
         parent.AddComponent<TargetAlternatingSprites>();
 
 
-        GameObject childMarker1 = Instantiate(new GameObject());
-        GameObject childMarker2 = Instantiate(new GameObject());
+        GameObject childMarker1 = new GameObject();
+        GameObject childMarker2 = new GameObject();
         childMarker1.transform.position = Vector2.zero;
         childMarker1.transform.parent = parent.transform;
         childMarker2.transform.position = Vector2.zero;

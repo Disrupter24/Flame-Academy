@@ -1,6 +1,6 @@
 
+using System.Collections.Generic;
 using UnityEngine;
-
 public class NavigationNode 
 {
     private TileStateManager _tile;
@@ -10,7 +10,9 @@ public class NavigationNode
     private int _gCost;
     private NavigationNode _prevNode;
     private bool _isOccupiedByWorker;
-    private WorkerStateManager _worker; 
+    private WorkerStateManager _worker;
+    private List <WorkerStateManager> _workers;
+    private int MaxWorkersOnNode = 4;
 
     public NavigationNode(TileStateManager tile, Vector2 coordinates)
     {

@@ -19,6 +19,13 @@ public class WorkerGatheringState : WorkerBaseState
         // Enter animation state and set timer
         _totalGatheringTime = 2f;
         _gatheringTimer = 0;
+
+        if (worker.CurrentTask.ObjectState == TileStateManager.ObjectStates.Grass)
+        {
+            worker.gameObject.GetComponent<SoundEffects>().PlaySwingSound();
+        }
+
+
     }
 
     public override void UpdateState(WorkerStateManager worker)
@@ -26,12 +33,19 @@ public class WorkerGatheringState : WorkerBaseState
         // Very basic timer. If we have "halfway" animations for resources being harvested, will have to figure that out
         // Could also switch out the whole thing for coroutines
 
+        //if (worker.CurrentTask.ObjectState == TileStateManager.ObjectStates.Grass)
+       // {
+       //     worker.gameObject.GetComponent<SoundEffects>().PlaySwingSound(Time.deltaTime);
+       // }
+
+
         _gatheringTimer += Time.deltaTime;
         if (_gatheringTimer >= _totalGatheringTime)
         {
 
             // Worker picks up item
             worker.CollectItem(worker.CurrentTask.ObjectState);
+            worker.gameObject.GetComponent<SoundEffects>().PlayPickup();
 
             // Change tile's object state
             worker.CurrentTask.SwitchObjectState(worker.CurrentTask.ObjectEmptyState);

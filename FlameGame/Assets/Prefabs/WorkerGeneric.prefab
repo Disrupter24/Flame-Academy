@@ -149,6 +149,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 891132b933223564c9ccd02d98ec1a70, type: 3}
   - {fileID: 8300000, guid: ea45f090a6bb4d348b9c3ec3d66eca15, type: 3}
   - {fileID: 8300000, guid: 850fdd4220c643f41a7034a899ed4b10, type: 3}
+  SwingSounds:
+  - {fileID: 8300000, guid: c2c88b30aa243bb418114e3ff93887ad, type: 3}
+  - {fileID: 8300000, guid: efba7009df6886e4582e50ba8727d940, type: 3}
+  DropInStoreHouse: {fileID: 8300000, guid: 332dc50294ca7f144a9ad8b5f49000b3, type: 3}
+  DropOnGrass: {fileID: 8300000, guid: ee74892d125721c4ba81b4ec2b99ba95, type: 3}
+  Pickup: {fileID: 8300000, guid: 65de43e90ddf97645bb3d147c06b3fe6, type: 3}
 --- !u!82 &2538721675887380010
 AudioSource:
   m_ObjectHideFlags: 0

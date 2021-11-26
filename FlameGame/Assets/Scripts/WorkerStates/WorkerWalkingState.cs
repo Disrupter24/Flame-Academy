@@ -61,6 +61,7 @@ public class WorkerWalkingState : WorkerBaseState
                     break;
                 case TileStateManager.TaskStates.PlaceFuel:
                     // Place fuel on ground
+                    worker.gameObject.GetComponent<SoundEffects>().PlayDropOnGrass();
                     worker.CurrentTask.ToggleGhost(false, worker.HeldItem);
                     worker.HeldItem = TileStateManager.ObjectStates.None;
                     worker.CurrentTask.TaskState = TileStateManager.TaskStates.Gather;
@@ -68,8 +69,11 @@ public class WorkerWalkingState : WorkerBaseState
                     break;
                 case TileStateManager.TaskStates.Storehouse:
                     // Place held item in storehouse
-                    if(worker.HeldItem != TileStateManager.ObjectStates.None)
+
+
+                    if (worker.HeldItem != TileStateManager.ObjectStates.None)
                     {
+                        worker.gameObject.GetComponent<SoundEffects>().PlayDropInStoreHouse();
                         StorehouseManager.Instance.MoveItem(worker.HeldItem, true);
                         worker.HeldItem = TileStateManager.ObjectStates.None;
                     }
@@ -83,6 +87,7 @@ public class WorkerWalkingState : WorkerBaseState
 
                             if (StorehouseManager.Instance.CheckRemainingFuel(worker.FuelToPlace) > 0)
                             {
+                                worker.gameObject.GetComponent<SoundEffects>().PlayPickup();
                                 StorehouseManager.Instance.MoveItem(worker.FuelToPlace, false);
                                 worker.HeldItem = worker.FuelToPlace;
                             }
