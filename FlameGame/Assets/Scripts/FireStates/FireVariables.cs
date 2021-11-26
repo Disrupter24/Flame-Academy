@@ -13,12 +13,12 @@ public class FireVariables : MonoBehaviour
     public static int s_objectSpreadRadius = int; (radius in tiles, example: 1 would spread the fire to the 8 tiles surrounding it)
     public static float s_objectBurnTime = float; (in seconds)*/
     //Wood Properties
-    public static int s_woodIgnitionTemperature = 250;
+    public static int s_woodIgnitionTemperature = 200;
     public static int s_woodSpreadRadius = 1;
     public static float s_woodBurnTime = 15f;
     public static float s_woodHeatTransfer = 0.1f;
     //Tree Properties
-    public static int s_treeIgnitionTemperature = 500;
+    public static int s_treeIgnitionTemperature = 250;
     public static int s_treeSpreadRadius = 1;
     public static float s_treeBurnTime = 25f;
     public static float s_treeHeatTransfer = 0.06f;
