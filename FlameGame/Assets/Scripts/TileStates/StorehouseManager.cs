@@ -53,7 +53,12 @@ public class StorehouseManager : MonoBehaviour
     {
         _instance = this;
     }
-
+    public void SetStartingResources(int startingLogs, int startingGrass)
+    {
+        Logs = startingLogs;
+        Grass = startingGrass;
+        UpdateStorehouseUI();
+    }
     public void MoveItem(TileStateManager.ObjectStates item, bool puttingIn)
     {
         switch (item)

@@ -29,6 +29,7 @@ public class ClickManager : MonoBehaviour
     private void Start()
     {
         ToggleStorehouseButtons(false);
+        UIAction.OnCursorIdle();
     }
 
     private void Update()

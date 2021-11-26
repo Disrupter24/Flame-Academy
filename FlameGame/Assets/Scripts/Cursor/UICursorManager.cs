@@ -263,6 +263,7 @@ public class UICursorManager : MonoBehaviour
     private void StopScrolling()
     {
         _isScrollCursor = false;
+        if (_prevCursor != null)
         ChangeCursor(_prevCursorState,_prevCursor,false);
     }
 
