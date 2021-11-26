@@ -4935,8 +4935,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: World Map
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6311,8 +6311,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Replay
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6445,8 +6445,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: World Map
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12798,6 +12798,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: buttonCanvas 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7079343735288370703, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+    - target: {fileID: 7079343735288370703, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
     - target: {fileID: 7079343736102627876, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12910,6 +12918,14 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ButtonGrassPointerDown
       objectReference: {fileID: 0}
+    - target: {fileID: 7079343736822414188, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+    - target: {fileID: 7079343736822414188, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
     - target: {fileID: 7079343736876359488, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -17974,8 +17990,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You Lose!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -19556,8 +19572,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Replay
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -19807,25 +19823,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1241983353}
-    - target: {fileID: 159589337618989591, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Resume
-      objectReference: {fileID: 0}
     - target: {fileID: 159589338042510309, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1241983353}
-    - target: {fileID: 159589338042510309, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToWorldMap
-      objectReference: {fileID: 0}
     - target: {fileID: 159589338431719732, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_Name
       value: PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 159589338431719732, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_Pivot.x
@@ -19862,18 +19866,6 @@ PrefabInstance:
     - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6125
-      objectReference: {fileID: 0}
-    - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5875
-      objectReference: {fileID: 0}
-    - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.03274
       objectReference: {fileID: 0}
     - target: {fileID: 159589338431719735, guid: 8affe01a2ac773749866bcfbb1bd5dda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20597,8 +20589,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Level Complete!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 009c940f9db54414985a57e85376796a, type: 2}
+  m_sharedMaterial: {fileID: -3220476788678302251, guid: 009c940f9db54414985a57e85376796a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -22166,32 +22158,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1241983352}
     m_Modifications:
-    - target: {fileID: 5960535139713475641, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_Text
-      value: "Pop Quiz: In this test we want to clear a path to the goal by cutting
-        down the trees. We can do this by harnessing the power of our left hand and
-        right hand. \n\nleft hand (left click / left click and drag)\n\nand \n\nright
-        hand (right click / right click and drag). \n\nSelect both Workers with the
-        left hand (left click and drag).\n\nThen \n\nCommand them to perform a task
-        by using your right hand (right click and drag over the trees). \n\nGood
-        luck. The Test begins now!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535139713475646, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 648.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535139713475646, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 440.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535139713475646, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535139713475646, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -45.35
-      objectReference: {fileID: 0}
     - target: {fileID: 5960535140304123714, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -22279,30 +22245,6 @@ PrefabInstance:
     - target: {fileID: 5960535140304123715, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
       propertyPath: m_Name
       value: Tutorial Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535140881108224, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_FontData.m_MinSize
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535140881108224, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535141321818934, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 224.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535141321818934, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 69.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535141321818934, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 5960535141321818934, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -278.29
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49a58de7b826e4142ac017c05621ac33, type: 3}
