@@ -57,7 +57,6 @@ public class NavigationGrid : MonoBehaviour
     private void Awake()
     {
         s_instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     //private NavigationNode GetNavigationNodeFromPosition(float x, float y)
