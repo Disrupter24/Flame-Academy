@@ -12,6 +12,7 @@ public class TileObjectTreeState : TileObjectBaseState
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[4];
+        //tile.ObjectRenderer.
     }
     public override void UpdateState(TileStateManager tile)
     {

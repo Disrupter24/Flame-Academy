@@ -204,6 +204,7 @@ public class ClickManager : MonoBehaviour
         
         if (Input.GetMouseButton(1) && StorehouseManager.Instance.CheckRemainingFuel(_fuelToPlace) > StorehouseManager.Instance.CheckGhostFuel(_fuelToPlace))
         {
+            
             RaycastHit2D hit = Physics2D.Raycast(GetMousePositionInWorld(), Vector2.zero, 0, 1 << 7);
 
             if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)

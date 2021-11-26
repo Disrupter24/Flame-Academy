@@ -6,6 +6,7 @@ public class FireVariables : MonoBehaviour
 {
     public static FireStateManager[] s_listOfCombustibles;
     public static TileStateManager[] s_listOfTiles;
+    public GameObject LoseMenu;
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
@@ -49,5 +50,18 @@ public class FireVariables : MonoBehaviour
                 StorehouseManager.Instance.Storehouses.Add(tile);
             }
         }
+        InvokeRepeating("LossCheck", 5f, 5f);
+    }
+
+    private void LossCheck()
+    {
+        for (int i = 0; i < s_listOfCombustibles.Length; i++)
+        {
+            if (s_listOfCombustibles[i].currentState != s_listOfCombustibles[i].NoneState && s_listOfCombustibles[i].enabled)
+            {
+                return;
+            }
+        }
+        LoseMenu.SetActive(true);
     }
 }
