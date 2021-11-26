@@ -40,14 +40,12 @@ public class WorkerGatheringState : WorkerBaseState
 
             if(nearestStorehouse != null)
             {
-                //Debug.Log("found storehouse");
                 // Set storehouse as next task
                 worker.CurrentTask = nearestStorehouse;
                 worker.SwitchState(worker.WalkingState);
             }
             else
             {
-                //Debug.Log("no storehouse");
                 // If there are no storehouses, workers will just look for the next task
                 worker.FindNextTask();
             }
