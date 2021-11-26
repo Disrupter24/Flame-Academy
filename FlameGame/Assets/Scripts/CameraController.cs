@@ -18,27 +18,27 @@ public class CameraController : MonoBehaviour
         Vector3 cameraPosition = transform.position;
 
         bool isStillScrolling = false;
-        if (Input.GetKey(KeyCode.UpArrow) || Input.mousePosition.y >= Screen.height - PanBorderThickness)
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.mousePosition.y >= Screen.height - PanBorderThickness)
         {
             cameraPosition.y += PanSpeed * Time.deltaTime;
             UIAction.OnCursorScroll(UICursorManager.Direction.N);
             isStillScrolling = true;
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.mousePosition.y <= PanBorderThickness)
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.mousePosition.y <= PanBorderThickness)
         {
             cameraPosition.y -= PanSpeed * Time.deltaTime;
             UIAction.OnCursorScroll(UICursorManager.Direction.S);
             isStillScrolling = true;
 
         }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.mousePosition.x <= PanBorderThickness)
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.mousePosition.x <= PanBorderThickness)
         {
             cameraPosition.x -= PanSpeed * Time.deltaTime;
             UIAction.OnCursorScroll(UICursorManager.Direction.W);
             isStillScrolling = true;
 
         }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.mousePosition.x >= Screen.width - PanBorderThickness)
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.mousePosition.x >= Screen.width - PanBorderThickness)
         {
             cameraPosition.x += PanSpeed * Time.deltaTime;
             UIAction.OnCursorScroll(UICursorManager.Direction.E);

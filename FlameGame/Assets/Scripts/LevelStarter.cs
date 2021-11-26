@@ -46,19 +46,19 @@ public class LevelStarter : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && NextUpLevel != null && (level.IsComplete || NextUpLevel.GetComponent<LevelStarter>().level.IsComplete))
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && NextUpLevel != null && (level.IsComplete || NextUpLevel.GetComponent<LevelStarter>().level.IsComplete))
         {
             IsMovingUp = true;
         }
-        if (Input.GetKeyDown(KeyCode.A) && NextLeftLevel != null && (level.IsComplete || NextLeftLevel.GetComponent<LevelStarter>().level.IsComplete))
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && NextLeftLevel != null && (level.IsComplete || NextLeftLevel.GetComponent<LevelStarter>().level.IsComplete))
         {
             IsMovingLeft = true;
         }
-        if (Input.GetKeyDown(KeyCode.S) && NextDownLevel != null && (level.IsComplete || NextDownLevel.GetComponent<LevelStarter>().level.IsComplete))
+        if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) && NextDownLevel != null && (level.IsComplete || NextDownLevel.GetComponent<LevelStarter>().level.IsComplete))
         {
             IsMovingDown = true;
         }
-        if (Input.GetKeyDown(KeyCode.D) && NextRightLevel != null && (level.IsComplete || NextRightLevel.GetComponent<LevelStarter>().level.IsComplete))
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) && NextRightLevel != null && (level.IsComplete || NextRightLevel.GetComponent<LevelStarter>().level.IsComplete))
         {
             IsMovingRight = true;
         }
