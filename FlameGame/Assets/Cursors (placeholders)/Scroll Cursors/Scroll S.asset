@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
   m_Name: Scroll S
   m_EditorClassIdentifier: 
-  _isAnimated: 0
+  _isAnimated: 1
   _cursorTextures:
   - {fileID: 2800000, guid: 2225de9251385724e946e76b9bba100a, type: 3}
-  _offsetFromMousePosition: {x: 0, y: 0}
-  _animationTimeInSeconds: 0
+  - {fileID: 2800000, guid: cc1dc77e9bc13d049bf39c38777f9f7b, type: 3}
+  - {fileID: 2800000, guid: 811952a90e9352a4d96fa6a906dee8ee, type: 3}
+  _offsetFromMousePosition: {x: 0, y: 48}
+  _animationTimeInSeconds: 0.8

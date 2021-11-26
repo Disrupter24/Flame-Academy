@@ -12,8 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
   m_Name: Selected Worker
   m_EditorClassIdentifier: 
-  _isAnimated: 0
+  _isAnimated: 1
   _cursorTextures:
   - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: e9d15e88790828e4383db4e2c26f0c48, type: 3}
+  - {fileID: 2800000, guid: 120dbbc8427a61649bb1c65955a63108, type: 3}
+  - {fileID: 2800000, guid: 3df60748916aa04409f1eb849efb6331, type: 3}
+  - {fileID: 2800000, guid: 722aa8f888e15ce41b9c36e690c797ee, type: 3}
+  - {fileID: 2800000, guid: 947b6352ca91d9d48b5eaa1c0f98f942, type: 3}
+  - {fileID: 2800000, guid: d0aa60edd30d6fc409ce4a60a9c9750f, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
+  - {fileID: 2800000, guid: def92f2abe3763b4eb038f69e348f952, type: 3}
   _offsetFromMousePosition: {x: 8, y: 8}
-  _animationTimeInSeconds: 0
+  _animationTimeInSeconds: 4
+  _animateOnlyOnce: 1

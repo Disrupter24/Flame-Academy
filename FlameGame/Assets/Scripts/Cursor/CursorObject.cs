@@ -47,6 +47,9 @@ public class CursorObject : ScriptableObject
         [SerializeField]
         [Range(0.0f, 5.0f)]
         private float _animationTimeInSeconds = 1.0f;
+
+        [SerializeField]
+        private bool _animateOnlyOnce = false; 
         private IEnumerator _animationCoroutine; 
 
     public void OnCursorStart()
@@ -85,5 +88,10 @@ public class CursorObject : ScriptableObject
     public float GetTimePerAnimationFrame()
     {
         return (_animationTimeInSeconds / _cursorTextures.Count);
+    }
+
+    public bool GetAnimateOnlyOnce()
+    {
+        return _animateOnlyOnce;
     }
 }

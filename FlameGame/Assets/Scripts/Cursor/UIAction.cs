@@ -14,7 +14,8 @@ public static class UIAction
     //public static Action OnCursorMaterialSelected;
     public static Action OnCursorStartSelection;
     public static Action OnCursorDrawWood;
-    public static Action OnCursorDrawGrass; 
+    public static Action OnCursorDrawGrass;
+    public static Action OnCursorScrollStop; 
 
     public static Action OnCursorWorkerMove;
     //public static Action OnCursorWorkerDrop;

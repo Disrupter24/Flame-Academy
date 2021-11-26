@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
   m_Name: Draw Wood
   m_EditorClassIdentifier: 
-  _isAnimated: 0
+  _isAnimated: 1
   _cursorTextures:
   - {fileID: 2800000, guid: 29340442f2953d241a25c3484a5f8900, type: 3}
+  - {fileID: 2800000, guid: b498d71f259ffc644a901ee181ae898f, type: 3}
+  - {fileID: 2800000, guid: bcdadbf4b22ccc448baa140def1bf6d1, type: 3}
+  - {fileID: 2800000, guid: 0f6740d1f340ca44b8451cffe636bcc8, type: 3}
+  - {fileID: 2800000, guid: 081de336b0736b64588a8059232798d4, type: 3}
+  - {fileID: 2800000, guid: 29340442f2953d241a25c3484a5f8900, type: 3}
   _offsetFromMousePosition: {x: 8, y: 8}
-  _animationTimeInSeconds: 1
+  _animationTimeInSeconds: 3
+  _animateOnlyOnce: 1

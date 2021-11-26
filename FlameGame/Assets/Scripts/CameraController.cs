@@ -10,27 +10,49 @@ public class CameraController : MonoBehaviour
     public float MinCameraSize, MaxCameraSize;
     public Vector2 panLimit;
     public bool CanMove = false;
-    
+    public bool isScrolling = false; 
     // Update is called once per frame
     void Update()
     {
         if (!CanMove) return;
         Vector3 cameraPosition = transform.position;
+
+        bool isStillScrolling = false;
         if (Input.GetKey(KeyCode.UpArrow) || Input.mousePosition.y >= Screen.height - PanBorderThickness)
         {
             cameraPosition.y += PanSpeed * Time.deltaTime;
+            UIAction.OnCursorScroll(UICursorManager.Direction.N);
+            isStillScrolling = true;
         }
         if (Input.GetKey(KeyCode.DownArrow) || Input.mousePosition.y <= PanBorderThickness)
         {
             cameraPosition.y -= PanSpeed * Time.deltaTime;
+            UIAction.OnCursorScroll(UICursorManager.Direction.S);
+            isStillScrolling = true;
+
         }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.mousePosition.x <= PanBorderThickness)
         {
             cameraPosition.x -= PanSpeed * Time.deltaTime;
+            UIAction.OnCursorScroll(UICursorManager.Direction.W);
+            isStillScrolling = true;
+
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.mousePosition.x >= Screen.width - PanBorderThickness)
         {
             cameraPosition.x += PanSpeed * Time.deltaTime;
+            UIAction.OnCursorScroll(UICursorManager.Direction.E);
+            isStillScrolling = true;
+
+        }
+
+        if (isScrolling && !isStillScrolling)
+        {
+            isScrolling = false;
+            UIAction.OnCursorScrollStop();
+        } else if (isStillScrolling)
+        {
+            isScrolling = true;
         }
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");

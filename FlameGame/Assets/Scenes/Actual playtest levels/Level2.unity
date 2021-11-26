@@ -2392,6 +2392,7 @@ MonoBehaviour:
   MaxCameraSize: 32
   panLimit: {x: 10, y: 10}
   CanMove: 1
+  isScrolling: 0
 --- !u!82 &144633094
 AudioSource:
   m_ObjectHideFlags: 0

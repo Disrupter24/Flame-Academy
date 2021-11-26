@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
   m_Name: Draw Grass
   m_EditorClassIdentifier: 
-  _isAnimated: 0
+  _isAnimated: 1
   _cursorTextures:
   - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
+  - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
+  - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
+  - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
+  - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
+  - {fileID: 2800000, guid: 405c7f8caa9e4ac4381a0e25a43084d2, type: 3}
+  - {fileID: 2800000, guid: 48482e0bf7c532d448e399ad32d1c9dc, type: 3}
+  - {fileID: 2800000, guid: b0f547226e4298f46bcc5b880401e742, type: 3}
+  - {fileID: 2800000, guid: 05407fe298c9fb145add2f65687dd3c2, type: 3}
+  - {fileID: 2800000, guid: 232361f2db7eb0d4e82f7467efd45e62, type: 3}
   _offsetFromMousePosition: {x: 8, y: 8}
-  _animationTimeInSeconds: 1
+  _animationTimeInSeconds: 3
+  _animateOnlyOnce: 1

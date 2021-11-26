@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f2a3745f61eb4aafa7b4f08deae71, type: 3}
   m_Name: Start Selection
   m_EditorClassIdentifier: 
-  _isAnimated: 0
+  _isAnimated: 1
   _cursorTextures:
   - {fileID: 2800000, guid: 2ebf6b7837c3dc04c8ab8d783a5a431b, type: 3}
+  - {fileID: 2800000, guid: 7cbc91195ac79c643a181c66420266fc, type: 3}
+  - {fileID: 2800000, guid: f87ed6331fd11104f8fa172f56181f5d, type: 3}
+  - {fileID: 2800000, guid: 81808b45d179e5747aa4e7f5ea97e0b3, type: 3}
+  - {fileID: 2800000, guid: 244b7c08c8c15004ea28727b47018f4f, type: 3}
+  - {fileID: 2800000, guid: 549e5f1183ccfbf468a691f4f11e2e0d, type: 3}
+  - {fileID: 2800000, guid: ec1f13203271e7f48a72105ce7cb33f1, type: 3}
   _offsetFromMousePosition: {x: 8, y: 12}
-  _animationTimeInSeconds: 0
+  _animationTimeInSeconds: 1

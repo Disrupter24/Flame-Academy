@@ -87,6 +87,9 @@ public class UICursorManager : MonoBehaviour
         [SerializeField]
         private CursorObject _ScrollNorthEastCursor;
 
+
+    private CursorObject _prevCursor;
+    private CursorState _prevCursorState;
     //cursor variables
     private CursorObject _currentCursor;
     private Texture2D _currentTexture;
@@ -101,6 +104,7 @@ public class UICursorManager : MonoBehaviour
     private int _totalAnimationFrames;
     private float _timePerAnimationFrame;
     private IEnumerator _animationCoroutine;
+    private bool _isScrollCursor; 
 
     private void OnEnable()
     {
@@ -118,6 +122,7 @@ public class UICursorManager : MonoBehaviour
         //UIAction.OnCursorWorkerHarvest += SetCursorToWorkerHarvest;
         UIAction.OnCursorScroll += SetCursorToScroll;
         UIAction.OnCursorStartSelection += SetCursorToStartSelection;
+        UIAction.OnCursorScrollStop += StopScrolling;
     }
 
     private void OnDisable()
@@ -136,6 +141,7 @@ public class UICursorManager : MonoBehaviour
         //UIAction.OnCursorWorkerHarvest -= SetCursorToWorkerHarvest;
         UIAction.OnCursorScroll -= SetCursorToScroll;
         UIAction.OnCursorStartSelection -= SetCursorToStartSelection;
+        UIAction.OnCursorScrollStop -= StopScrolling;
 
     }
 
@@ -148,71 +154,71 @@ public class UICursorManager : MonoBehaviour
 
     private void SetCursorToIdle()
     {
-        ChangeCursor(CursorState.IDLE, _idleCursor);
+        ChangeCursor(CursorState.IDLE, _idleCursor, false);
     }
 
     private void SetCursorToDrawGrass()
     {
-        ChangeCursor(CursorState.DRAW_GRASS, _drawGrassCursor);
+        ChangeCursor(CursorState.DRAW_GRASS, _drawGrassCursor, false);
 
     }
 
     private void SetCursorToDrawWood()
     {
-        ChangeCursor(CursorState.DRAW_WOOD, _drawWoodCursor);
+        ChangeCursor(CursorState.DRAW_WOOD, _drawWoodCursor, false);
 
     }
 
     private void SetCursorToOverMaterialA()
     {
-        ChangeCursor( CursorState.OVER_MATERIAL_A, _overMaterialACursor);
+        ChangeCursor( CursorState.OVER_MATERIAL_A, _overMaterialACursor, false);
 
     }
 
     private void SetCursorToOverMaterialB()
     {
-        ChangeCursor(CursorState.OVER_MATERIAL_B, _overMaterialBCursor);
+        ChangeCursor(CursorState.OVER_MATERIAL_B, _overMaterialBCursor, false);
 
     }
 
     private void SetCursorToMaterialSelected()
     {
-        ChangeCursor(CursorState.SELECTED_MATERIAL, _selectedMaterialCursor);
+        ChangeCursor(CursorState.SELECTED_MATERIAL, _selectedMaterialCursor, false);
 
     }
 
     private void SetCursorToOverWorker()
     {
-        ChangeCursor(CursorState.OVER_WORKER, _overWorkerCursor);
+        ChangeCursor(CursorState.OVER_WORKER, _overWorkerCursor, false);
     }
 
     private void SetCursorToWorkerSelected()
     {
-        ChangeCursor(CursorState.SELECTED_WORKER, _selectedWorkerCursor);
+        ChangeCursor(CursorState.SELECTED_WORKER, _selectedWorkerCursor, false);
 
     }
 
     private void SetCursorToStartSelection()
     {
-        ChangeCursor(CursorState.START_SELECTION, _startSelectionCursor);
+        ChangeCursor(CursorState.START_SELECTION, _startSelectionCursor, false);
 
     }
 
     private void SetCursorToWorkerMove()
     {
-        ChangeCursor(CursorState.WORKER_MOVE, _workerMoveCursor);
+        ChangeCursor(CursorState.WORKER_MOVE, _workerMoveCursor, false);
 
     }
 
     private void SetCursorToWorkerHarvest()
     {
-        ChangeCursor(CursorState.WORKER_HARVEST, _workerHarvestCursor);
+        ChangeCursor(CursorState.WORKER_HARVEST, _workerHarvestCursor, false);
 
     }
 
     private void SetCursorToWorkerDrop()
     {
-        ChangeCursor(CursorState.WORKER_DROP, _workerDropCursor);
+        ChangeCursor(CursorState.WORKER_DROP, _workerDropCursor, false);
 
     }
 
@@ -250,16 +256,31 @@ public class UICursorManager : MonoBehaviour
                 break;
         }
 
-
-        ChangeCursor(CursorState.SCROLL, _scrollCursorToSet);
+        ChangeCursor(CursorState.SCROLL, _scrollCursorToSet, true);
 
     }
 
-    private void ChangeCursor(CursorState newCursorState, CursorObject newCursor)
+    private void StopScrolling()
     {
+        _isScrollCursor = false;
+        ChangeCursor(_prevCursorState,_prevCursor,false);
+    }
+
+    private void ChangeCursor(CursorState newCursorState, CursorObject newCursor, bool IsScrollCursor)
+    {
+
+        if (_currentCursorState == newCursorState) return; 
+
+        if (!IsScrollCursor && _isScrollCursor)
+        {
+            return;
+        }
+        _isScrollCursor = IsScrollCursor;
         if (_currentCursor != null)
         {
             _currentCursor.OnCursorStop();
+            _prevCursor = _currentCursor;
+            _prevCursorState = _currentCursorState;
         }
 
         if (_animationIsActive)
@@ -321,6 +342,11 @@ public class UICursorManager : MonoBehaviour
 
     private void GoToNextFrame()
     {
+        if (_currentFrame == _totalAnimationFrames && _currentCursor.GetAnimateOnlyOnce())
+        {
+            StopCoroutine(_animationCoroutine);
+            _animationIsActive = false;
+        }
         _currentFrame = (_currentFrame % _totalAnimationFrames) + 1;
         _currentTexture = _cursorTextures[_currentFrame - 1];
         _timeSinceLastFrame = 0.0f;
