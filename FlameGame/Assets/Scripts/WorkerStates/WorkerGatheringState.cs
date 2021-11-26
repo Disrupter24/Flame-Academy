@@ -17,7 +17,7 @@ public class WorkerGatheringState : WorkerBaseState
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 
         // Enter animation state and set timer
-        _totalGatheringTime = 3f;
+        _totalGatheringTime = 2f;
         _gatheringTimer = 0;
     }
 
