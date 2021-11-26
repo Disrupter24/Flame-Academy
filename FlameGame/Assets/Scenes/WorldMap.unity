@@ -157,13 +157,8 @@ MonoBehaviour:
   NextDownLevel: {fileID: 0}
   NextLeftLevel: {fileID: 863198727}
   NextRightLevel: {fileID: 0}
-  teste: {fileID: 1682785638}
-  _player: {fileID: 1401089200}
-  speed: 10
-  IsMovingUp: 0
-  IsMovingDown: 0
-  IsMovingLeft: 0
-  IsMovingRight: 0
+  level_UI: {fileID: 1682785638}
+  _player: {fileID: 1401089201}
 --- !u!4 &185323057
 Transform:
   m_ObjectHideFlags: 0
@@ -545,13 +540,8 @@ MonoBehaviour:
   NextDownLevel: {fileID: 0}
   NextLeftLevel: {fileID: 0}
   NextRightLevel: {fileID: 185323055}
-  teste: {fileID: 1682785638}
-  _player: {fileID: 1401089200}
-  speed: 10
-  IsMovingUp: 0
-  IsMovingDown: 0
-  IsMovingLeft: 0
-  IsMovingRight: 0
+  level_UI: {fileID: 1682785638}
+  _player: {fileID: 1401089201}
 --- !u!4 &863198729
 Transform:
   m_ObjectHideFlags: 0
@@ -737,13 +727,8 @@ MonoBehaviour:
   NextDownLevel: {fileID: 185323055}
   NextLeftLevel: {fileID: 0}
   NextRightLevel: {fileID: 0}
-  teste: {fileID: 1682785638}
-  _player: {fileID: 1401089200}
-  speed: 10
-  IsMovingUp: 0
-  IsMovingDown: 0
-  IsMovingLeft: 0
-  IsMovingRight: 0
+  level_UI: {fileID: 1682785638}
+  _player: {fileID: 1401089201}
 --- !u!4 &1264188539
 Transform:
   m_ObjectHideFlags: 0
@@ -851,6 +836,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1401089200}
   - component: {fileID: 1401089199}
+  - component: {fileID: 1401089201}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -925,6 +911,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401089201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401089198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1513fba0c66e94b8f55b0d7247cb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!1 &1514829425
 GameObject:
   m_ObjectHideFlags: 0
