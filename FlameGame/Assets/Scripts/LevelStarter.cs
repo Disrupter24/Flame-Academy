@@ -39,6 +39,10 @@ public class LevelStarter : MonoBehaviour
     private void Start()
     {
         ChangeCurrentLevel(gameObject);
+        if (LevelManager.Instance.GetCurrentLevel().gameObject != gameObject)
+        {
+            ChangeCurrentLevel(LevelManager.Instance.GetCurrentLevel().gameObject);
+        }
     }
     private void Update()
     {
@@ -61,9 +65,11 @@ public class LevelStarter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(gameObject.name);
+            LevelManager.Instance.SetCurrentLevel(gameObject.GetComponent<LevelStarter>());
         }
         HandleMovement();
     }
+
     private void HandleMovement()
     {
         if (IsMovingUp)
@@ -140,5 +146,10 @@ public class LevelStarter : MonoBehaviour
         }
         level_UI.text_UI.text = ls.level.LevelName;
         level_UI.level_UI.SetActive(true);
+    }
+
+    public Level GetLevelInfo()
+    {
+        return level;
     }
 }

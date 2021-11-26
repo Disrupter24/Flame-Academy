@@ -12,6 +12,12 @@ public class WhenEnterWinLevel : MonoBehaviour
         if ((_playerLayer.value & 1 << collision.gameObject.layer) != 0)
         {
             _tileUnderneath.WinScreen.SetActive(true);
+            Level level = LevelManager.Instance.GetCurrentLevel().GetLevelInfo();
+            level.IsComplete = true;
+            level.Star1 = true;
+            level.Star2 = true;
+            level.Star3 = true;
+            level.starCount = 3;
         }
     }
 }

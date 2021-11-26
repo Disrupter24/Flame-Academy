@@ -18,6 +18,12 @@ public class TileObjectGoalpostState : TileObjectBaseState
         if (tile.FireStateManager.Temperature >= tile.FireStateManager.IgnitionTemperature)
         {
             tile.WinScreen.SetActive(true);
+            Level level = LevelManager.Instance.GetCurrentLevel().GetLevelInfo();
+            level.IsComplete = true;
+            level.Star1 = true;
+            level.Star2 = true;
+            level.Star3 = true;
+            level.starCount = 3;
         }
     }
 }
