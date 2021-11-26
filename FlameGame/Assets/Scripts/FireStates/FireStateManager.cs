@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FireStateManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class FireStateManager : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public GameObject FireParticles;
     public bool StartsBurning;
+    public Slider BrazierBar;
     public enum FuelTypes
     {
         Log, Tree, Grass, Goalpost, Brazier
