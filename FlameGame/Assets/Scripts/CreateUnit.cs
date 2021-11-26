@@ -28,7 +28,7 @@ public class CreateUnit : MonoBehaviour
     private bool SpawnUnit()
     {
         Vector2 newPosition = NavigationGrid.GetPositionOfAnEmptySurroundingTile(_spawnLocation.position.x, _spawnLocation.position.y);
-        if (NavigationGrid.HasWorkerOntile(newPosition.x, newPosition.y)) return false; 
+        if (NavigationGrid.IsFullOfWorkersOntile(newPosition.x, newPosition.y)) return false; 
 
         GameObject newWorker = Instantiate(_worker);
         newWorker.transform.position = newPosition;

@@ -31,6 +31,8 @@ public class NavigationGrid : MonoBehaviour
     private static int s_mapHeight;
     private static int s_mapWidth;
 
+    private const int _fixRoundingErrorsHack = 3000;
+
     [SerializeField]
     private static int s_tileDimention;
 
@@ -107,9 +109,9 @@ public class NavigationGrid : MonoBehaviour
         }
         foreach (TileStateManager tile in tileArray)
         { 
-            if ((tile.transform.position.x - smallestXValue) + 1 > mapWidth) mapWidth = ((int) tile.transform.position.x - (int) smallestXValue) + 1;
+            if ((tile.transform.position.x - smallestXValue) + 1 > mapWidth) mapWidth = Mathf.CeilToInt( tile.transform.position.x )- Mathf.CeilToInt( smallestXValue) + 1;
 
-            if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = ((int) tile.transform.position.y - (int) smallestYValue) + 1;
+            if ((tile.transform.position.y - smallestYValue) + 1 > mapHeight) mapHeight = Mathf.CeilToInt( tile.transform.position.y) - Mathf.CeilToInt( smallestYValue) + 1;
 
             if ( tile.transform.position.x - smallestXValue < smallestTileDimention && tile.transform.position.x - smallestXValue > 0) smallestTileDimention = tile.transform.position.x - smallestXValue;
 
@@ -125,7 +127,7 @@ public class NavigationGrid : MonoBehaviour
         s_mapHeight = mapHeight;
         s_mapDimention = new Vector2 (mapWidth, mapHeight);
         s_startTilePosition = new Vector2(smallestXValue, smallestYValue);
-        Debug.Log("level dim " + s_mapDimention + " start " + s_startTilePosition + " tile dim " + s_tileDimention);
+        //Debug.Log("level dim " + s_mapDimention + " start " + s_startTilePosition + " tile dim " + s_tileDimention);
     }
     public static void CreateGrid(TileStateManager[] tileArray = null)
     {
@@ -133,7 +135,7 @@ public class NavigationGrid : MonoBehaviour
         int xIndex;
         int yIndex;
        // _nodeGrid = new NavigationNode[_mapWidth, _mapHeight];
-        s_nodeGrid = new NavigationNode[(int) s_mapDimention.x, (int) s_mapDimention.y];
+        s_nodeGrid = new NavigationNode[Mathf.CeilToInt( s_mapDimention.x), Mathf.CeilToInt( s_mapDimention.y)];
 
         NavigationNode newNode;
 
@@ -142,7 +144,7 @@ public class NavigationGrid : MonoBehaviour
             worldPosition = tile.transform.position;
             xIndex = GetXIndex(worldPosition.x); 
             yIndex = GetYIndex(worldPosition.y);
-            Debug.Log(xIndex + " " + yIndex + " " + worldPosition);
+            //Debug.Log(xIndex + " " + yIndex + " " + worldPosition);
             newNode = new NavigationNode(tile, xIndex, yIndex);
             s_nodeGrid[xIndex, yIndex] = newNode;
 
@@ -309,8 +311,9 @@ public class NavigationGrid : MonoBehaviour
         {
             if (currentNode == endNode)
             {
-                if (endNode.GetTraversable() && !endNode.HasWorkerOnTile())
+                if (endNode.GetTraversable() && !endNode.IsFull())
                 {
+                   // Debug.Log("adding endnode " + currentNode.GetTileWorldPosition());
                     movementPath.Add(currentNode);
                     currentNode = currentNode.GetPreviousNode();
                 }
@@ -381,7 +384,7 @@ public class NavigationGrid : MonoBehaviour
 
                 if (s_nodeGrid[i, j] != null)
                 {
-                    if (checkOccupied && s_nodeGrid[i, j].HasWorkerOnTile()) continue;
+                    if (checkOccupied && s_nodeGrid[i, j].IsFull()) continue;
 
 
                     if ((endNode != null && s_nodeGrid[i,j] == endNode) || !checkTraversable || (checkTraversable && s_nodeGrid[i, j].GetTraversable()))
@@ -395,19 +398,19 @@ public class NavigationGrid : MonoBehaviour
         return neighbours;
     }
 
-    public static bool HasWorkerOntile(float xPos, float yPos)
+    public static bool IsFullOfWorkersOntile(float xPos, float yPos)
     {
         int xIndex = GetXIndex(xPos);
         int yIndex = GetYIndex(yPos);
         NavigationNode node = GetNode(xIndex, yIndex);
-        return node.HasWorkerOnTile();
+        return node.IsFull();
     }
-    public static void RemoveWorkerFromNode(float xPos, float yPos)
+    public static void RemoveWorkerFromNode(float xPos, float yPos, WorkerStateManager worker)
     {
         int xIndex = GetXIndex(xPos);
         int yIndex = GetYIndex(yPos);
         NavigationNode node = GetNode(xIndex, yIndex);
-        node.RemoveWorkerFromTile();
+        node.RemoveWorkerFromTile(worker);
     }
     public static void SetNodeOccupied(float xPos, float yPos, WorkerStateManager worker)
     {
@@ -428,14 +431,14 @@ public class NavigationGrid : MonoBehaviour
 
     public static int GetXIndex(float x)
     {
-        return (int)(x / s_tileDimention) - (int)s_startTilePosition.x;
+        return Mathf.CeilToInt((x) / s_tileDimention) - Mathf.CeilToInt(s_startTilePosition.x);
         //return Mathf.FloorToInt(x / s_tileDimention) - Mathf.FloorToInt(s_startTilePosition.x);
         //return Mathf.CeilToInt(x / s_tileDimention) - (int)s_startTilePosition.x;
     }
 
     public static int GetYIndex(float y)
     {
-        return (int)(y / s_tileDimention) - (int)s_startTilePosition.y;
+        return Mathf.CeilToInt((y) / s_tileDimention) - Mathf.CeilToInt(s_startTilePosition.y);
 
         // return Mathf.CeilToInt(y / s_tileDimention) - (int)s_startTilePosition.y;
         // return Mathf.FloorToInt(y / s_tileDimention) - Mathf.FloorToInt(s_startTilePosition.y);
@@ -450,10 +453,13 @@ public class NavigationGrid : MonoBehaviour
         xIndex = GetXIndex(endPosition.x); 
         yIndex = GetYIndex(endPosition.y); 
         NavigationNode endNode = GetNode(xIndex, yIndex);
+        //Debug.Log("endnode " + endNode.GetTileWorldPosition());
+
         if (endNode == null) return null; 
 
-        if (endNode.HasWorkerOnTile() || !endNode.GetTraversable())
+        if (endNode.IsFull() || !endNode.GetTraversable())
         {
+            //Debug.Log("alternate");
             NavigationNode tempNode = GetClosestNavigationNode(endNode, GetNode(startPosition.x, startPosition.y));
             if (tempNode != null)
             {
@@ -508,7 +514,7 @@ public class NavigationGrid : MonoBehaviour
             {
                 return GeneratePathFromEndNode(endNode, startNode);
             }
-            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(),true, true, false,endNode))
+            foreach (NavigationNode node in GetNeighbours(currentNode.GetCoordinates(), true, true, false,endNode))
             {
                 //if (!node.GetTraversable() || _closedNodeList.Contains(node))
                 if (_closedNodeList.Contains(node))

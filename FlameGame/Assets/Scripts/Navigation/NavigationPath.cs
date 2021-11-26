@@ -8,7 +8,8 @@ public class NavigationPath
     private List<NavigationNode> _path;
     private int _pathLength;
     private int _currentNodeIndex;
-    private NavigationNode _lastNode; 
+    private NavigationNode _lastNode;
+
     public NavigationPath(List<NavigationNode> path)
     {
         _path = path;
@@ -39,15 +40,15 @@ public class NavigationPath
         _lastNode.SetWorkerOnTile(worker);
     }
 
-    public void RemoveWorkerFromLastNode()
+    public void RemoveWorkerFromLastNode(WorkerStateManager worker)
     {
         if (_lastNode == null) return;
-        _lastNode.RemoveWorkerFromTile();
+        _lastNode.RemoveWorkerFromTile(worker);
     }
 
-    public bool CheckIfWorkerOnLastNode()
+    public bool CheckIfLastNodeFull()
     {
-        return _lastNode.HasWorkerOnTile();
+        return _lastNode.IsFull();
     }
     public Vector2 GetFinalPosition()
     {

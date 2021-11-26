@@ -13,7 +13,7 @@ public class WorkerStateManager : MonoBehaviour
     public WorkerGatheringState GatheringState = new WorkerGatheringState();
     public WorkerHarvestingState HarvestingState = new WorkerHarvestingState();
     public WorkerIdleState IdleState = new WorkerIdleState();
-    public WorkerMovement workerMovement = new WorkerMovement();
+    public WorkerMovement workerMovement;
 
     public bool IsSelected;
     public bool ForceMove = false;
@@ -38,7 +38,7 @@ public class WorkerStateManager : MonoBehaviour
     {
         // Initial state of worker
         _currentState = IdleState;
-
+        workerMovement = new WorkerMovement(this);
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
@@ -137,6 +137,12 @@ public class WorkerStateManager : MonoBehaviour
         }
     }
 
+    public void SqueezeOntoTile(Vector2 location, Vector3 scale)
+    {
+        Debug.Log("Setting");
+        transform.position = location;
+        transform.localScale = scale;
+    }
     public void CancelTask()
     {
         _currentState.CancelAction(this);
