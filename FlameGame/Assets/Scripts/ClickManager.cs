@@ -24,7 +24,7 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private GameObject _grassButton;
 
     private bool _placingFuel = false;
-    private TileStateManager.ObjectStates _fuelToPlace;
+    private TileStateManager.ObjectStates _fuelToDraw;
 
     private void Start()
     {
@@ -52,7 +52,7 @@ public class ClickManager : MonoBehaviour
     public void ButtonWoodOnClick()
     {
         _placingFuel = true;
-        _fuelToPlace = TileStateManager.ObjectStates.Log;
+        _fuelToDraw = TileStateManager.ObjectStates.Log;
 
         // Clear each selected worker's task list
         // Also mark any tasks in progress as cancelled
@@ -81,7 +81,7 @@ public class ClickManager : MonoBehaviour
     public void ButtonGrassOnClick()
     {
         _placingFuel = true;
-        _fuelToPlace = TileStateManager.ObjectStates.Grass;
+        _fuelToDraw = TileStateManager.ObjectStates.Grass;
 
         // Clear each selected worker's task list
         // Also mark any tasks in progress as cancelled
@@ -202,7 +202,7 @@ public class ClickManager : MonoBehaviour
     private void DrawFuel()
     {
         
-        if (Input.GetMouseButton(1) && StorehouseManager.Instance.CheckRemainingFuel(_fuelToPlace) > StorehouseManager.Instance.CheckGhostFuel(_fuelToPlace))
+        if (Input.GetMouseButton(1) && StorehouseManager.Instance.CheckRemainingFuel(_fuelToDraw) > StorehouseManager.Instance.CheckGhostFuel(_fuelToDraw))
         {
             
             RaycastHit2D hit = Physics2D.Raycast(GetMousePositionInWorld(), Vector2.zero, 0, 1 << 7);
@@ -213,9 +213,10 @@ public class ClickManager : MonoBehaviour
 
                 if(tile.currentObjectState == tile.ObjectEmptyState)
                 {
-                    tile.ToggleGhost(true, _fuelToPlace);
+                    tile.ToggleGhost(true, _fuelToDraw);
+                    Debug.Log("Fuel: " + StorehouseManager.Instance.CheckRemainingFuel(_fuelToDraw) + "GhostFuel: " + StorehouseManager.Instance.CheckGhostFuel(_fuelToDraw));
 
-                    switch (_fuelToPlace)
+                    switch (_fuelToDraw)
                     {
                         case TileStateManager.ObjectStates.Log:
                             tile.SwitchObjectState(tile.ObjectLogState);
@@ -299,9 +300,11 @@ public class ClickManager : MonoBehaviour
                         switch (worker.CurrentTask.ObjectState)
                         {
                             case TileStateManager.ObjectStates.Log:
+                                Debug.Log("LOSING GHOST LOGS CLICK1");
                                 StorehouseManager.GhostLogs -= 1;
                                 break;
                             case TileStateManager.ObjectStates.Grass:
+                                Debug.Log("LOSING GHOST GRASS CLICK2");
                                 StorehouseManager.GhostGrass -= 1;
                                 break;
                         }
@@ -319,9 +322,11 @@ public class ClickManager : MonoBehaviour
                             switch (tile.ObjectState)
                             {
                                 case TileStateManager.ObjectStates.Log:
+                                    Debug.Log("LOSING GHOST LOGS CLICK2");
                                     StorehouseManager.GhostLogs -= 1;
                                     break;
                                 case TileStateManager.ObjectStates.Grass:
+                                    Debug.Log("LOSING GHOST GRASS CLICK2");
                                     StorehouseManager.GhostGrass -= 1;
                                     break;
                             }
@@ -375,12 +380,16 @@ public class ClickManager : MonoBehaviour
                 {
                     RaycastHit2D hit = Physics2D.Raycast(currentMousePosition, Vector2.zero, 0, 1 << 7);
 
-                    if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
+                    if (hit)
                     {
-                        // Add tile to each worker's task list
-                        worker.TaskList.Add(hit.collider.gameObject.GetComponent<TileStateManager>());
-                        worker.MoveTowardsEmptyTile();
+                        if (hit.collider.gameObject.GetComponent<TileStateManager>() != null)
+                        {
+                            // Add tile to each worker's task list
+                            worker.TaskList.Add(hit.collider.gameObject.GetComponent<TileStateManager>());
+                            worker.MoveTowardsEmptyTile();
+                        }
                     }
+                    
                 }
             }
 

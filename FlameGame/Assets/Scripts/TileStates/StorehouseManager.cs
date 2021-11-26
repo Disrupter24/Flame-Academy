@@ -66,6 +66,7 @@ public class StorehouseManager : MonoBehaviour
                 else
                 {
                     Logs -= 1;
+                    Debug.Log("LOSING GHOST LOGS STOREHOUSE");
                     GhostLogs -= 1;
                 }
                 break;
@@ -77,6 +78,7 @@ public class StorehouseManager : MonoBehaviour
                 else
                 {
                     Grass -= 1;
+                    Debug.Log("LOSING GHOST GRASS STOREHOUSE");
                     GhostGrass -= 1;
                 }
                 break;
@@ -119,6 +121,7 @@ public class StorehouseManager : MonoBehaviour
             case TileStateManager.ObjectStates.Grass:
                 return Grass;
         }
+        Debug.Log("CheckRemainingFuel error!");
         return 0;
     }
 
@@ -131,6 +134,7 @@ public class StorehouseManager : MonoBehaviour
             case TileStateManager.ObjectStates.Grass:
                 return GhostGrass;
         }
+        Debug.Log("CheckGhostFuel error!");
         return 0;
     }
 }
