@@ -12,6 +12,7 @@ public class TileObjectGrassState : TileObjectBaseState
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = false;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[1];
+        tile.FireStateManager.BurnTime = tile.FireStateManager.MaxBurnTime;
     }
     public override void UpdateState(TileStateManager tile)
     {

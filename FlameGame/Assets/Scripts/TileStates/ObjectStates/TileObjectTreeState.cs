@@ -12,7 +12,7 @@ public class TileObjectTreeState : TileObjectBaseState
         tile.ObjectRenderer.enabled = true;
         tile.WillCollide = true;
         tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[4];
-        //tile.ObjectRenderer.
+        tile.FireStateManager.BurnTime = tile.FireStateManager.MaxBurnTime;
     }
     public override void UpdateState(TileStateManager tile)
     {

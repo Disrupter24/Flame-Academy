@@ -12219,6 +12219,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2984240792244161712, guid: b5e383d29556c694ab87ad63521b7398, type: 3}
+    - target: {fileID: 4736627219771074626, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8999202926922544536, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: m_Name
       value: Tile (229)
@@ -12339,6 +12343,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 144633091}
+    - target: {fileID: 7079343736102627879, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7079343736593472431, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -21051,9 +21059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LogText: {fileID: 1241983347}
   GrassText: {fileID: 1241983345}
-  Storehouses:
-  - {fileID: 0}
-  - {fileID: 0}
+  Storehouses: []
 --- !u!4 &4595424595169477394
 Transform:
   m_ObjectHideFlags: 0
