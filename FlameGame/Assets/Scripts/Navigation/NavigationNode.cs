@@ -10,7 +10,7 @@ public class NavigationNode
     private int _gCost;
     private NavigationNode _prevNode;
     private bool _isOccupiedByWorker;
-    private WorkerStateManager _worker;
+    private bool _isFull; 
     private List <WorkerStateManager> _workers;
     private int MaxWorkersOnNode = 4;
 
@@ -19,11 +19,14 @@ public class NavigationNode
         _tile = tile;
         _coordinates = coordinates;
         _prevNode = null;
+        _workers = new List<WorkerStateManager>();
     }
     public NavigationNode(TileStateManager tile, int x, int y)
     {
         _tile = tile;
         _coordinates = new Vector2(x, y);
+        _workers = new List<WorkerStateManager>();
+
     }
 
     public void SetPreviousNode(NavigationNode prevNode)
@@ -88,26 +91,53 @@ public class NavigationNode
         _gCost = gCost;
     }
 
-    public void SetWorkerOnTile(WorkerStateManager worker)
+    public void  SetWorkerOnTile(WorkerStateManager worker)
     {
         _isOccupiedByWorker = true;
-        _worker = worker; 
+        _workers.Add(worker);
+        if (_workers.Count == MaxWorkersOnNode) _isFull = true;
 
+
+        UpdateWorkersOntile();
     }
 
-    public WorkerStateManager GetWorkerOnTile()
+    private void UpdateWorkersOntile()
     {
-        return _worker;
+        if (_workers.Count <= 1) return;
+
+        int count = 1;
+        float seperationDistance = (32 / (_workers.Count));
+        float startingPosition = -16 + (32 / (_workers.Count * 2));
+
+        foreach (WorkerStateManager w in _workers)
+        {
+            w.workerMovement.SetOffset(new Vector2((startingPosition + count * seperationDistance - 16)/32, 1 - (_workers.Count - 1) * .15f));
+            count++;
+
+        }
+    }
+    public List <WorkerStateManager> GetWorkersOnTile()
+    {
+        return _workers;
     }
 
     public bool HasWorkerOnTile()
     {
         return _isOccupiedByWorker;
     }
-    public void RemoveWorkerFromTile()
+
+    public bool IsFull()
     {
-        _worker = null;
-        _isOccupiedByWorker = false;
+        return _isFull;
+    }
+
+    public void RemoveWorkerFromTile(WorkerStateManager worker)
+    {
+        _workers.Remove(worker);
+        _isFull = false; 
+        if (_workers.Count == 0) _isOccupiedByWorker = false;
+
+        UpdateWorkersOntile();
     }
 
 }
