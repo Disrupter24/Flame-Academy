@@ -155,6 +155,8 @@ MonoBehaviour:
   DropInStoreHouse: {fileID: 8300000, guid: 332dc50294ca7f144a9ad8b5f49000b3, type: 3}
   DropOnGrass: {fileID: 8300000, guid: ee74892d125721c4ba81b4ec2b99ba95, type: 3}
   Pickup: {fileID: 8300000, guid: 65de43e90ddf97645bb3d147c06b3fe6, type: 3}
+  goTo: {fileID: 8300000, guid: 36a0341d40e435743a6a224f4abe98c1, type: 3}
+  cannotGoTo: {fileID: 8300000, guid: d8a817fc0a567cd49a35be599b9a4c40, type: 3}
 --- !u!82 &2538721675887380010
 AudioSource:
   m_ObjectHideFlags: 0

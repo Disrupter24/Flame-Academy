@@ -10,8 +10,11 @@ public class SoundEffects : MonoBehaviour
     public AudioClip DropInStoreHouse;
     public AudioClip DropOnGrass;
     public AudioClip Pickup;
+    public AudioClip goTo;
+    public AudioClip cannotGoTo;
 
-    private  AudioSource _audio;
+
+    private AudioSource _audio;
     private  float _timeSinceLastSoundEffect;
     private  float _timeBetweenChoppingEffects = 0.4f;
     private float _timeBetweenSwingEffects = 0.7f;
@@ -27,6 +30,18 @@ public class SoundEffects : MonoBehaviour
         
     }
 
+    public void PlayCannotGoTo()
+    {
+        _audio.clip = cannotGoTo;
+        _audio.Play();
+
+    }
+
+    public void PlayGoTo()
+    {
+        _audio.clip = goTo;
+        _audio.Play();
+    }
     public void PlayPickup()
     {
         _audio.clip = Pickup;

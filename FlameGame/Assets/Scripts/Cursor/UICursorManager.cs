@@ -18,7 +18,9 @@ public class UICursorManager : MonoBehaviour
         WORKER_MOVE, 
         WORKER_HARVEST, 
         WORKER_DROP, 
-        SCROLL 
+        SCROLL, 
+        DRAW_GRASS, 
+        DRAW_WOOD,
     };
     private CursorState _currentCursorState;
 
@@ -37,6 +39,10 @@ public class UICursorManager : MonoBehaviour
         private CursorObject _overMaterialBCursor;
         [SerializeField]
         private CursorObject _overWorkerCursor;
+        [SerializeField]
+        private CursorObject _drawWoodCursor;
+        [SerializeField]
+        private CursorObject _drawGrassCursor;
 
     [Header ("Selection Cursors")]
 
@@ -99,14 +105,17 @@ public class UICursorManager : MonoBehaviour
     private void OnEnable()
     {
         UIAction.OnCursorIdle += SetCursorToIdle;
-        UIAction.OnCursorOverMaterialTypeA += SetCursorToOverMaterialA;
-        UIAction.OnCursorOverMaterialTypeB += SetCursorToOverMaterialB;
-        UIAction.OnCursorOverWorker += SetCursorToOverWorker;
+        UIAction.OnCursorDrawWood += SetCursorToDrawWood;
+        UIAction.OnCursorDrawGrass += SetCursorToDrawGrass;
+
+        //UIAction.OnCursorOverMaterialTypeA += SetCursorToOverMaterialA;
+        //UIAction.OnCursorOverMaterialTypeB += SetCursorToOverMaterialB;
+        //UIAction.OnCursorOverWorker += SetCursorToOverWorker;
         UIAction.OnCursorWorkerSelected += SetCursorToWorkerSelected;
-        UIAction.OnCursorMaterialSelected += SetCursorToMaterialSelected;
+        //UIAction.OnCursorMaterialSelected += SetCursorToMaterialSelected;
         UIAction.OnCursorWorkerMove += SetCursorToWorkerMove;
-        UIAction.OnCursorWorkerDrop += SetCursorToWorkerDrop;
-        UIAction.OnCursorWorkerHarvest += SetCursorToWorkerHarvest;
+        //UIAction.OnCursorWorkerDrop += SetCursorToWorkerDrop;
+        //UIAction.OnCursorWorkerHarvest += SetCursorToWorkerHarvest;
         UIAction.OnCursorScroll += SetCursorToScroll;
         UIAction.OnCursorStartSelection += SetCursorToStartSelection;
     }
@@ -114,14 +123,17 @@ public class UICursorManager : MonoBehaviour
     private void OnDisable()
     {
         UIAction.OnCursorIdle -= SetCursorToIdle;
-        UIAction.OnCursorOverMaterialTypeA -= SetCursorToOverMaterialA;
-        UIAction.OnCursorOverMaterialTypeB -= SetCursorToOverMaterialB;
-        UIAction.OnCursorOverWorker -= SetCursorToOverWorker;
+        UIAction.OnCursorDrawWood -= SetCursorToDrawWood;
+        UIAction.OnCursorDrawGrass -= SetCursorToDrawGrass;
+
+        //UIAction.OnCursorOverMaterialTypeA -= SetCursorToOverMaterialA;
+        //UIAction.OnCursorOverMaterialTypeB -= SetCursorToOverMaterialB;
+        //UIAction.OnCursorOverWorker -= SetCursorToOverWorker;
         UIAction.OnCursorWorkerSelected -= SetCursorToWorkerSelected;
-        UIAction.OnCursorMaterialSelected -= SetCursorToMaterialSelected;
+       // UIAction.OnCursorMaterialSelected -= SetCursorToMaterialSelected;
         UIAction.OnCursorWorkerMove -= SetCursorToWorkerMove;
-        UIAction.OnCursorWorkerDrop -= SetCursorToWorkerDrop;
-        UIAction.OnCursorWorkerHarvest -= SetCursorToWorkerHarvest;
+        //UIAction.OnCursorWorkerDrop -= SetCursorToWorkerDrop;
+        //UIAction.OnCursorWorkerHarvest -= SetCursorToWorkerHarvest;
         UIAction.OnCursorScroll -= SetCursorToScroll;
         UIAction.OnCursorStartSelection -= SetCursorToStartSelection;
 
@@ -139,6 +151,17 @@ public class UICursorManager : MonoBehaviour
         ChangeCursor(CursorState.IDLE, _idleCursor);
     }
 
+    private void SetCursorToDrawGrass()
+    {
+        ChangeCursor(CursorState.DRAW_GRASS, _drawGrassCursor);
+
+    }
+
+    private void SetCursorToDrawWood()
+    {
+        ChangeCursor(CursorState.DRAW_WOOD, _drawWoodCursor);
+
+    }
 
     private void SetCursorToOverMaterialA()
     {

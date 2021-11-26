@@ -53,7 +53,7 @@ public class ClickManager : MonoBehaviour
     {
         _placingFuel = true;
         _fuelToDraw = TileStateManager.ObjectStates.Log;
-
+        UIAction.OnCursorDrawWood();
         // Clear each selected worker's task list
         // Also mark any tasks in progress as cancelled
         foreach (WorkerStateManager worker in _workersSelected)
@@ -82,6 +82,7 @@ public class ClickManager : MonoBehaviour
     {
         _placingFuel = true;
         _fuelToDraw = TileStateManager.ObjectStates.Grass;
+        UIAction.OnCursorDrawGrass();
 
         // Clear each selected worker's task list
         // Also mark any tasks in progress as cancelled
@@ -117,6 +118,7 @@ public class ClickManager : MonoBehaviour
 
     private void DrawSelectionBox()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             _placingFuel = false;
@@ -129,6 +131,8 @@ public class ClickManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            UIAction.OnCursorStartSelection();
+
             // Display selection box according to selection start position and current mouse position
             if (!_selectionBox.gameObject.activeInHierarchy)
             {
@@ -141,6 +145,10 @@ public class ClickManager : MonoBehaviour
 
             _selectionBox.sizeDelta = new Vector2(Mathf.Abs(boxWidth), Mathf.Abs(boxHeight));
             _selectionBox.anchoredPosition = _selectionStartPositionCanvas + new Vector2(boxWidth / 2, boxHeight / 2);
+        } else
+        {
+            if (_workersSelected.Count == 0)
+            UIAction.OnCursorIdle();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -168,6 +176,7 @@ public class ClickManager : MonoBehaviour
                     _workersSelected.Add(worker);
                     worker.IsSelected = true;
                     ToggleStorehouseButtons(true);
+                    UIAction.OnCursorWorkerSelected();
                 }
             }
         }

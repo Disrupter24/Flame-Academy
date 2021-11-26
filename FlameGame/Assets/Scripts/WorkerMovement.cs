@@ -80,6 +80,7 @@ public class WorkerMovement
         NavigationPath tempPath = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
         if (tempPath != null)
         {
+            //worker.gameObject.GetComponent<SoundEffects>().PlayGoTo();
 
             if (tempPath.IsAtEndOfPath())
             {
@@ -87,6 +88,7 @@ public class WorkerMovement
 
             }  else
             {
+
                 WorkerOnNewPath(startPosition);
 
                 _isAtDestination = false;
@@ -99,6 +101,9 @@ public class WorkerMovement
                 _path.OccupyLastNodeWithWorker(worker);
             }
 
+        } else
+        {
+            worker.gameObject.GetComponent<SoundEffects>().PlayCannotGoTo();
         }
 
         return newPathCreatedSuccessfully;        
