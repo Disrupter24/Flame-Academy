@@ -23,7 +23,10 @@ public class WorkerStateManager : MonoBehaviour
     public TileStateManager CurrentTask;
     public TileStateManager CancelledTask;
     public int CurrentTaskID;
+
+    // Placing fuel (spaghet)
     public bool PlacingFuel;
+    public TileStateManager.ObjectStates FuelToPlace;
 
     // Item worker is carrying
     public TileStateManager.ObjectStates HeldItem;
@@ -99,13 +102,13 @@ public class WorkerStateManager : MonoBehaviour
             if(nearestTile.TaskState == TileStateManager.TaskStates.PlaceFuel)
             {
                 PlacingFuel = true;
-                if(HeldItem != nearestTile.ObjectState)
+                FuelToPlace = nearestTile.ObjectState;
+                if(HeldItem != FuelToPlace)
                 {
                     // Get item from storehouse if needed
-                    if(StorehouseManager.Instance.CheckRemainingFuel(nearestTile.ObjectState) > 0)
+                    if(StorehouseManager.Instance.CheckRemainingFuel(FuelToPlace) > 0)
                     {
                         CurrentTask = StorehouseManager.Instance.FindNearestStorehouse(this);
-                        CurrentTaskID = TaskList.IndexOf(nearestTile);
                     }
                     else
                     {

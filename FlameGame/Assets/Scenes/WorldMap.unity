@@ -157,7 +157,7 @@ MonoBehaviour:
   NextDownLevel: {fileID: 0}
   NextLeftLevel: {fileID: 863198727}
   NextRightLevel: {fileID: 0}
-  level_UI: {fileID: 0}
+  level_UI: {fileID: 1682785638}
   _player: {fileID: 1401089201}
 --- !u!4 &185323057
 Transform:
@@ -451,6 +451,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -539,7 +540,7 @@ MonoBehaviour:
   NextDownLevel: {fileID: 0}
   NextLeftLevel: {fileID: 0}
   NextRightLevel: {fileID: 185323055}
-  level_UI: {fileID: 0}
+  level_UI: {fileID: 1682785638}
   _player: {fileID: 1401089201}
 --- !u!4 &863198729
 Transform:
@@ -726,7 +727,7 @@ MonoBehaviour:
   NextDownLevel: {fileID: 185323055}
   NextLeftLevel: {fileID: 0}
   NextRightLevel: {fileID: 0}
-  level_UI: {fileID: 0}
+  level_UI: {fileID: 1682785638}
   _player: {fileID: 1401089201}
 --- !u!4 &1264188539
 Transform:
@@ -854,6 +855,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -882,7 +884,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -891,7 +893,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1401089200
