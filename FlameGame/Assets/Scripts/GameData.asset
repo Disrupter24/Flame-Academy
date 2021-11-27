@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5023aec8922d422469b40ab567fd847b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  _runningSpeed: 150
+  _runningSpeed: 500
   _choppingTreeSpeed: 0
   _choppingGrassSpeed: 0
   _DroppingSpeed: 0
