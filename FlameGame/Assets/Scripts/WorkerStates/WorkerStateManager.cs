@@ -34,6 +34,9 @@ public class WorkerStateManager : MonoBehaviour
     // Misc. pointers
     private SpriteRenderer _sprite;
 
+    public GameData gameData; 
+
+
     private void Awake()
     {
         // Initial state of worker

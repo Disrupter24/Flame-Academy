@@ -133,6 +133,7 @@ MonoBehaviour:
   PlacingFuel: 0
   FuelToPlace: 0
   HeldItem: 0
+  gameData: {fileID: 11400000, guid: 8571ddd2269be0f4fa2a07d4a0ec46c3, type: 2}
 --- !u!114 &4477752730892964551
 MonoBehaviour:
   m_ObjectHideFlags: 0

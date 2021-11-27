@@ -101,6 +101,7 @@ public class WorkerMovement
     }
     public bool MoveTo(WorkerStateManager worker, Vector2 startPosition, Vector2 targetPosition)
     {
+        _movementSpeed = worker.gameData.GetRunningSpeed();
         bool newPathCreatedSuccessfully = false; 
         NavigationPath tempPath = NavigationGrid.CalculatePathToDestination(startPosition, targetPosition);
         if (tempPath != null)

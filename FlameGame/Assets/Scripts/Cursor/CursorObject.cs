@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Cursor", menuName = "Cursor", order = 51)]
+[CreateAssetMenu(fileName = "New Cursor", menuName = "FlameGame/Cursor", order = 52)]
 public class CursorObject : ScriptableObject
 {
     [Header("Type of Cursor")]
