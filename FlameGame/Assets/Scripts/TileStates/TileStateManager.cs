@@ -10,6 +10,7 @@ public class TileStateManager : MonoBehaviour
     public NavigationNode NavigationNode;
     public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
+    public UpdateTilesInEditor EditModeUpdate;
 
     [HideInInspector]
     public bool IsGhost = false; // Indicates that a worker intends to place fuel here
@@ -57,6 +58,7 @@ public class TileStateManager : MonoBehaviour
     public GameObject WinScreen;
     public void Start()
     {
+        EditModeUpdate.enabled = false;
         SetStartingState();
         currentObjectState.EnterState(this);
     }

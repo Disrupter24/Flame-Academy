@@ -17,7 +17,7 @@ public class WorkerGatheringState : WorkerBaseState
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 
         // Enter animation state and set timer
-        _totalGatheringTime = 2f;
+        _totalGatheringTime = 0.5f;
         _gatheringTimer = 0;
 
         if (worker.CurrentTask.ObjectState == TileStateManager.ObjectStates.Grass)

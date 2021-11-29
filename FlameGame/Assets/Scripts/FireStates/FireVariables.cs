@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireVariables : MonoBehaviour
 {
+    //public GameObject TileParent;
     public static FireStateManager[] s_listOfCombustibles;
     public static TileStateManager[] s_listOfTiles;
     public GameObject LoseMenu;
@@ -39,14 +40,32 @@ public class FireVariables : MonoBehaviour
     public static float s_brazierHeatTransfer = 0.12f;
     private void Start() // This is pretty expensive, so we'll run it once per level.
     {
+
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
         s_listOfTiles = FindObjectsOfType<TileStateManager>();
 
+        // BELOW: wrote a method for filling lists without using FindObjectsOfType, but it's no faster at our current scale.
+        // It's a bit inconvenient because it relies on parenting all tiles under one object and linking that object to this one in the inspector. With no upsides, better not to use it.
+
+        //List<FireStateManager> tempListCombustibles = new List<FireStateManager>();
+        //List<TileStateManager> tempListTiles = new List<TileStateManager>();
+
+        //for (int i = 0; i < TileParent.transform.childCount; i++)
+        //{
+        //    GameObject tile = TileParent.transform.GetChild(i).gameObject;
+        //    tempListCombustibles.Add(tile.GetComponent<FireStateManager>());
+        //    tempListTiles.Add(tile.GetComponent<TileStateManager>());
+        //}
+
+        //s_listOfCombustibles = tempListCombustibles.ToArray();
+        //s_listOfTiles = tempListTiles.ToArray();
+
         // Compile starting list of storehouses
-        foreach(TileStateManager tile in s_listOfTiles)
+        foreach (TileStateManager tile in s_listOfTiles)
         {
-            if(tile.TaskState == TileStateManager.TaskStates.Storehouse)
+            if(tile.ObjectState == TileStateManager.ObjectStates.Storehouse)
             {
+                Debug.Log("Adding storehouse");
                 StorehouseManager.Instance.Storehouses.Add(tile);
             }
         }

@@ -21,7 +21,7 @@ public class WorkerHarvestingState : WorkerBaseState
         {
             case TileStateManager.ObjectStates.Tree:
                 // Tree animation
-                _totalHarvestingTime = 3f;
+                _totalHarvestingTime = 1f;
                 _harvestedResource = worker.CurrentTask.ObjectLogState;
                 break;
             //case TileStateManager.ObjectStates.Coal:
