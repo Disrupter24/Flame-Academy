@@ -48,10 +48,12 @@ public class ClickManager : MonoBehaviour
 
     public void ButtonWoodPointerDown()
     {
+        Debug.Log("WOOD BUTTON POINTER DOWN");
         _canDrawSelectionBox = false;
     }
     public void ButtonWoodOnClick()
     {
+        Debug.Log("WOOD BUTTON CLICK");
         _placingFuel = true;
         _fuelToDraw = TileStateManager.ObjectStates.Log;
         UIAction.OnCursorDrawWood();
