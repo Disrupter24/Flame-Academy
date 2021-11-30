@@ -21,7 +21,6 @@ public class WorkerWalkingState : WorkerBaseState
         // If current tile no longer has a task, remove it from the list and find the next one
         if (!worker.ForceMove && !(worker.CurrentTask.TaskState == TileStateManager.TaskStates.Harvest || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Gather || worker.CurrentTask.TaskState == TileStateManager.TaskStates.Storehouse || worker.CurrentTask.TaskState == TileStateManager.TaskStates.PlaceFuel))
         {
-            Debug.Log("NEXT TASK");
             worker.FindNextTask();
         }
 
@@ -70,7 +69,6 @@ public class WorkerWalkingState : WorkerBaseState
                     break;
                 case TileStateManager.TaskStates.Storehouse:
                     // Place held item in storehouse
-                    Debug.Log("NUMTASKS " + worker.TaskList.Count);
                     if (worker.HeldItem != TileStateManager.ObjectStates.None)
                     {
                         worker.gameObject.GetComponent<SoundEffects>().PlayDropInStoreHouse();

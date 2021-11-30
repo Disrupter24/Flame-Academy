@@ -105,15 +105,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -283457022370305672, guid: eabdf4e8d95f27d4cb241fe634388352, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8999202926922544536
@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 4736627219771074620}
   - component: {fileID: 4736627219771074621}
   - component: {fileID: 4736627219771074626}
+  - component: {fileID: 1274131497777058697}
   m_Layer: 7
   m_Name: Tile
   m_TagString: Untagged
@@ -192,7 +193,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 2531549922278074774, guid: 0c68a0ea46dfa5441a39c1423f60d4aa, type: 3}
+  m_Sprite: {fileID: 2984240792244161712, guid: b5e383d29556c694ab87ad63521b7398, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -251,8 +252,9 @@ MonoBehaviour:
   - {fileID: 801782744561129462, guid: 0c68a0ea46dfa5441a39c1423f60d4aa, type: 3}
   - {fileID: -283457022370305672, guid: eabdf4e8d95f27d4cb241fe634388352, type: 3}
   - {fileID: -1353551497164233637, guid: 0c68a0ea46dfa5441a39c1423f60d4aa, type: 3}
-  - {fileID: 8229234674354008737, guid: 0c68a0ea46dfa5441a39c1423f60d4aa, type: 3}
+  - {fileID: 7482667652216324306, guid: add94384b257be547bccda1862ecbbbb, type: 3}
   WillCollide: 0
+  EditModeUpdate: {fileID: 1274131497777058697}
   IsGhost: 0
   TaskState: 0
   ObjectState: 3
@@ -281,6 +283,18 @@ MonoBehaviour:
   StartsBurning: 0
   BrazierBar: {fileID: 0}
   FuelType: 0
+--- !u!114 &1274131497777058697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8999202926922544536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8b9de09ef9f7d459ee5d827761585b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4736627218495398812
 PrefabInstance:
   m_ObjectHideFlags: 0

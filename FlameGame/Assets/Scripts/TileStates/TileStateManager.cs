@@ -10,6 +10,7 @@ public class TileStateManager : MonoBehaviour
     public NavigationNode NavigationNode;
     public Sprite[] ObjectSpriteSheet;
     public bool WillCollide;
+    public UpdateTilesInEditor EditModeUpdate;
 
     [HideInInspector]
     public bool IsGhost = false; // Indicates that a worker intends to place fuel here
@@ -57,6 +58,7 @@ public class TileStateManager : MonoBehaviour
     public GameObject WinScreen;
     public void Start()
     {
+        EditModeUpdate.enabled = false;
         SetStartingState();
         currentObjectState.EnterState(this);
     }
@@ -101,7 +103,15 @@ public class TileStateManager : MonoBehaviour
     }
     public void ResetProperties()
     {
-        FireStateManager.Temperature = 0;
+        if(FireStateManager.StartsBurning)
+        {
+            FireStateManager.Temperature = FireStateManager.IgnitionTemperature;
+            FireStateManager.StartsBurning = false;
+        }
+        else
+        {
+            FireStateManager.Temperature = 0;
+        }
         if (!IsGhost)
         {
             ObjectRenderer.color = new Color(1, 1, 1, 1); // Resets the colour to white (for perfect sprite display)
