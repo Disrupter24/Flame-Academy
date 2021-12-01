@@ -8,12 +8,18 @@ public class FireVariables : MonoBehaviour
     public static FireStateManager[] s_listOfCombustibles;
     public static TileStateManager[] s_listOfTiles;
     public GameObject LoseMenu;
+
+    [SerializeField]
+    private GameData _gameData; 
+
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
     public static int s_objectSpreadRadius = int; (radius in tiles, example: 1 would spread the fire to the 8 tiles surrounding it)
     public static float s_objectBurnTime = float; (in seconds)*/
     //Wood Properties
+
+    
     public static int s_woodIgnitionTemperature = 100;
     public static int s_woodSpreadRadius = 1;
     public static float s_woodBurnTime = 15f;
@@ -43,6 +49,32 @@ public class FireVariables : MonoBehaviour
 
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
         s_listOfTiles = FindObjectsOfType<TileStateManager>();
+
+
+        s_woodIgnitionTemperature = _gameData.GetWoodIgnitionTemp();
+        s_woodSpreadRadius = _gameData.GetWoodSpreadRadius();
+        s_woodBurnTime = _gameData.GetWoodBurningTime();
+        s_woodHeatTransfer = _gameData.GetWoodHeatTransfer();
+    //Tree Properties
+        s_treeIgnitionTemperature = _gameData.GetTreeIgnitionTemp();
+         s_treeSpreadRadius = _gameData.GetTreeSpreadRadius();
+        s_treeBurnTime = _gameData.GetTreeBurningTime();
+        s_treeHeatTransfer = _gameData.GetTreeHeatTransfer();
+    //Grass Properties
+        s_grassIgnitionTemperature = _gameData.GetGrassIgnitionTemp();
+        s_grassSpreadRadius = _gameData.GetGrassSpreadRadius();
+        s_grassBurnTime = _gameData.GetGoalBurningTime();
+        s_grassHeatTransfer = _gameData.GetGrassHeatTransfer();
+    //Goalpost Properties
+        s_goalpostIgnitionTemperature = _gameData.GetGoalIgnitionTemp();
+        s_goalpostSpreadRadius = _gameData.GetGoalSpreadRadius();
+        s_goalpostBurnTime = _gameData.GetGrassBurningTime();
+        s_goalpostHeatTransfer = _gameData.GetGoalHeatTransfer();
+        //Brazier Properties
+        s_brazierIgnitionTemperature = _gameData.GetBrazierIgnitionTemp();
+        s_brazierSpreadRadius = _gameData.GetBrazierSpreadRadius();
+        s_brazierBurnTime = _gameData.GetBrazierBurningTime();
+        s_brazierHeatTransfer = _gameData.GetBrazierHeatTransfer();
 
         // BELOW: wrote a method for filling lists without using FindObjectsOfType, but it's no faster at our current scale.
         // It's a bit inconvenient because it relies on parenting all tiles under one object and linking that object to this one in the inspector. With no upsides, better not to use it.
