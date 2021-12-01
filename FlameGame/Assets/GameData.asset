@@ -12,8 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5023aec8922d422469b40ab567fd847b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  _runningSpeed: 500
-  _choppingTreeSpeed: 0
-  _choppingGrassSpeed: 0
+  _runningSpeed: 16
+  _choppingTreeSpeed: 3
+  _choppingGrassSpeed: 1
   _DroppingSpeed: 0
   _PickingUpSpeed: 0
+  _woodIgnitionTemperature: 100
+  _woodSpreadRadius: 1
+  _woodBurnTime: 15
+  _woodHeatTransfer: 0.2
+  _treeIgnitionTemperature: 125
+  _treeSpreadRadius: 1
+  _treeBurnTime: 25
+  _treeHeatTransfer: 0.12
+  _grassIgnitionTemperature: 25
+  _grassSpreadRadius: 1
+  _grassBurnTime: 3
+  _grassHeatTransfer: 0.8
+  _goalIgnitionTemperature: 75
+  _goalSpreadRadius: 0
+  _goalBurnTime: 1
+  _goalHeatTransfer: 0
+  _brazierIgnitionTemperature: 200
+  _brazierSpreadRadius: 1
+  _brazierBurnTime: 200
+  _brazierHeatTransfer: 0.12
