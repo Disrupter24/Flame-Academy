@@ -35,6 +35,21 @@ public class GameData : ScriptableObject
     private float _PickingUpSpeed;
 
 
+    [Header("Fire")]
+
+    [Space(10)]
+
+    [Tooltip("Tree burning Time")]
+    [SerializeField]
+    private float _treeBurningSpeed;
+
+    [Tooltip("Log burning Time")]
+    [SerializeField]
+    private float _logBurningSpeed;
+
+    [Tooltip("Grass burning Time")]
+    [SerializeField]
+    private float _grassBurningSpeed;
 
     public float GetRunningSpeed()
     {
