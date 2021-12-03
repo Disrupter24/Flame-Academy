@@ -43,8 +43,8 @@ public class StorehouseManager : MonoBehaviour
     }
     public void UpdateStorehouseUI() // This will be called by the worker when they deposit resources into the storehouse to prevent every-frame checking.
     {
-        LogText.text = ("Wood: " + Logs);
-        GrassText.text = ("Grass: " + Grass);
+        LogText.text = ("Place Wood (" + Logs + ")");
+        GrassText.text = ("Place Grass (" + Grass + ")");
     }
 
     public List<TileStateManager> Storehouses = new List<TileStateManager>();
