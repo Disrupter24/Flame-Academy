@@ -9,6 +9,8 @@ public class TileStateManager : MonoBehaviour
     public SpriteRenderer ObjectRenderer;
     public NavigationNode NavigationNode;
     public Sprite[] ObjectSpriteSheet;
+    public Sprite[] TileSpriteSheet;
+    public Sprite[] TileBurnSheet;
     public bool WillCollide;
     public UpdateTilesInEditor EditModeUpdate;
 

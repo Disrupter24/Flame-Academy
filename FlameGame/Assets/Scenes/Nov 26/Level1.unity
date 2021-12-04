@@ -5296,7 +5296,7 @@ RectTransform:
   - {fileID: 1634114626}
   - {fileID: 1951226355}
   m_Father: {fileID: 1241983352}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7509,7 +7509,7 @@ RectTransform:
   - {fileID: 1496399697}
   - {fileID: 831551991}
   m_Father: {fileID: 1241983352}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -12911,13 +12911,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93464141447217589, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 658940147751958268, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 809842653379215328, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_Name
       value: buttonCanvas 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2601606944372509251, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 34.599976
+      objectReference: {fileID: 0}
+    - target: {fileID: 2601606944372509251, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -19.199997
       objectReference: {fileID: 0}
     - target: {fileID: 6566718534680215235, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_RootOrder
@@ -13050,6 +13062,14 @@ PrefabInstance:
     - target: {fileID: 7079343736876359492, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ButtonWoodPointerDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 7079343736876359495, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -46.800003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681146734443577683, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
@@ -15414,6 +15434,10 @@ PrefabInstance:
       objectReference: {fileID: 2984240792244161712, guid: b5e383d29556c694ab87ad63521b7398, type: 3}
     - target: {fileID: 4736627219771074626, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: FuelType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736627219771074626, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
+      propertyPath: StartsBurning
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8999202926922544536, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
