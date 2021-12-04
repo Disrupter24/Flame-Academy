@@ -96,4 +96,14 @@ public class FireStateManager : MonoBehaviour
         }
         MaxBurnTime = BurnTime;
     }
+    public void BurnTile()
+    {
+        for (int i = 0; i < TileManager.TileSpriteSheet.Length; i++)
+        {
+            if (TileManager.TileRenderer.sprite == TileManager.TileSpriteSheet[i])
+            {
+                TileManager.TileRenderer.sprite = TileManager.TileBurnSheet[i];
+            }
+        }
+    }
 }

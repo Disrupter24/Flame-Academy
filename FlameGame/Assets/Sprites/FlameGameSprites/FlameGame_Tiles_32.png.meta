@@ -124,7 +124,7 @@ TextureImporter:
     second: 32_burned_borderwater6
   - first:
       213: 4925506322143388700
-    second: water_burned_border7
+    second: 32_burned_borderwater7
   - first:
       213: -5837161524428579100
     second: 32_burned_borderwater8
@@ -712,8 +712,8 @@ TextureImporter:
       name: 32_burned_borderwater2
       rect:
         serializedVersion: 2
-        x: 257
-        y: 167
+        x: 256
+        y: 168
         width: 32
         height: 32
       alignment: 0
@@ -1066,7 +1066,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: water_burned_border7
+      name: 32_burned_borderwater7
       rect:
         serializedVersion: 2
         x: 256
