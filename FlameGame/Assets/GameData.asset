@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   _runningSpeed: 16
-  _choppingTreeSpeed: 3
-  _choppingGrassSpeed: 1
+  _choppingTreeSpeed: 1
+  _choppingGrassSpeed: 0.5
   _DroppingSpeed: 0
   _PickingUpSpeed: 0
   _woodIgnitionTemperature: 100
