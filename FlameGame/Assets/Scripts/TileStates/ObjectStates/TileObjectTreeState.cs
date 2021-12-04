@@ -16,6 +16,20 @@ public class TileObjectTreeState : TileObjectBaseState
     }
     public override void UpdateState(TileStateManager tile)
     {
-
+        if (tile.FireStateManager.BurnTime != tile.FireStateManager.MaxBurnTime)
+        {
+            if (tile.FireStateManager.BurnTime < tile.FireStateManager.MaxBurnTime * 0.25f)
+            {
+                tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[9];
+            }
+            else if (tile.FireStateManager.BurnTime < tile.FireStateManager.MaxBurnTime * 0.5f)
+            {
+                tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[8];
+            }
+            else if (tile.FireStateManager.BurnTime < tile.FireStateManager.MaxBurnTime * 0.75f)
+            {
+                tile.ObjectRenderer.sprite = tile.ObjectSpriteSheet[7];
+            }
+        }
     }
 }
