@@ -52,6 +52,10 @@ public class MenuHandler : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("WorldMap");
     }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void QuitGame()
     {
         Application.Quit();
