@@ -6,6 +6,14 @@ public class WorkerIdleState : WorkerBaseState
     public override void EnterState(WorkerStateManager worker)
     {
         worker.CurrentTask = null;
+        if(worker.LevelVictory)
+        {
+            // ENTER DANCE ANIMATION
+        }
+        else
+        {
+            // ENTER IDLE ANIMATION
+        }
     }
 
     public override void UpdateState(WorkerStateManager worker)

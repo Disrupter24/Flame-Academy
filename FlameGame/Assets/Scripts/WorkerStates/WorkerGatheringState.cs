@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class WorkerGatheringState : WorkerBaseState
 {
+    // PICK UP ANIMATION
+
     // Change tile's object state to none
     // Play "pick up item" animation
     // When the animation's done, set the nearest storehouse as the next task

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileObjectGoalpostState : TileObjectBaseState
 {
+
     public override void EnterState(TileStateManager tile)
     {
         tile.ResetProperties();
@@ -24,6 +25,8 @@ public class TileObjectGoalpostState : TileObjectBaseState
             level.Star2 = true;
             level.Star3 = true;
             level.starCount = 3;
+
+
         }
     }
 }

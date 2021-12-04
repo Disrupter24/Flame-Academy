@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class WorkerStateManager : MonoBehaviour
 {
+    //ANIMATIONS:
+    // Idle (WorkerIdleState)
+    // Cut (WorkerHarvestingState)
+    // Dance (WorkerIdleState)
+    // No (Jeremy will help)
+    // Take/Put (WorkerGatheringState)
+
     // Used this tutorial for worker state machine:
     // https://www.youtube.com/watch?v=Vt8aZDPzRjI&ab_channel=iHeartGameDev
 
@@ -34,8 +41,10 @@ public class WorkerStateManager : MonoBehaviour
     // Misc. pointers
     private SpriteRenderer _sprite;
 
-    public GameData gameData; 
+    public GameData gameData;
 
+    // Beat the level?
+    public bool LevelVictory = false;
 
     private void Awake()
     {
@@ -204,5 +213,13 @@ public class WorkerStateManager : MonoBehaviour
         }
 
         return nearestTile;
+    }
+
+    public void OnLevelVictory()
+    {
+        // Bool triggers victory dance in idle state
+        LevelVictory = true;
+        // Enter idle state
+        SwitchState(IdleState);
     }
 }

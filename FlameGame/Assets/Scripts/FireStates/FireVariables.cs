@@ -10,7 +10,7 @@ public class FireVariables : MonoBehaviour
     public GameObject LoseMenu;
 
     [SerializeField]
-    private GameData _gameData; 
+    private GameData _gameData;
 
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
