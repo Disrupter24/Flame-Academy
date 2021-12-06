@@ -24,9 +24,7 @@ public class NavigationGrid : MonoBehaviour
 
 
     private static List<NavigationNode> s_path;
-    private static bool s_hasStartedNavigating;
 
-    private static bool s_isCalculatingNavigation;
     private static NavigationNode[,] s_nodeGrid;
     private static int s_mapHeight;
     private static int s_mapWidth;
@@ -87,7 +85,6 @@ public class NavigationGrid : MonoBehaviour
     public static void OnStartLevel()
     {
         s_allTilesOnMap = FindObjectsOfType<TileStateManager>();
-        s_hasStartedNavigating = false;
         DetermineLevelData(s_allTilesOnMap);
         CreateGrid(s_allTilesOnMap);
 
@@ -420,10 +417,6 @@ public class NavigationGrid : MonoBehaviour
         node.SetWorkerOnTile(worker);
 
     }
-    public static bool IsReadyToCalculateNavigation()
-    {
-        return s_isCalculatingNavigation;
-    }
     public static Vector2 GetPathNodePosition(int nodeNumber)
     {
         return s_path[nodeNumber].GetCoordinates();
@@ -498,8 +491,6 @@ public class NavigationGrid : MonoBehaviour
     }
     public static NavigationPath CalculatePath(NavigationNode startNode, NavigationNode endNode)
     {
-        s_hasStartedNavigating = false;
-        s_isCalculatingNavigation = true;
         s_path = new List<NavigationNode>();
         List<NavigationNode> _openNodeList = new List<NavigationNode>();
         List<NavigationNode> _closedNodeList = new List<NavigationNode>();
