@@ -110,6 +110,7 @@ public class WorkerMovement
 
             if (tempPath.IsAtEndOfPath())
             {
+                worker.EnterAnimationState("CantGo");
                 WorkerPathOnComplete();
 
             }  else
@@ -131,6 +132,9 @@ public class WorkerMovement
         } else
         {
             worker.gameObject.GetComponent<SoundEffects>().PlayCannotGoTo();
+            worker.EnterAnimationState("CantGo");
+            //worker.ResetAnimationBools();
+
         }
 
         return newPathCreatedSuccessfully;        

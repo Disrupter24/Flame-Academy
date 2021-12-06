@@ -21,6 +21,7 @@ public class WorkerStateManager : MonoBehaviour
     public WorkerHarvestingState HarvestingState = new WorkerHarvestingState();
     public WorkerIdleState IdleState = new WorkerIdleState();
     public WorkerMovement workerMovement;
+    public Animator workerAnimator; 
 
     public bool IsSelected;
     public bool ForceMove = false;
@@ -215,6 +216,29 @@ public class WorkerStateManager : MonoBehaviour
         return nearestTile;
     }
 
+    public void EnterAnimationState(string name)
+    {
+        Debug.Log("Enter state: " + name);
+        ResetAnimationBools();
+        workerAnimator.SetBool(name, true);
+    }
+
+    public void ResetMostAnimationBools()
+    {
+        Debug.Log("Reseting most");
+        foreach (AnimatorControllerParameter param in workerAnimator.parameters)
+        {
+            if (param.name == "CantGo") continue;
+            workerAnimator.SetBool(param.name, false);
+        }
+    }
+    public void ResetAnimationBools()
+    {
+        foreach(AnimatorControllerParameter param in workerAnimator.parameters)
+        {
+            workerAnimator.SetBool(param.name, false);
+        }
+    }
     public void OnLevelVictory()
     {
         // Bool triggers victory dance in idle state

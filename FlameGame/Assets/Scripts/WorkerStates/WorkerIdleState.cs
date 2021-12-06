@@ -8,10 +8,12 @@ public class WorkerIdleState : WorkerBaseState
         worker.CurrentTask = null;
         if(worker.LevelVictory)
         {
+            worker.EnterAnimationState("Won");
             // ENTER DANCE ANIMATION
         }
         else
         {
+            worker.ResetMostAnimationBools();
             // ENTER IDLE ANIMATION
         }
     }

@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7adcd8614a0705a4bb1a359fc4654e6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  workerAnimator: {fileID: 8477127418663840452}
   IsSelected: 0
   ForceMove: 0
   TaskList: []
@@ -135,6 +136,7 @@ MonoBehaviour:
   FuelToPlace: 0
   HeldItem: 0
   gameData: {fileID: 11400000, guid: 8571ddd2269be0f4fa2a07d4a0ec46c3, type: 2}
+  LevelVictory: 0
 --- !u!114 &4477752730892964551
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class WorkerHarvestingState : WorkerBaseState
     public override void EnterState(WorkerStateManager worker)
     {
         // CHOPPING ANIMATION
-
+        worker.EnterAnimationState("Cutting");
         // Change tile's task state to none
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 

@@ -19,6 +19,7 @@ public class WorkerGatheringState : WorkerBaseState
         worker.CurrentTask.TaskState = TileStateManager.TaskStates.None;
 
         // Enter animation state and set timer
+        worker.EnterAnimationState("TakePut");
         _totalGatheringTime = worker.gameData.GetGrassCuttingSpeed();
         _gatheringTimer = 0;
 
