@@ -18,15 +18,22 @@ public class TileObjectGoalpostState : TileObjectBaseState
     {
         if (tile.FireStateManager.Temperature >= tile.FireStateManager.IgnitionTemperature)
         {
-            tile.WinScreen.SetActive(true);
-            Level level = LevelManager.Instance.GetCurrentLevel().GetLevelInfo();
-            level.IsComplete = true;
-            level.Star1 = true;
-            level.Star2 = true;
-            level.Star3 = true;
-            level.starCount = 3;
+
+            //Kinda hacky, we can have all the workers in a class somewhere in the future
+            //for now this just makes sure the level complete animation plays correctly. 
+            WorkerStateManager[] workers = GameObject.FindObjectsOfType<WorkerStateManager>();
+            foreach (WorkerStateManager worker in workers)
+            {
+                worker.OnLevelVictory();
+            }
+            tile.StartWinScreen();
+
+            
 
 
         }
     }
+
+
+   
 }

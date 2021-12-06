@@ -219,4 +219,27 @@ public class TileStateManager : MonoBehaviour
         }
 
     }
+
+    public void StartWinScreen()
+    {
+        StartCoroutine(WinScreenDelay(5.0f));
+
+    }
+
+    IEnumerator WinScreenDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        WinScreen.SetActive(true);
+        Level level = LevelManager.Instance.GetCurrentLevel().GetLevelInfo();
+
+
+        level.IsComplete = true;
+        level.Star1 = true;
+        level.Star2 = true;
+        level.Star3 = true;
+        level.starCount = 3;
+    }
+
+
+
 }

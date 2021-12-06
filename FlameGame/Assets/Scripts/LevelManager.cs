@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
     public void SetCurrentLevel(LevelStarter level)
     {
         _currentLevel = level;
+
     }
 
     public LevelStarter GetCurrentLevel()

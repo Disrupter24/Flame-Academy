@@ -110,7 +110,6 @@ public class WorkerMovement
 
             if (tempPath.IsAtEndOfPath())
             {
-                worker.EnterAnimationState("CantGo");
                 WorkerPathOnComplete();
 
             }  else
