@@ -8,7 +8,7 @@ public class WorkerIdleState : WorkerBaseState
         worker.CurrentTask = null;
         if(worker.LevelVictory)
         {
-            worker.transform.localScale = Vector3.one * 5f;
+            //worker.transform.localScale = Vector3.one * 5f;
             worker.EnterAnimationState("Won");
             // ENTER DANCE ANIMATION
         }
