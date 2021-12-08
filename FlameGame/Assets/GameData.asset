@@ -25,10 +25,10 @@ MonoBehaviour:
   _treeSpreadRadius: 1
   _treeBurnTime: 25
   _treeHeatTransfer: 0.12
-  _grassIgnitionTemperature: 25
+  _grassIgnitionTemperature: 40
   _grassSpreadRadius: 1
   _grassBurnTime: 3
-  _grassHeatTransfer: 0.8
+  _grassHeatTransfer: 3
   _goalIgnitionTemperature: 75
   _goalSpreadRadius: 0
   _goalBurnTime: 1

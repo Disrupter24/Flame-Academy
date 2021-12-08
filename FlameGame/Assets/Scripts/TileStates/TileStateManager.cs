@@ -13,6 +13,7 @@ public class TileStateManager : MonoBehaviour
     public Sprite[] TileBurnSheet;
     public bool WillCollide;
     public UpdateTilesInEditor EditModeUpdate;
+    private int _resetcount;
 
     [HideInInspector]
     public bool IsGhost = false; // Indicates that a worker intends to place fuel here
@@ -108,7 +109,11 @@ public class TileStateManager : MonoBehaviour
         if(FireStateManager.StartsBurning)
         {
             FireStateManager.Temperature = FireStateManager.IgnitionTemperature;
-            FireStateManager.StartsBurning = false;
+            _resetcount++;
+            if (_resetcount >= 2) // Spaghetti band-aid for StartsBurning not working.
+            {
+                FireStateManager.StartsBurning = false;
+            }
         }
         else
         {

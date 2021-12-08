@@ -27,7 +27,15 @@ public class FireStateManager : MonoBehaviour
     protected void Start()
     {
         SetProperties(FuelType);
-        currentState = NoneState;
+        if (StartsBurning)
+        {
+            Temperature = IgnitionTemperature;
+            currentState = FullState;
+        }
+        else
+        {
+            currentState = NoneState;
+        }
         currentState.EnterState(this);
     }
     protected void Update()

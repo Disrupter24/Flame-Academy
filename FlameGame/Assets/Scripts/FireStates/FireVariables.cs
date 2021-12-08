@@ -8,6 +8,7 @@ public class FireVariables : MonoBehaviour
     public static FireStateManager[] s_listOfCombustibles;
     public static TileStateManager[] s_listOfTiles;
     public GameObject LoseMenu;
+    public bool CanLose = true; // Added this to make debugging/testing more convenient
 
     [SerializeField]
     private GameData _gameData;
@@ -15,7 +16,7 @@ public class FireVariables : MonoBehaviour
     //This script is just a database of the properties of the various materials, accessed through the "FuelTypes" enum in "FireStateManager" for now.
     /*Object Properties
     public static int s_objectIgnitionTemperature = int; (arbitrary number, woohoo!)
-    public static int s_objectSpreadRadius = int; (radius in tiles, example: 1 would spread the fire to the 8 tiles surrounding it)
+    public static int s_objectSpreadRadius = int; (radius in tiles, example: a radius of 1 would spread the fire to the 8 tiles surrounding it)
     public static float s_objectBurnTime = float; (in seconds)*/
     //Wood Properties
 
@@ -33,7 +34,7 @@ public class FireVariables : MonoBehaviour
     public static int s_grassIgnitionTemperature = 25;
     public static int s_grassSpreadRadius = 1;
     public static float s_grassBurnTime = 3f;
-    public static float s_grassHeatTransfer = 0.80f;
+    public static float s_grassHeatTransfer = 1.5f;
     //Goalpost Properties
     public static int s_goalpostIgnitionTemperature = 75;
     public static int s_goalpostSpreadRadius = 0;
@@ -50,7 +51,7 @@ public class FireVariables : MonoBehaviour
         s_listOfCombustibles = FindObjectsOfType<FireStateManager>();
         s_listOfTiles = FindObjectsOfType<TileStateManager>();
 
-
+        
         s_woodIgnitionTemperature = _gameData.GetWoodIgnitionTemp();
         s_woodSpreadRadius = _gameData.GetWoodSpreadRadius();
         s_woodBurnTime = _gameData.GetWoodBurningTime();
@@ -101,7 +102,10 @@ public class FireVariables : MonoBehaviour
                 StorehouseManager.Instance.Storehouses.Add(tile);
             }
         }
-        InvokeRepeating("LossCheck", 5f, 5f);
+        if (CanLose)
+        {
+            InvokeRepeating("LossCheck", 5f, 5f);
+        }
     }
 
     private void LossCheck()
