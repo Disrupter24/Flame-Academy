@@ -12929,7 +12929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2601606944372509251, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -19.199997
+      value: -19.200012
       objectReference: {fileID: 0}
     - target: {fileID: 6566718534680215235, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_RootOrder
@@ -13065,7 +13065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7079343736876359495, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -46.800003
+      value: -46.799988
       objectReference: {fileID: 0}
     - target: {fileID: 7681146734443577683, guid: de7898cf70ee7ba45b29c8f564222db5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -15438,7 +15438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4736627219771074626, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: StartsBurning
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8999202926922544536, guid: 83cb72e884bd6d64794e5d12225b16f1, type: 3}
       propertyPath: m_Name
